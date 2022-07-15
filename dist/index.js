@@ -26,6 +26,7 @@ const addNoteForm = () => {
     const addNote = document.createElement('div');
     addNote.classList.add('addNote');
     body.appendChild(addNote);
+    const form = document.createElement('form');
     const titleInputLabel = document.createElement('label');
     titleInputLabel.setAttribute('for', 'titleInput');
     titleInputLabel.textContent = "Title:";
@@ -70,13 +71,23 @@ const addNoteForm = () => {
     const defconbtnLabel = document.createElement('label');
     defconbtnLabel.setAttribute('for', 'defconbtn');
     defconbtnLabel.textContent = "Defcon";
-    const dateInput = document.createElement('div');
-    dateInput.classList.add('dateInput');
-    dateInput.textContent = "Date Input";
-    addNote.appendChild(titleInputLabel);
-    addNote.appendChild(titleInput);
-    addNote.appendChild(priorityLabel);
-    addNote.appendChild(priorityInputList);
+    const dateInputLabel = document.createElement('label');
+    dateInputLabel.setAttribute('for', 'dateInput');
+    dateInputLabel.textContent = "Due Date:";
+    const dateInput = document.createElement('input');
+    dateInput.setAttribute('type', 'date');
+    dateInput.setAttribute('id', 'dateInput');
+    const textareaLabel = document.createElement('label');
+    textareaLabel.setAttribute('for', 'textarea');
+    textareaLabel.classList.add('textareaLabel')
+    textareaLabel.textContent = "Notes:";
+    const textarea = document.createElement('textarea');
+    textarea.setAttribute('id', 'textarea');
+    addNote.appendChild(form);
+    form.appendChild(titleInputLabel);
+    form.appendChild(titleInput);
+    form.appendChild(priorityLabel);
+    form.appendChild(priorityInputList);
     priorityInputList.appendChild(lowbtn);
     priorityInputList.appendChild(lowbtnLabel);
     priorityInputList.appendChild(medbtn);
@@ -85,7 +96,10 @@ const addNoteForm = () => {
     priorityInputList.appendChild(highbtnLabel);
     priorityInputList.appendChild(defconbtn);
     priorityInputList.appendChild(defconbtnLabel);
-    addNote.appendChild(dateInput);
+    form.appendChild(dateInputLabel);
+    form.appendChild(dateInput);
+    form.appendChild(textareaLabel);
+    form.appendChild(textarea);
 }
 addNoteForm();
 
