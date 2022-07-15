@@ -44,6 +44,11 @@
 .date {
     border: 1px solid rebeccapurple;
 }
+.addNote {
+    height: 40vh;
+    width: 50vw;
+    background-color: salmon;
+}
 .footer {
     height: 75px;
     width: inherit;
