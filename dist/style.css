@@ -1,0 +1,51 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.main {
+
+}
+.header {
+    height: 150px;
+    width: inherit;
+    border: 1px solid black;
+}
+.bodyContainer {
+    min-height: calc(100vh - 225px);
+    display: flex;
+}
+.nav {
+    height: inherit;
+    width: 200px;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+}
+.body {
+    height: inherit;
+    width: calc(100vw - 200px);
+}
+.checkboxLabel {
+    display: none;
+}
+.checkbox {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+.card {
+    display: flex;
+    border: 2px solid blue;
+}
+.title {
+    border: 1px solid salmon;
+}
+.priority {
+    border: 1px solid lightgreen;
+}
+.date {
+    border: 1px solid rebeccapurple;
+}
+.footer {
+    height: 75px;
+    width: inherit;
+    border: 1px solid black;
+}
