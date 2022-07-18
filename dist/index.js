@@ -35,17 +35,25 @@ const setAttributes = (element, attributes) => {
         element.setAttribute(key, value);
     })
 }
+// ToDo button listener functions
+const checkboxFn = (input) => {
+    console.log('fire');
+    if (input.checked == true) {
+        console.log('winning');
+    }
+}
+
 // create ToDo
 const createCard = (object) => {
     const card = createElement('div', {"class": "card"});
     const regularSize = createElement('div', {"class": "regularSize"});
     const extendedSize = createElement('div', {"class": "extendedSize"});
-    const checked = createElement('button', {"type": "checkbox", "class": "checkbox"});
+    const checked = createElement('input', {"type": "checkbox", "class": "checkbox", 'aria-label': "Unchecked"});
     const title = createElement('div', {"class": "title"});
     title.textContent = `${object.title}`;
     const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
     priority.textContent = `${object.priority}`;
-    const expandbtn = createElement('input', {"type": "button", "id": "expand", "class": "expand"});
+    const expandbtn = createElement('button', {"id": "expand", "class": "expand"});
     const expandbtnLabel = createElement('label', {"for": "expand"});
     const date = createElement('div', {"class": "date"});
     date.textContent = `${object.date}`;
@@ -57,9 +65,14 @@ const createCard = (object) => {
     if (object.project != "") {
         projectTag.textContent = `Project: ${object.project}`;
     }
+    const spacerDiv = createElement('div', {"class": "spacerDiv"});
     card.appendChild(regularSize);
     regularSize.appendChild(checked);
+    checked.addEventListener('click', () => {
+        checkboxFn(checked);
+    });
     regularSize.appendChild(title);
+    regularSize.appendChild(spacerDiv);
     regularSize.appendChild(priority);
     regularSize.appendChild(expandbtnLabel);
     expandbtnLabel.appendChild(expandbtn);
@@ -68,7 +81,6 @@ const createCard = (object) => {
     card.appendChild(extendedSize);
     extendedSize.appendChild(notes);
     extendedSize.appendChild(projectTag);
-    card
     return card;
 }
 

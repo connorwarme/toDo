@@ -44,10 +44,24 @@
 .date {
     border: 1px solid rebeccapurple;
 }
-.addNote {
-    height: 40vh;
-    width: 50vw;
-    background-color: salmon;
+.card {
+    height: 60px;
+    width: inherit;
+    background-color: lightgoldenrodyellow;
+}
+.regularSize {
+    display: flex;
+    width: inherit;
+}
+.extendedSize {
+    display: none;
+}
+.spacerDiv {
+    flex-grow: 1;
+}
+button {
+    height: 40px;
+    width: 40px;
 }
 .footer {
     height: 75px;
