@@ -31,10 +31,6 @@
     width: 35px;
     border-radius: 50%;
 }
-.card {
-    display: flex;
-    border: 2px solid blue;
-}
 .title {
     border: 1px solid salmon;
 }
@@ -45,12 +41,17 @@
     border: 1px solid rebeccapurple;
 }
 .card {
-    height: 60px;
     width: inherit;
     background-color: lightgoldenrodyellow;
+    border: 2px solid blue;
+}
+.cardEdit {
+    display: flex;
+    flex-direction: column;
 }
 .regularSize {
     display: flex;
+    height: 50px;
     width: inherit;
 }
 .extendedSize {
@@ -59,6 +60,11 @@
 .displayExtended {
     display: block;
     background-color: red;
+}
+.editSize {
+    background-color: violet;
+    display: flex;
+    justify-content: space-around;
 }
 .spacerDiv {
     flex-grow: 1;

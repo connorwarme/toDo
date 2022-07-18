@@ -50,6 +50,7 @@ const editFn = (input) => {
     let toDo = input.parentElement.parentElement;
     // expand form
     toDo.children[1].classList.add('displayExtended');
+    toDo.classList.add('cardEdit');
 }
 const deleteFn = (input) => {
     console.log('delete');
@@ -104,17 +105,16 @@ const createCard = (object) => {
         }
         const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
         const priorityEditLabel = createElement('label', {"for": "priorityEditLabel"});
+        priorityEditLabel.textContent= "Priority:"
         const priorityEditLow = createElement('button', {"type": "radio", "class": "priorityEditLow"});
         const priorityEditMed = createElement('button', {"type": "radio", "class": "priorityEditMed"});
         const priorityEditHigh = createElement('button', {"type": "radio", "class": "priorityEditHigh"});
         const priorityEditDefcon = createElement('button', {"type": "radio", "class": "priorityEditDefcon"});
         const submitEditContainer = createElement('div', {"class": "submitContainer"});
-        const cancelEditLabel = createElement('label', {"for": "cancelEdit"});
-        cancelEditLabel.textContent = "Cancel";
-        const cancelEditBtn = createElement('button', {"class": "cancelEditBtn", "id": "cancelEdit"});
-        const submitEditLabel = createElement('label', {"for": "submitEdit"});
-        submitEditLabel.textContent = "Submit";
-        const submitEditBtn = createElement('button', {"class": "submitEditBtn", "id": "submitEdit"})
+        const cancelEditBtn = createElement('button', {"class": "cancelEditBtn", "aria-label": "Cancel Edit"});
+        cancelEditBtn.textContent = "Cancel";
+        const submitEditBtn = createElement('button', {"class": "submitEditBtn", "aria-label": "Submit Edit"})
+        submitEditBtn.textContent = "Submit";
         card.appendChild(regularSize);
         regularSize.appendChild(checked);
         regularSize.appendChild(title);
@@ -135,10 +135,8 @@ const createCard = (object) => {
         priorityEditLabel.appendChild(priorityEditHigh);
         priorityEditLabel.appendChild(priorityEditDefcon);
         editSize.appendChild(submitEditContainer);
-        submitEditContainer.appendChild(cancelEditLabel);
-        cancelEditLabel.appendChild(cancelEditBtn)
-        submitEditContainer.appendChild(submitEditLabel);
-        submitEditLabel.appendChild(submitEditBtn);
+        submitEditContainer.appendChild(cancelEditBtn);
+        submitEditContainer.appendChild(submitEditBtn);
         return card;
     }
     let createdCard = makeCard(object);
