@@ -38,6 +38,8 @@ const setAttributes = (element, attributes) => {
 // create ToDo
 const createCard = (object) => {
     const card = createElement('div', {"class": "card"});
+    const regularSize = createElement('div', {"class": "regularSize"});
+    const extendedSize = createElement('div', {"class": "extendedSize"});
     const checked = createElement('button', {"type": "checkbox", "class": "checkbox"});
     const title = createElement('div', {"class": "title"});
     title.textContent = `${object.title}`;
@@ -49,16 +51,26 @@ const createCard = (object) => {
     date.textContent = `${object.date}`;
     const editCard = createElement('button', {"class": "editCard"});
     const deleteCard = createElement('button', {"class": "deleteCard"});
-    card.appendChild(checked);
-    card.appendChild(title);
-    card.appendChild(priority);
-    card.appendChild(expandbtnLabel);
+    const notes = createElement('div', {"class": "notes"});
+    notes.textContent = `Notes: ${object.notes}`;
+    const projectTag = createElement('div', {'class': 'projectTag'});
+    if (object.project != "") {
+        projectTag.textContent = `Project: ${object.project}`;
+    }
+    card.appendChild(regularSize);
+    regularSize.appendChild(checked);
+    regularSize.appendChild(title);
+    regularSize.appendChild(priority);
+    regularSize.appendChild(expandbtnLabel);
     expandbtnLabel.appendChild(expandbtn);
-    card.appendChild(editCard);
-    card.appendChild(deleteCard);
+    regularSize.appendChild(editCard);
+    regularSize.appendChild(deleteCard);
+    card.appendChild(extendedSize);
+    extendedSize.appendChild(notes);
+    extendedSize.appendChild(projectTag);
+    card
     return card;
 }
-
 
 body.appendChild(createCard(first));
 // let firstMent = createElement('div', {"id": "first", "class": "firstdiv"});
