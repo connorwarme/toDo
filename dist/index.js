@@ -45,6 +45,33 @@ const checkboxFn = (input) => {
 const expandFn = (input) => {
     input.parentElement.nextElementSibling.classList.toggle('displayExtended');
 }
+const editFn = (input) => {
+    console.log('edit');
+    let toDo = input.parentElement.parentElement;
+    // expand form
+    toDo.children[1].classList.add('displayExtended');
+}
+const deleteFn = (input) => {
+    console.log('delete');
+    removeCardListeners(input);
+    let toDo = input.parentElement.parentElement;
+    // needs access to "body" !!
+    body.removeChild(toDo);
+}
+const removeCardListeners = (input) => {
+    input.removeEventListener('click', () => {
+        checkboxFn(input);
+    })
+    input.removeEventListener('click', () => {
+        expandFn(input);
+    })
+    input.removeEventListener('click', () => {
+        editFn();
+    })
+    input.removeEventListener('click', () => {
+        deleteFn(input);
+    })
+}
 
 // create ToDo
 const createCard = (object) => {
@@ -57,34 +84,61 @@ const createCard = (object) => {
         card = createElement('div', {"class": "card"});
         const regularSize = createElement('div', {"class": "regularSize"});
         const extendedSize = createElement('div', {"class": "extendedSize"});
+        const editSize = createElement('div', {"class": "editSize"});
         checked = createElement('input', {"type": "checkbox", "class": "checkbox", 'aria-label': "Checkbox"});
         const title = createElement('div', {"class": "title"});
         title.textContent = `${object.title}`;
+        const spacerDiv = createElement('div', {"class": "spacerDiv"});
         const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
         priority.textContent = `${object.priority}`;
         expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card"});
         const date = createElement('div', {"class": "date"});
-        date.textContent = `${object.date}`;
-        const editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
-        const deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
+        date.textContent = `${object.dueDate}`;
+        editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
+        deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
         const notes = createElement('div', {"class": "notes"});
         notes.textContent = `Notes: ${object.notes}`;
         const projectTag = createElement('div', {'class': 'projectTag'});
         if (object.project != "") {
             projectTag.textContent = `Project: ${object.project}`;
         }
-        const spacerDiv = createElement('div', {"class": "spacerDiv"});
+        const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
+        const priorityEditLabel = createElement('label', {"for": "priorityEditLabel"});
+        const priorityEditLow = createElement('button', {"type": "radio", "class": "priorityEditLow"});
+        const priorityEditMed = createElement('button', {"type": "radio", "class": "priorityEditMed"});
+        const priorityEditHigh = createElement('button', {"type": "radio", "class": "priorityEditHigh"});
+        const priorityEditDefcon = createElement('button', {"type": "radio", "class": "priorityEditDefcon"});
+        const submitEditContainer = createElement('div', {"class": "submitContainer"});
+        const cancelEditLabel = createElement('label', {"for": "cancelEdit"});
+        cancelEditLabel.textContent = "Cancel";
+        const cancelEditBtn = createElement('button', {"class": "cancelEditBtn", "id": "cancelEdit"});
+        const submitEditLabel = createElement('label', {"for": "submitEdit"});
+        submitEditLabel.textContent = "Submit";
+        const submitEditBtn = createElement('button', {"class": "submitEditBtn", "id": "submitEdit"})
         card.appendChild(regularSize);
         regularSize.appendChild(checked);
         regularSize.appendChild(title);
         regularSize.appendChild(spacerDiv);
         regularSize.appendChild(priority);
         regularSize.appendChild(expandCard);
+        regularSize.appendChild(date);
         regularSize.appendChild(editCard);
         regularSize.appendChild(deleteCard);
         card.appendChild(extendedSize);
         extendedSize.appendChild(notes);
         extendedSize.appendChild(projectTag);
+        card.appendChild(editSize);
+        editSize.appendChild(priorityEditContainer);
+        priorityEditContainer.appendChild(priorityEditLabel);
+        priorityEditLabel.appendChild(priorityEditLow);
+        priorityEditLabel.appendChild(priorityEditMed);
+        priorityEditLabel.appendChild(priorityEditHigh);
+        priorityEditLabel.appendChild(priorityEditDefcon);
+        editSize.appendChild(submitEditContainer);
+        submitEditContainer.appendChild(cancelEditLabel);
+        cancelEditLabel.appendChild(cancelEditBtn)
+        submitEditContainer.appendChild(submitEditLabel);
+        submitEditLabel.appendChild(submitEditBtn);
         return card;
     }
     let createdCard = makeCard(object);
@@ -98,7 +152,13 @@ const createCard = (object) => {
             expandFn(expandCard);
         })
         // edit ToDo
+        editCard.addEventListener('click', () => {
+            editFn();
+        })
         // delete ToDo
+        deleteCard.addEventListener('click', () => {
+            deleteFn(deleteCard);
+        })
     // }
     body.appendChild(createdCard);
 }
