@@ -37,54 +37,73 @@ const setAttributes = (element, attributes) => {
 }
 // ToDo button listener functions
 const checkboxFn = (input) => {
-    console.log('fire');
-    if (input.checked == true) {
-        console.log('winning');
-    }
+    // could just toggle back and forth (i.e. no if clause)
+    // if (input.checked == true)
+    // get card and toggle class
+    input.parentElement.parentElement.classList.toggle('completedToDo');
+}
+const expandFn = (input) => {
+    input.parentElement.nextElementSibling.classList.toggle('displayExtended');
 }
 
 // create ToDo
 const createCard = (object) => {
-    const card = createElement('div', {"class": "card"});
-    const regularSize = createElement('div', {"class": "regularSize"});
-    const extendedSize = createElement('div', {"class": "extendedSize"});
-    const checked = createElement('input', {"type": "checkbox", "class": "checkbox", 'aria-label': "Unchecked"});
-    const title = createElement('div', {"class": "title"});
-    title.textContent = `${object.title}`;
-    const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
-    priority.textContent = `${object.priority}`;
-    const expandbtn = createElement('button', {"id": "expand", "class": "expand"});
-    const expandbtnLabel = createElement('label', {"for": "expand"});
-    const date = createElement('div', {"class": "date"});
-    date.textContent = `${object.date}`;
-    const editCard = createElement('button', {"class": "editCard"});
-    const deleteCard = createElement('button', {"class": "deleteCard"});
-    const notes = createElement('div', {"class": "notes"});
-    notes.textContent = `Notes: ${object.notes}`;
-    const projectTag = createElement('div', {'class': 'projectTag'});
-    if (object.project != "") {
-        projectTag.textContent = `Project: ${object.project}`;
+    let card;
+    let checked;
+    let expandCard;
+    let editCard;
+    let deleteCard;
+    const makeCard = (object) => {
+        card = createElement('div', {"class": "card"});
+        const regularSize = createElement('div', {"class": "regularSize"});
+        const extendedSize = createElement('div', {"class": "extendedSize"});
+        checked = createElement('input', {"type": "checkbox", "class": "checkbox", 'aria-label': "Checkbox"});
+        const title = createElement('div', {"class": "title"});
+        title.textContent = `${object.title}`;
+        const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
+        priority.textContent = `${object.priority}`;
+        expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card"});
+        const date = createElement('div', {"class": "date"});
+        date.textContent = `${object.date}`;
+        const editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
+        const deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
+        const notes = createElement('div', {"class": "notes"});
+        notes.textContent = `Notes: ${object.notes}`;
+        const projectTag = createElement('div', {'class': 'projectTag'});
+        if (object.project != "") {
+            projectTag.textContent = `Project: ${object.project}`;
+        }
+        const spacerDiv = createElement('div', {"class": "spacerDiv"});
+        card.appendChild(regularSize);
+        regularSize.appendChild(checked);
+        regularSize.appendChild(title);
+        regularSize.appendChild(spacerDiv);
+        regularSize.appendChild(priority);
+        regularSize.appendChild(expandCard);
+        regularSize.appendChild(editCard);
+        regularSize.appendChild(deleteCard);
+        card.appendChild(extendedSize);
+        extendedSize.appendChild(notes);
+        extendedSize.appendChild(projectTag);
+        return card;
     }
-    const spacerDiv = createElement('div', {"class": "spacerDiv"});
-    card.appendChild(regularSize);
-    regularSize.appendChild(checked);
-    checked.addEventListener('click', () => {
-        checkboxFn(checked);
-    });
-    regularSize.appendChild(title);
-    regularSize.appendChild(spacerDiv);
-    regularSize.appendChild(priority);
-    regularSize.appendChild(expandbtnLabel);
-    expandbtnLabel.appendChild(expandbtn);
-    regularSize.appendChild(editCard);
-    regularSize.appendChild(deleteCard);
-    card.appendChild(extendedSize);
-    extendedSize.appendChild(notes);
-    extendedSize.appendChild(projectTag);
-    return card;
+    let createdCard = makeCard(object);
+    // const addListeners = () => {
+        // checkbox
+        checked.addEventListener('click', () => {
+            checkboxFn(checked);
+        });
+        // expand ToDo
+        expandCard.addEventListener('click', () => {
+            expandFn(expandCard);
+        })
+        // edit ToDo
+        // delete ToDo
+    // }
+    body.appendChild(createdCard);
 }
-
-body.appendChild(createCard(first));
+createCard(first);
+// body.appendChild(createCard(first));
 // let firstMent = createElement('div', {"id": "first", "class": "firstdiv"});
 // body.appendChild(firstMent);
 

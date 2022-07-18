@@ -56,12 +56,19 @@
 .extendedSize {
     display: none;
 }
+.displayExtended {
+    display: block;
+    background-color: red;
+}
 .spacerDiv {
     flex-grow: 1;
 }
 button {
     height: 40px;
     width: 40px;
+}
+.completedToDo {
+    opacity: 0.7;
 }
 .footer {
     height: 75px;
