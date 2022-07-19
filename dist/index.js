@@ -1,7 +1,8 @@
 const noteFactory = (title, project, priority, dueDate, notes, checked) => {
-    return { title, project, priority, dueDate, notes, checked }
+    this.properties = ["title", "project", "priority", "dueDate", "notes", "checked"];
+    return { title, project, priority, dueDate, notes, checked, properties }
 }
-let first = noteFactory('update README', '', 'high', '07/14/22', 'kinda like the other dudes', false);
+let first = noteFactory('update README', '', 'High', '07/14/22', 'kinda like the other dudes', false);
 
 let body = document.querySelector('div.body');
 
@@ -77,6 +78,8 @@ const editFn = (input) => {
         editDisplayInput(titleDiv);
         let notesDiv = toDo.children[1].children[0];
         editDisplayInput(notesDiv);
+        editPopulateInput(toDo, first);
+        editCurrentRadioSelection(toDo, first);
     } else if (edit == false) {
         cancelEditFn(toDo);
     }
@@ -99,6 +102,17 @@ const editDisplayInput = (container) => {
     container.children[2].style.display = "block";
 }
 // populate inputs with current object data!
+const editPopulateInput = (cardDiv, object) =>  {
+    let currentTitle = cardDiv.querySelector('input.titleEdit');
+    currentTitle.value = object.title;
+    let currentNotes = cardDiv.querySelector('input#notesEdit');
+    currentNotes.value = object.notes; 
+}
+// so I have to pass title and object.title for it to work...
+// const editPopulateInput = (inputDOM, value) => {
+//     inputDOM.value = value;
+// }
+// editCurrentRadioSelection works, returns the btn (need condition...if btn == null, don't worry about it);
 
 const editHideInput = (container) => {
     container.children[0].style.display = "flex";
@@ -112,18 +126,28 @@ const cancelEditFn = (cardDiv) => {
     editHideInput(cardDiv.children[0].children[1]);
     editHideInput(cardDiv.children[1].children[0]);
     minimizeCard(cardDiv);
+    // needs to be updated to be able to receive other objects (?)
 }
 const clearEditInputs = (cardDiv) => {
-    let inputArray = Array.from(cardDiv.querySelectorAll('input'));
-    for (i=0; i<inputArray.length; i++) {
-        inputArray[i].value = null;
-    }
+    clearTextInputs(cardDiv);
+    clearRadioSelection(cardDiv);
+}
+const clearTextInputs = (cardDiv) => {
+    cardDiv.children[0].children[1].children[2].value = null;
+    cardDiv.children[1].children[0].children[2].value = null;
 }
 // for submit
 // take inputs and modify object
 // with updated object, update ToDo display
 // how to identify object and key?
 //
+const submitEditFn = (cardDiv) => {
+    let titleInput = cardDiv.children[0].children[1].children[2].value;
+    let notesInput = cardDiv.children[1].children[0].children[2].value;
+    let priorityInput = radioSelection(btns).value;
+    let array = [titleInput, "", priorityInput, "", notesInput, ""];
+    return array;
+}
 const editGetInput = (input) => {
     let userInput = input.select();
     return userInput;
@@ -142,6 +166,27 @@ const priorityFn = (cardDiv) => {
     let priorityBtns = Array.from(cardDiv.querySelector('input[type="radio'));
     let selection = radioSelection(priorityBtns);
     return selection;
+}
+// clear radio selection
+const clearRadioSelection = (cardDiv) => {
+    let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
+    for (i=0; i<priorityBtns.length; i++) {
+        priorityBtns[i].checked = false;
+    }
+}
+// display the current selection (in edit mode)
+const editCurrentRadioSelection = (cardDiv, object) => {
+    let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
+    let btn;
+    console.log(priorityBtns);
+    for (i=0; i<priorityBtns.length; i++) {
+        if (priorityBtns[i].value == object.priority) {
+            priorityBtns[i].checked = "checked";
+            btn = priorityBtns[i];
+            console.log(btn);
+        }
+    }
+    return btn;
 }
 // find and return the "checked" radio button
 const radioSelection = (input) => {
@@ -165,6 +210,12 @@ const removeCardListeners = (input) => {
         deleteFn(input);
     })
 }
+// object operations
+const updateObject = (object, array) => {
+    for (i=0; i<array.length; i++) {
+        object[object.properties[i]] = array[i];
+    }
+}
 
 // create ToDo
 const createCard = (object) => {
@@ -173,6 +224,7 @@ const createCard = (object) => {
     let expandCard;
     let editCard;
     let deleteCard;
+    let cancelEditBtn;
     const makeCard = (object) => {
         card = createElement('div', {"class": "card"});
         const regularSize = createElement('div', {"class": "regularSize"});
@@ -182,9 +234,9 @@ const createCard = (object) => {
         const titleContainer = createElement('div', {"class": "titleContainer"})
         const title = createElement('div', {"class": "title"});
         title.textContent = `${object.title}`;
-        const titleEditLabel = createElement('label', {"for": "titleEdit", "class": "hideTitleEdit"});
+        const titleEditLabel = createElement('label', {"for": "titleEdit", "class": "titleEdit"});
         titleEditLabel.textContent = "Title:";
-        const titleEditInput = createElement('input', {"type": "text", "class": "hideTitleEdit", "id": "titleEdit"});
+        const titleEditInput = createElement('input', {"type": "text", "class": "titleEdit", "id": "titleEdit"});
         const spacerDiv = createElement('div', {"class": "spacerDiv"});
         const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
         priority.textContent = `${object.priority}`;
@@ -219,7 +271,7 @@ const createCard = (object) => {
         const priorityEditDefconLabel = createElement('label', {"for": "priorityEditDefcon"});
         priorityEditDefconLabel.textContent = "Defcon";
         const submitEditContainer = createElement('div', {"class": "submitContainer"});
-        const cancelEditBtn = createElement('button', {"class": "cancelEditBtn", "aria-label": "Cancel Edit"});
+        cancelEditBtn = createElement('button', {"class": "cancelEditBtn", "aria-label": "Cancel Edit"});
         cancelEditBtn.textContent = "Cancel";
         const submitEditBtn = createElement('button', {"class": "submitEditBtn", "aria-label": "Submit Edit"})
         submitEditBtn.textContent = "Submit";
@@ -276,12 +328,18 @@ const createCard = (object) => {
             deleteFn(deleteCard);
         })
         // priority level (radio buttons)
-        let priorityBtns = Array.from(card.querySelectorAll('input[type="radio"]'));
+        let priorityBtns = Array.from(createdCard.querySelectorAll('input[type="radio"]'));
         console.log(priorityBtns);
         priorityBtns.forEach(index => {
             index.addEventListener('click', () => {
-                priorityFn(card);
+                priorityFn(createdCard);
             })
+        })
+        // cancel
+        cancelEditBtn.addEventListener('click', () => {
+            cancelEditFn(createdCard);
+            edit = true;
+            expand = true;
         })
     // }
     body.appendChild(createdCard);
@@ -452,3 +510,5 @@ createCard(first);
 //     card.appendChild(deletebtn);
 // }
 // makeNote(first);
+let x = document.querySelector('div.card');
+let btns = Array.from(x.querySelectorAll('input[type="radio"]'));
