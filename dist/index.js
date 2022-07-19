@@ -42,15 +42,94 @@ const checkboxFn = (input) => {
     // get card and toggle class
     input.parentElement.parentElement.classList.toggle('completedToDo');
 }
+let expand = false;
+const expandToggle = () => {
+    expand = !expand;
+}
 const expandFn = (input) => {
-    input.parentElement.nextElementSibling.classList.toggle('displayExtended');
+    let extendedCard = input.parentElement.nextElementSibling;
+    if (expand == false) {
+    extendedCard.style.display = "block";
+    } else {
+        extendedCard.style.display = "none";
+        if (edit == false) {
+            cancelEditFn(extendedCard.parentElement);
+            editToggle();
+        }
+    }
+    expandToggle();
+    // extendedCard.classList.toggle('displayExtended');
+    // removing displayEdit also needs to cancel inputs...
+    // extendedCard.nextElementSibling.classList.remove('displayEdit');
+}
+let edit = true;
+const editToggle = () => {
+    edit = !edit;
 }
 const editFn = (input) => {
-    console.log('edit');
     let toDo = input.parentElement.parentElement;
+    if (edit == true) {
     // expand form
-    toDo.children[1].classList.add('displayExtended');
-    toDo.classList.add('cardEdit');
+        extendCard(toDo);
+        expand = false;
+    // change title and notes into inputs
+        let titleDiv = toDo.children[0].children[1];
+        editDisplayInput(titleDiv);
+        let notesDiv = toDo.children[1].children[0];
+        editDisplayInput(notesDiv);
+    } else if (edit == false) {
+        cancelEditFn(toDo);
+    }
+    editToggle();
+    expandToggle();
+}
+const extendCard = (cardDiv) => {
+    cardDiv.classList.add('cardEdit');
+    cardDiv.children[1].style.display = "block";
+    cardDiv.children[2].classList.add('displayEdit');
+}
+const minimizeCard = (cardDiv) => {
+    cardDiv.classList.remove('cardEdit');
+    cardDiv.children[1].style.display = "none";
+    cardDiv.children[2].classList.remove('displayEdit');
+}
+const editDisplayInput = (container) => {
+    container.children[0].style.display = "none";
+    container.children[1].style.display = "block";
+    container.children[2].style.display = "block";
+}
+// populate inputs with current object data!
+
+const editHideInput = (container) => {
+    container.children[0].style.display = "flex";
+    container.children[1].style.display = "none";
+    container.children[2].style.display = "none";
+}
+// cancel edit button
+// clear inputs, change title and notes input to display, card to regular size
+const cancelEditFn = (cardDiv) => {
+    clearEditInputs(cardDiv);
+    editHideInput(cardDiv.children[0].children[1]);
+    editHideInput(cardDiv.children[1].children[0]);
+    minimizeCard(cardDiv);
+}
+const clearEditInputs = (cardDiv) => {
+    let inputArray = Array.from(cardDiv.querySelectorAll('input'));
+    for (i=0; i<inputArray.length; i++) {
+        inputArray[i].value = null;
+    }
+}
+// for submit
+// take inputs and modify object
+// with updated object, update ToDo display
+// how to identify object and key?
+//
+const editGetInput = (input) => {
+    let userInput = input.select();
+    return userInput;
+}
+const editUpdateObject = (object, key, input) => {
+    object[`${key}`] = input;
 }
 const deleteFn = (input) => {
     console.log('delete');
@@ -58,6 +137,19 @@ const deleteFn = (input) => {
     let toDo = input.parentElement.parentElement;
     // needs access to "body" !!
     body.removeChild(toDo);
+}
+const priorityFn = (cardDiv) => {
+    let priorityBtns = Array.from(cardDiv.querySelector('input[type="radio'));
+    let selection = radioSelection(priorityBtns);
+    return selection;
+}
+// find and return the "checked" radio button
+const radioSelection = (input) => {
+    for (i=0; i<input.length; i++) {
+        if (input[i].checked) {
+            return input[i];
+        }
+    }
 }
 const removeCardListeners = (input) => {
     input.removeEventListener('click', () => {
@@ -67,7 +159,7 @@ const removeCardListeners = (input) => {
         expandFn(input);
     })
     input.removeEventListener('click', () => {
-        editFn();
+        editFn(input);
     })
     input.removeEventListener('click', () => {
         deleteFn(input);
@@ -87,8 +179,12 @@ const createCard = (object) => {
         const extendedSize = createElement('div', {"class": "extendedSize"});
         const editSize = createElement('div', {"class": "editSize"});
         checked = createElement('input', {"type": "checkbox", "class": "checkbox", 'aria-label': "Checkbox"});
+        const titleContainer = createElement('div', {"class": "titleContainer"})
         const title = createElement('div', {"class": "title"});
         title.textContent = `${object.title}`;
+        const titleEditLabel = createElement('label', {"for": "titleEdit", "class": "hideTitleEdit"});
+        titleEditLabel.textContent = "Title:";
+        const titleEditInput = createElement('input', {"type": "text", "class": "hideTitleEdit", "id": "titleEdit"});
         const spacerDiv = createElement('div', {"class": "spacerDiv"});
         const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
         priority.textContent = `${object.priority}`;
@@ -97,19 +193,31 @@ const createCard = (object) => {
         date.textContent = `${object.dueDate}`;
         editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
         deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
+        const notesContainer = createElement('div', {"class": "notesContainer"});
         const notes = createElement('div', {"class": "notes"});
         notes.textContent = `Notes: ${object.notes}`;
+        const notesEditLabel = createElement('label', {"for": "notesEdit"});
+        notesEditLabel.textContent = "Notes:";
+        const notesEditInput = createElement('input', {"type": "textarea", "id": "notesEdit"});
         const projectTag = createElement('div', {'class': 'projectTag'});
         if (object.project != "") {
             projectTag.textContent = `Project: ${object.project}`;
         }
         const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
-        const priorityEditLabel = createElement('label', {"for": "priorityEditLabel"});
-        priorityEditLabel.textContent= "Priority:"
-        const priorityEditLow = createElement('button', {"type": "radio", "class": "priorityEditLow"});
-        const priorityEditMed = createElement('button', {"type": "radio", "class": "priorityEditMed"});
-        const priorityEditHigh = createElement('button', {"type": "radio", "class": "priorityEditHigh"});
-        const priorityEditDefcon = createElement('button', {"type": "radio", "class": "priorityEditDefcon"});
+        const priorityEditTitle = createElement('div', {"class": "priorityEditTitle"});
+        priorityEditTitle.textContent = "Priority:"
+        const priorityEditLow = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditLow", "value": "Low"});
+        const priorityEditLowLabel = createElement('label', {"for": "priorityEditLow"});
+        priorityEditLowLabel.textContent = "Low";
+        const priorityEditMed = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditMed", "value": "Medium"});
+        const priorityEditMedLabel = createElement('label', {"for": "priorityEditMed"});
+        priorityEditMedLabel.textContent = "Medium";
+        const priorityEditHigh = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditHigh", "value": "High"});
+        const priorityEditHighLabel = createElement('label', {"for": "priorityEditHigh"});
+        priorityEditHighLabel.textContent = "High";
+        const priorityEditDefcon = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditDefcon", "value": "Defcon"});
+        const priorityEditDefconLabel = createElement('label', {"for": "priorityEditDefcon"});
+        priorityEditDefconLabel.textContent = "Defcon";
         const submitEditContainer = createElement('div', {"class": "submitContainer"});
         const cancelEditBtn = createElement('button', {"class": "cancelEditBtn", "aria-label": "Cancel Edit"});
         cancelEditBtn.textContent = "Cancel";
@@ -117,7 +225,10 @@ const createCard = (object) => {
         submitEditBtn.textContent = "Submit";
         card.appendChild(regularSize);
         regularSize.appendChild(checked);
-        regularSize.appendChild(title);
+        regularSize.appendChild(titleContainer);
+        titleContainer.appendChild(title);
+        titleContainer.appendChild(titleEditLabel);
+        titleContainer.appendChild(titleEditInput);
         regularSize.appendChild(spacerDiv);
         regularSize.appendChild(priority);
         regularSize.appendChild(expandCard);
@@ -125,15 +236,22 @@ const createCard = (object) => {
         regularSize.appendChild(editCard);
         regularSize.appendChild(deleteCard);
         card.appendChild(extendedSize);
-        extendedSize.appendChild(notes);
+        extendedSize.appendChild(notesContainer);
+        notesContainer.appendChild(notes);
+        notesContainer.appendChild(notesEditLabel);
+        notesContainer.appendChild(notesEditInput);
         extendedSize.appendChild(projectTag);
         card.appendChild(editSize);
         editSize.appendChild(priorityEditContainer);
-        priorityEditContainer.appendChild(priorityEditLabel);
-        priorityEditLabel.appendChild(priorityEditLow);
-        priorityEditLabel.appendChild(priorityEditMed);
-        priorityEditLabel.appendChild(priorityEditHigh);
-        priorityEditLabel.appendChild(priorityEditDefcon);
+        priorityEditContainer.appendChild(priorityEditTitle);
+        priorityEditContainer.appendChild(priorityEditLow);
+        priorityEditContainer.appendChild(priorityEditLowLabel);
+        priorityEditContainer.appendChild(priorityEditMed);
+        priorityEditContainer.appendChild(priorityEditMedLabel);
+        priorityEditContainer.appendChild(priorityEditHigh);
+        priorityEditContainer.appendChild(priorityEditHighLabel);
+        priorityEditContainer.appendChild(priorityEditDefcon);
+        priorityEditContainer.appendChild(priorityEditDefconLabel);
         editSize.appendChild(submitEditContainer);
         submitEditContainer.appendChild(cancelEditBtn);
         submitEditContainer.appendChild(submitEditBtn);
@@ -151,11 +269,19 @@ const createCard = (object) => {
         })
         // edit ToDo
         editCard.addEventListener('click', () => {
-            editFn();
+            editFn(editCard);
         })
         // delete ToDo
         deleteCard.addEventListener('click', () => {
             deleteFn(deleteCard);
+        })
+        // priority level (radio buttons)
+        let priorityBtns = Array.from(card.querySelectorAll('input[type="radio"]'));
+        console.log(priorityBtns);
+        priorityBtns.forEach(index => {
+            index.addEventListener('click', () => {
+                priorityFn(card);
+            })
         })
     // }
     body.appendChild(createdCard);

@@ -31,9 +31,6 @@
     width: 35px;
     border-radius: 50%;
 }
-.title {
-    border: 1px solid salmon;
-}
 .priority {
     border: 1px solid lightgreen;
 }
@@ -57,17 +54,40 @@
 .extendedSize {
     display: none;
 }
-.displayExtended {
-    display: block;
-    background-color: red;
-}
 .editSize {
-    background-color: violet;
+    display: none;
+}
+.displayEdit {
     display: flex;
     justify-content: space-around;
+    background-color: violet;
+}
+.titleContainer {
+    display: flex;
+    border: 1px solid salmon;
+}
+.hideTitleEdit {
+    display: none;
+}
+.displayTitleEdit {
+    display: block;
 }
 .spacerDiv {
     flex-grow: 1;
+}
+.notesContainer > label,
+.notesContainer > input {
+    display: none;
+}
+.priorityEditContainer {
+    display: flex;
+    align-items: center;
+}
+.priorityEditContainer > label {
+    width: 75px;
+}
+.submitContainer > button {
+    width: 75px;
 }
 button {
     height: 40px;
