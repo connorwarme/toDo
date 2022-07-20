@@ -3,17 +3,27 @@ const noteFactory = (title, project, priority, dueDate, notes, checked) => {
     return { title, project, priority, dueDate, notes, checked, properties }
 }
 let first = noteFactory('update README', 'winning', 'High', '07/14/22', 'kinda like the other dudes', false);
-let second = noteFactory('doing it', "", "High", "", "all the time", false);
+let second = noteFactory('doing it', "dudeage", "High", "", "all the time", false);
 let body = document.querySelector('div.body');
 
-const projectArray = [];
+const objectArray = [];
 
-const addToProject = (project, object) => {
+const addToObjectArray = (project, object) => {
     let x = Object.keys(project).length;
     project[x] = object;
 }
-addToProject(projectArray, first);
-addToProject(projectArray, second);
+addToObjectArray(objectArray, first);
+addToObjectArray(objectArray, second);
+
+const projectArray = [];
+
+// this is going to need a sort function to weed out "" (empty) projects and the like. !!!
+const addToProjectArray = (array) => {
+    array.forEach(index => {
+        projectArray.push(index.project);
+    })
+}
+addToProjectArray(objectArray);
 
 // DOM functions
 // helper functions to create DOM element and add attributes
@@ -44,7 +54,7 @@ const expandToggle = () => {
 const expandFn = (input) => {
     let extendedCard = input.parentElement.nextElementSibling;
     if (expand == false) {
-    extendedCard.style.display = "block";
+    extendedCard.style.display = "flex";
     } else {
         extendedCard.style.display = "none";
         if (edit == false) {
@@ -70,7 +80,14 @@ const editFn = (input) => {
         editDisplayInput(titleDiv);
         let notesDiv = toDoCard.children[1].children[0];
         editDisplayInput(notesDiv);
+    // project input
+        projectDisplayInput(toDoCard);
+    // populate the input fields with current object data... needs object as argument !!!
+    // could potentially group these in a seperate fn to try and clean up this editFn
+    // needs object passed as argument...need to figure that out!
         editPopulateInput(toDoCard, first);
+        let optionsArray = projectPopulateInput(projectArray, toDoCard);
+        projectFindSelected(optionsArray, second);
         editCurrentRadioSelection(toDoCard, first);
     } else if (edit == false) {
         resetCard(toDoCard);
@@ -81,7 +98,7 @@ const editFn = (input) => {
 // card expanded to allow edits
 const extendCard = (cardDiv) => {
     cardDiv.classList.add('cardEdit');
-    cardDiv.children[1].style.display = "block";
+    cardDiv.children[1].style.display = "flex";
     cardDiv.children[2].classList.add('displayEdit');
 }
 // card minimized, hide notes & project, priority buttons and cancel/submit
@@ -91,6 +108,7 @@ const minimizeCard = (cardDiv) => {
     cardDiv.children[2].classList.remove('displayEdit');
 }
 // switch from text display to input fields
+// is it possible/advantageous to change this into a fn that works for each of these (title, notes, priority, date, project). first argument = (exact element needing to be acted upon), second arg = (what should happen to it)..? !!!
 const editDisplayInput = (containerDiv) => {
     containerDiv.children[0].style.display = "none";
     containerDiv.children[1].style.display = "block";
@@ -126,12 +144,14 @@ const resetCard = (cardDiv) => {
     clearEditInputs(cardDiv);
     editHideInput(cardDiv.children[0].children[1]);
     editHideInput(cardDiv.children[1].children[0]);
+    projectHideInput(cardDiv);
     minimizeCard(cardDiv);
 }
 // clears edits from input sources
 const clearEditInputs = (cardDiv) => {
     clearTextInputs(cardDiv);
     clearRadioSelection(cardDiv);
+    projectClearOptions(cardDiv);
 }
 const clearTextInputs = (cardDiv) => {
     cardDiv.children[0].children[1].children[2].value = null;
@@ -228,6 +248,36 @@ const projectDisplayInput = (cardDiv) => {
     cardDiv.children[1].children[1].children[1].style.display = "block";
     cardDiv.children[1].children[1].children[2].style.display = "block";
 }
+// might want to seperate forEach fn on its own... !!!
+// another fn to find object.property value and to select it (set "option.selected = true")
+const projectPopulateInput = (array, cardDiv) => {
+    let select = cardDiv.children[1].children[1].children[2];
+    let optionsArray = [];
+    array.forEach(index => {
+        let option = createElement('option', {"value": `${index}`});
+        option.textContent = `${index}`;
+        select.appendChild(option);
+        optionsArray.push(option);
+    })
+    return optionsArray;
+}
+const projectFindSelected = (array, object) => {
+    let selectedProject = object.project;
+    let selectedOption = array.find(index => {
+        return index.value === selectedProject;
+    });
+    selectedOption.selected = true;
+}
+// project clear input (for cancel button)
+const projectClearOptions = (cardDiv) => {
+    let select = cardDiv.children[1].children[1].children[2];
+    let optionsArray = Array.from(select.children);
+    optionsArray.forEach(index => {
+        select.removeChild(index);
+    })
+}
+// project gather input (for submit button)
+// start here
 const removeCardListeners = (input) => {
     input.removeEventListener('click', () => {
         checkboxFn(input);
@@ -260,13 +310,13 @@ const updateObjectCheck = (input) => {
 // needs to be passed the project as well..? or should it just sort through the main array of objects?
 const getObject = (cardDiv) => {
     let theTitle = cardDiv.children[0].children[1].children[0].textContent;
-    let object = projectArray.find(index => {
+    let object = objectArray.find(index => {
         return index.title === theTitle;
     });
     // this works, but tried using find instead...can delete later 
-    // for (i=0; i<projectArray.length; i++) {
-    //     if (projectArray[i].title == title) {
-    //         object = projectArray[i];
+    // for (i=0; i<objectArray.length; i++) {
+    //     if (objectArray[i].title == title) {
+    //         object = objectArray[i];
     //     }
     // }
     return object;

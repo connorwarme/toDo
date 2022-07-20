@@ -53,6 +53,7 @@
 }
 .extendedSize {
     display: none;
+    justify-content: space-between;
 }
 .editSize {
     display: none;
@@ -72,8 +73,14 @@
 .spacerDiv {
     flex-grow: 1;
 }
+.notesContainer {
+
+}
 .notesContainer > label,
 .notesContainer > input {
+    display: none;
+}
+.projectSelect {
     display: none;
 }
 .priorityEditContainer {
