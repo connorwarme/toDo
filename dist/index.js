@@ -2,26 +2,18 @@ const noteFactory = (title, project, priority, dueDate, notes, checked) => {
     this.properties = ["title", "project", "priority", "dueDate", "notes", "checked"];
     return { title, project, priority, dueDate, notes, checked, properties }
 }
-let first = noteFactory('update README', '', 'High', '07/14/22', 'kinda like the other dudes', false);
-
+let first = noteFactory('update README', 'winning', 'High', '07/14/22', 'kinda like the other dudes', false);
+let second = noteFactory('doing it', "", "High", "", "all the time", false);
 let body = document.querySelector('div.body');
 
-const projectFactory = (name) => {
-    return { name };
-}
-let fine = {
-    id: '0',
-}
-let primo = projectFactory('primo');
-console.log(primo);
+const projectArray = [];
 
 const addToProject = (project, object) => {
     let x = Object.keys(project).length;
     project[x] = object;
 }
-addToProject(primo, fine);
-console.log(primo);
-addToProject(primo, first);
+addToProject(projectArray, first);
+addToProject(projectArray, second);
 
 // DOM functions
 // helper functions to create DOM element and add attributes
@@ -40,8 +32,8 @@ const setAttributes = (element, attributes) => {
 // get card and toggle class
 // might need update - to check object.checked / then to update it !!!
 const checkboxFn = (input) => {
-    // get card and toggle class
     input.parentElement.parentElement.classList.toggle('completedToDo');
+    updateObjectCheck(input);
 }
 let expand = false;
 const expandToggle = () => {
@@ -81,7 +73,7 @@ const editFn = (input) => {
         editPopulateInput(toDoCard, first);
         editCurrentRadioSelection(toDoCard, first);
     } else if (edit == false) {
-        resetCard(toDo);
+        resetCard(toDoCard);
     }
     editToggle();
     expandToggle();
@@ -176,7 +168,7 @@ const submitGetInput = (cardDiv) => {
 //     object[`${key}`] = input;
 // }
 // deletes To-Do card
-// should run a function to delete object too? !!!
+// should run a function to delete object too? !!! or to remove it from array of objects?
 const deleteFn = (input) => {
     console.log('delete');
     removeCardListeners(input);
@@ -201,15 +193,17 @@ const clearRadioSelection = (cardDiv) => {
 // display the current selection (in edit mode)
 const editCurrentRadioSelection = (cardDiv, object) => {
     let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
-    let btn;
-    console.log(priorityBtns);
-    for (i=0; i<priorityBtns.length; i++) {
-        if (priorityBtns[i].value == object.priority) {
-            priorityBtns[i].checked = "checked";
-            btn = priorityBtns[i];
-            console.log(btn);
-        }
-    }
+    let btn = priorityBtns.find(index => {
+        return index.value === object.priority;
+    });
+    btn.checked = "checked";
+    // this also works, tried to improve it by using array methods... can delete later
+    // for (i=0; i<priorityBtns.length; i++) {
+    //     if (priorityBtns[i].value == object.priority) {
+    //         priorityBtns[i].checked = "checked";
+    //         btn = priorityBtns[i];
+    //     }
+    // }
     return btn;
 }
 // find and return the "checked" radio button aka selected priority level
@@ -219,6 +213,20 @@ const radioSelection = (input) => {
             return input[i];
         }
     }
+}
+// project input
+// -> populate display, clear input, gather input
+// -> do dropdown? w/ option to add?
+// -> or text input, and run a check to see if project already exists. if not, pop-up suggesting creating one..?
+const projectHideInput = (cardDiv) => {
+    cardDiv.children[1].children[1].children[0].style.display = "block";
+    cardDiv.children[1].children[1].children[1].style.display = "none";
+    cardDiv.children[1].children[1].children[2].style.display = "none";
+}
+const projectDisplayInput = (cardDiv) => {
+    cardDiv.children[1].children[1].children[0].style.display = "none";
+    cardDiv.children[1].children[1].children[1].style.display = "block";
+    cardDiv.children[1].children[1].children[2].style.display = "block";
 }
 const removeCardListeners = (input) => {
     input.removeEventListener('click', () => {
@@ -239,6 +247,29 @@ const updateObject = (object, array) => {
     for (i=0; i<array.length; i++) {
         object[object.properties[i]] = array[i];
     }
+}
+const updateObjectCheck = (input) => {
+    let object = getObject(x);
+    if (input.checked) {
+        object.checked = true;
+    } else {
+        object.checked = false;
+    }
+}
+// needs updating once I have multiple objects... !!!
+// needs to be passed the project as well..? or should it just sort through the main array of objects?
+const getObject = (cardDiv) => {
+    let theTitle = cardDiv.children[0].children[1].children[0].textContent;
+    let object = projectArray.find(index => {
+        return index.title === theTitle;
+    });
+    // this works, but tried using find instead...can delete later 
+    // for (i=0; i<projectArray.length; i++) {
+    //     if (projectArray[i].title == title) {
+    //         object = projectArray[i];
+    //     }
+    // }
+    return object;
 }
 
 // create To-Do
@@ -276,10 +307,13 @@ const createCard = (object) => {
         const notesEditLabel = createElement('label', {"for": "notesEdit"});
         notesEditLabel.textContent = "Notes:";
         const notesEditInput = createElement('input', {"type": "textarea", "id": "notesEdit"});
-        const projectTag = createElement('div', {'class': 'projectTag'});
+        const projectContainer = createElement('div', {'class': 'projectContainer'});
+        const projectText = createElement('div', {"class": "projectText"});
         if (object.project != "") {
-            projectTag.textContent = `Project: ${object.project}`;
+            projectText.textContent = `Project: ${object.project}`;
         }
+        const projectEditLabel = createElement('div', {"class": "projectEditLabel", "for": "projectDropdown"});
+        const projectSelect = createElement('select', {"class": "projectSelect", "id": "projectDropdown"});
         const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
         const priorityEditTitle = createElement('div', {"class": "priorityEditTitle"});
         priorityEditTitle.textContent = "Priority:"
@@ -317,7 +351,10 @@ const createCard = (object) => {
         notesContainer.appendChild(notes);
         notesContainer.appendChild(notesEditLabel);
         notesContainer.appendChild(notesEditInput);
-        extendedSize.appendChild(projectTag);
+        extendedSize.appendChild(projectContainer);
+        projectContainer.appendChild(projectText);
+        projectContainer.appendChild(projectEditLabel);
+        projectContainer.appendChild(projectSelect);
         card.appendChild(editSize);
         editSize.appendChild(priorityEditContainer);
         priorityEditContainer.appendChild(priorityEditTitle);
