@@ -87,7 +87,7 @@ const editFn = (input) => {
     // needs object passed as argument...need to figure that out!
         editPopulateInput(toDoCard, first);
         let optionsArray = projectPopulateInput(projectArray, toDoCard);
-        projectFindSelected(optionsArray, second);
+        projectMarkSelected(optionsArray, second);
         editCurrentRadioSelection(toDoCard, first);
     } else if (edit == false) {
         resetCard(toDoCard);
@@ -160,7 +160,7 @@ const clearTextInputs = (cardDiv) => {
 // for submit
 // gather inputs, update object, update To-Do card display
 const submitEditFn = (cardDiv, object) => {
-    let inputArray = editGetInput(cardDiv);
+    let inputArray = submitGetInput(cardDiv);
     updateObject(object, inputArray);
     submitDisplayInput(cardDiv, inputArray);
     cancelEditFn(cardDiv);
@@ -173,6 +173,8 @@ const submitDisplayInput = (cardDiv, array) => {
     notesText.textContent = array[4];
     let priorityText = cardDiv.children[0].children[3];
     priorityText.textContent = array[2];
+    let projectText = cardDiv.children[1].children[1].children[0];
+    projectText.textContent = array[1];
 }
 // collect input values, returns array (indexes mimic position in object)
 // needs updating - project, date, checked !!!
@@ -180,7 +182,8 @@ const submitGetInput = (cardDiv) => {
     let titleInput = cardDiv.children[0].children[1].children[2].value;
     let notesInput = cardDiv.children[1].children[0].children[2].value;
     let priorityInput = radioSelection(btns).value;
-    let array = [titleInput, "", priorityInput, "", notesInput, ""];
+    let projectInput = `Project: ${projectGetInput(cardDiv)}`;
+    let array = [titleInput, projectInput, priorityInput, "", notesInput, ""];
     return array;
 }
 // not using...do I need this? !!!
@@ -242,13 +245,16 @@ const projectHideInput = (cardDiv) => {
     cardDiv.children[1].children[1].children[0].style.display = "block";
     cardDiv.children[1].children[1].children[1].style.display = "none";
     cardDiv.children[1].children[1].children[2].style.display = "none";
+    cardDiv.children[1].children[1].children[3].style.display = "none";
+    cardDiv.children[1].children[1].children[4].style.display = "none";
 }
 const projectDisplayInput = (cardDiv) => {
     cardDiv.children[1].children[1].children[0].style.display = "none";
     cardDiv.children[1].children[1].children[1].style.display = "block";
     cardDiv.children[1].children[1].children[2].style.display = "block";
+    cardDiv.children[1].children[1].children[3].style.display = "block";
 }
-// might want to seperate forEach fn on its own... !!!
+// might want to separate forEach fn on its own... !!!
 // another fn to find object.property value and to select it (set "option.selected = true")
 const projectPopulateInput = (array, cardDiv) => {
     let select = cardDiv.children[1].children[1].children[2];
@@ -261,8 +267,10 @@ const projectPopulateInput = (array, cardDiv) => {
     })
     return optionsArray;
 }
-const projectFindSelected = (array, object) => {
+const projectMarkSelected = (array, object) => {
     let selectedProject = object.project;
+    console.log(selectedProject);
+    console.log(array);
     let selectedOption = array.find(index => {
         return index.value === selectedProject;
     });
@@ -277,7 +285,45 @@ const projectClearOptions = (cardDiv) => {
     })
 }
 // project gather input (for submit button)
-// start here
+// returns project name
+const projectGetInput = (cardDiv) => {
+    let select = cardDiv.children[1].children[1].children[2];
+    let optionsArray = Array.from(select.children);
+    let selection = optionsArray.find(index => {
+        return index.selected === true;
+    })
+    return selection.value;
+}
+// project: add project to the dropdown list
+// click + button, display input field and cancel and save buttons
+// cancel - clears the input field, hides display of input, cancel, save
+// save - gathers input, adds project to array, hides display^^, reruns creating dropdown menu (with the new addition)
+//
+const projectAddBtnFn = (cardDiv) => {
+    cardDiv.children[1].children[1].children[3].style.display = "none";
+    cardDiv.children[1].children[1].children[4].style.display = "block";
+}
+const projectAddInputFn = (cardDiv) => {
+    let project = cardDiv.children[1].children[1].children[4].children[0].value;
+    // push project into projectArray
+    projectArray.push(project);
+}
+// clear input field value; show "add new project" button; hide input, cancel, and save.
+const projectAddCancelFn = (cardDiv) => {
+    cardDiv.children[1].children[1].children[4].children[0].value = "";
+    cardDiv.children[1].children[1].children[3].style.display = "block";
+    cardDiv.children[1].children[1].children[4].style.display = "none";
+}
+const projectAddSaveFn = (cardDiv) => {
+    projectAddInputFn(cardDiv);
+    // reset display
+    projectAddCancelFn(cardDiv);
+    // remove and recreate dropdown menu
+    projectClearOptions(cardDiv);
+    // these need the project array and the object of the card !!!
+    let optionsArray = projectPopulateInput(projectArray, cardDiv);
+    projectMarkSelected(optionsArray, second);
+}
 const removeCardListeners = (input) => {
     input.removeEventListener('click', () => {
         checkboxFn(input);
@@ -362,8 +408,13 @@ const createCard = (object) => {
         if (object.project != "") {
             projectText.textContent = `Project: ${object.project}`;
         }
-        const projectEditLabel = createElement('div', {"class": "projectEditLabel", "for": "projectDropdown"});
+        const projectEditLabel = createElement('label', {"class": "projectEditLabel", "for": "projectDropdown"});
         const projectSelect = createElement('select', {"class": "projectSelect", "id": "projectDropdown"});
+        const projectAdd = createElement('button', {"class": "projectAddBtn", "aria-label": "Add Project"});
+        const projectAddContainer = createElement('div', {"class": "projectAddContainer"});
+        const projectAddInput = createElement('input', {"type": "text", "class": "projectAddInput", "aria-label": "Add New Project"});
+        const projectAddCancel = createElement('button', {"class": "projectAddCancel", "aria-label": "Cancel"});
+        const projectAddSave = createElement('button', {"class": "projectAddSave"});
         const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
         const priorityEditTitle = createElement('div', {"class": "priorityEditTitle"});
         priorityEditTitle.textContent = "Priority:"
@@ -405,6 +456,11 @@ const createCard = (object) => {
         projectContainer.appendChild(projectText);
         projectContainer.appendChild(projectEditLabel);
         projectContainer.appendChild(projectSelect);
+        projectContainer.appendChild(projectAdd);
+        projectContainer.appendChild(projectAddContainer);
+        projectAddContainer.appendChild(projectAddInput);
+        projectAddContainer.appendChild(projectAddCancel);
+        projectAddContainer.appendChild(projectAddSave);
         card.appendChild(editSize);
         editSize.appendChild(priorityEditContainer);
         priorityEditContainer.appendChild(priorityEditTitle);

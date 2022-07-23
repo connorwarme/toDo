@@ -83,6 +83,12 @@
 .projectSelect {
     display: none;
 }
+.projectAddBtn {
+    display: none;
+}
+.projectAddContainer {
+    display: none;
+}
 .priorityEditContainer {
     display: flex;
     align-items: center;
