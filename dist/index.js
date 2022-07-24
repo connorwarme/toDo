@@ -399,7 +399,7 @@ const createCard = (object) => {
         date.textContent = `${object.dueDate}`;
         const dateInputLabel = createElement('label', {"for": "dateInput", "class": "dateInput"});
         dateInputLabel.textContent = "Due Date:"
-        const dateInput = createElement('input', {"id": "dateInput", "class": "dateInput"});
+        const dateInput = createElement('input', {"type": "date", "id": "dateInput", "class": "dateInput"});
         editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
         deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
         const notesContainer = createElement('div', {"class": "notesContainer"});
