@@ -269,8 +269,6 @@ const projectPopulateInput = (array, cardDiv) => {
 }
 const projectMarkSelected = (array, object) => {
     let selectedProject = object.project;
-    console.log(selectedProject);
-    console.log(array);
     let selectedOption = array.find(index => {
         return index.value === selectedProject;
     });
@@ -298,15 +296,16 @@ const projectGetInput = (cardDiv) => {
 // click + button, display input field and cancel and save buttons
 // cancel - clears the input field, hides display of input, cancel, save
 // save - gathers input, adds project to array, hides display^^, reruns creating dropdown menu (with the new addition)
-//
 const projectAddBtnFn = (cardDiv) => {
     cardDiv.children[1].children[1].children[3].style.display = "none";
     cardDiv.children[1].children[1].children[4].style.display = "block";
 }
 const projectAddInputFn = (cardDiv) => {
     let project = cardDiv.children[1].children[1].children[4].children[0].value;
+    if (project != "") {
+        projectArray.push(project);
+    }
     // push project into projectArray
-    projectArray.push(project);
 }
 // clear input field value; show "add new project" button; hide input, cancel, and save.
 const projectAddCancelFn = (cardDiv) => {
@@ -375,6 +374,9 @@ const createCard = (object) => {
     let expandCard;
     let editCard;
     let deleteCard;
+    let projectAdd;
+    let projectAddCancel;
+    let projectAddSave;
     let cancelEditBtn;
     let submitEditBtn;
     const makeCard = (object) => {
@@ -395,6 +397,9 @@ const createCard = (object) => {
         expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card"});
         const date = createElement('div', {"class": "date"});
         date.textContent = `${object.dueDate}`;
+        const dateInputLabel = createElement('label', {"for": "dateInput", "class": "dateInput"});
+        dateInputLabel.textContent = "Due Date:"
+        const dateInput = createElement('input', {"id": "dateInput", "class": "dateInput"});
         editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
         deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
         const notesContainer = createElement('div', {"class": "notesContainer"});
@@ -410,11 +415,11 @@ const createCard = (object) => {
         }
         const projectEditLabel = createElement('label', {"class": "projectEditLabel", "for": "projectDropdown"});
         const projectSelect = createElement('select', {"class": "projectSelect", "id": "projectDropdown"});
-        const projectAdd = createElement('button', {"class": "projectAddBtn", "aria-label": "Add Project"});
+        projectAdd = createElement('button', {"class": "projectAddBtn", "aria-label": "Add Project"});
         const projectAddContainer = createElement('div', {"class": "projectAddContainer"});
         const projectAddInput = createElement('input', {"type": "text", "class": "projectAddInput", "aria-label": "Add New Project"});
-        const projectAddCancel = createElement('button', {"class": "projectAddCancel", "aria-label": "Cancel"});
-        const projectAddSave = createElement('button', {"class": "projectAddSave"});
+        projectAddCancel = createElement('button', {"class": "projectAddCancel", "aria-label": "Cancel"});
+        projectAddSave = createElement('button', {"class": "projectAddSave"});
         const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
         const priorityEditTitle = createElement('div', {"class": "priorityEditTitle"});
         priorityEditTitle.textContent = "Priority:"
@@ -445,6 +450,8 @@ const createCard = (object) => {
         regularSize.appendChild(priority);
         regularSize.appendChild(expandCard);
         regularSize.appendChild(date);
+        date.appendChild(dateInputLabel);
+        date.appendChild(dateInput);
         regularSize.appendChild(editCard);
         regularSize.appendChild(deleteCard);
         card.appendChild(extendedSize);
@@ -502,6 +509,18 @@ const createCard = (object) => {
             index.addEventListener('click', () => {
                 priorityFn(createdCard);
             })
+        })
+        // add project
+        projectAdd.addEventListener('click', () => {
+            projectAddBtnFn(createdCard);
+        })
+        // cancel adding project
+        projectAddCancel.addEventListener('click', () => {
+            projectAddCancelFn(createdCard);
+        })
+        // save new project
+        projectAddSave.addEventListener('click', () => {
+            projectAddSaveFn(createdCard);
         })
         // cancel
         cancelEditBtn.addEventListener('click', () => {

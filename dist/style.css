@@ -73,6 +73,9 @@
 .spacerDiv {
     flex-grow: 1;
 }
+.dateInput {
+    display: none;
+}
 .notesContainer {
 
 }
