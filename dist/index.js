@@ -52,6 +52,7 @@ const expandToggle = () => {
 // expand card
 // or, if it's expanded already, minimize card
 const expandFn = (input) => {
+    console.log(input);
     let extendedCard = input.parentElement.nextElementSibling;
     if (expand == false) {
     extendedCard.style.display = "flex";
@@ -80,6 +81,8 @@ const editFn = (input) => {
         editDisplayInput(titleDiv);
         let notesDiv = toDoCard.children[1].children[0];
         editDisplayInput(notesDiv);
+    // display date input
+        dateDisplayInput(toDoCard);
     // project input
         projectDisplayInput(toDoCard);
     // populate the input fields with current object data... needs object as argument !!!
@@ -136,7 +139,7 @@ const editHideInput = (containerDiv) => {
 const cancelEditFn = (cardDiv) => {
     resetCard(cardDiv);
     edit = true;
-    expand = true;
+    expand = false;
     // needs to be updated to be able to receive other objects (?)
 }
 // reset: clears inputs, hides them, displays text, minimizes card to normal size
@@ -145,6 +148,7 @@ const resetCard = (cardDiv) => {
     editHideInput(cardDiv.children[0].children[1]);
     editHideInput(cardDiv.children[1].children[0]);
     projectHideInput(cardDiv);
+    dateHideInput(cardDiv);
     minimizeCard(cardDiv);
 }
 // clears edits from input sources
@@ -152,6 +156,7 @@ const clearEditInputs = (cardDiv) => {
     clearTextInputs(cardDiv);
     clearRadioSelection(cardDiv);
     projectClearOptions(cardDiv);
+    dateClearInput(cardDiv);
 }
 const clearTextInputs = (cardDiv) => {
     cardDiv.children[0].children[1].children[2].value = null;
@@ -323,6 +328,27 @@ const projectAddSaveFn = (cardDiv) => {
     let optionsArray = projectPopulateInput(projectArray, cardDiv);
     projectMarkSelected(optionsArray, second);
 }
+// date functionality
+const dateFn = () => {
+
+}
+const dateHideInput = (cardDiv) => {
+    cardDiv.children[0].children[5].children[0].style.display = "block";
+    cardDiv.children[0].children[5].children[1].style.display = "none";
+    cardDiv.children[0].children[5].children[2].style.display = "none";
+}
+const dateDisplayInput = (cardDiv) => {
+    cardDiv.children[0].children[5].children[0].style.display = "none";
+    cardDiv.children[0].children[5].children[1].style.display = "block";
+    cardDiv.children[0].children[5].children[2].style.display = "block";
+}
+const dateClearInput = (cardDiv) => {
+    cardDiv.children[0].children[5].children[2].value = "";
+}
+const dateAddInput = (cardDiv) => {
+    let date = cardDiv.children[0].children[5].children[2].value;
+    // need to format date; currently goes yyyy-mm-dd
+}
 const removeCardListeners = (input) => {
     input.removeEventListener('click', () => {
         checkboxFn(input);
@@ -395,8 +421,9 @@ const createCard = (object) => {
         const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
         priority.textContent = `${object.priority}`;
         expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card"});
-        const date = createElement('div', {"class": "date"});
-        date.textContent = `${object.dueDate}`;
+        const dateContainer = createElement('div', {"class": "dateContainer"});
+        const dateText = createElement('div', {"class": "dateText"});
+        dateText.textContent = `${object.dueDate}`;
         const dateInputLabel = createElement('label', {"for": "dateInput", "class": "dateInput"});
         dateInputLabel.textContent = "Due Date:"
         const dateInput = createElement('input', {"type": "date", "id": "dateInput", "class": "dateInput"});
@@ -449,9 +476,10 @@ const createCard = (object) => {
         regularSize.appendChild(spacerDiv);
         regularSize.appendChild(priority);
         regularSize.appendChild(expandCard);
-        regularSize.appendChild(date);
-        date.appendChild(dateInputLabel);
-        date.appendChild(dateInput);
+        regularSize.appendChild(dateContainer);
+        dateContainer.appendChild(dateText);
+        dateContainer.appendChild(dateInputLabel);
+        dateContainer.appendChild(dateInput);
         regularSize.appendChild(editCard);
         regularSize.appendChild(deleteCard);
         card.appendChild(extendedSize);
