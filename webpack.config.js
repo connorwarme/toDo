@@ -6,6 +6,8 @@ module.exports = {
     entry: {
         index: './src/index.js',
         modA: './src/modA.js', 
+        create: './src/createCard.js',
+        utility: './src/utility.js'
     },
     // plugins: [
     //     new HtmlWebpackPlugin({
