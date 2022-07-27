@@ -1,3 +1,5 @@
+import { createElement } from "./utility";
+
 // To-Do card button listener functions
 // get card and toggle class
 // might need update - to check object.checked / then to update it !!!
@@ -5,151 +7,167 @@ const checkboxFn = (input) => {
     input.parentElement.parentElement.classList.toggle('completedToDo');
     updateObjectCheck(input);
 }
-let expand = false;
-const expandToggle = () => {
-    expand = !expand;
-}
-// expand card
-// or, if it's expanded already, minimize card
-const expandFn = (input) => {
-    let extendedCard = input.parentElement.nextElementSibling;
-    if (expand == false) {
-    extendedCard.style.display = "flex";
-    } else {
-        extendedCard.style.display = "none";
-        if (edit == false) {
-            resetCard(extendedCard.parentElement);
-            editToggle();
+const expand = (() => {
+    // expand card
+    // or, if it's expanded already, minimize card
+    const mainFn = (input) => {
+        let extendedCard = input.parentElement.nextElementSibling;
+        if (expand == false) {
+        extendedCard.style.display = "flex";
+        } else {
+            extendedCard.style.display = "none";
+            if (edit == false) {
+                edit.resetCard(extendedCard.parentElement);
+                edit.toggle();
+            }
         }
+        toggle();
     }
-    expandToggle();
-}
-let edit = true;
-const editToggle = () => {
-    edit = !edit;
-}
+    // toggle
+    let expand = false;
+    const toggle = () => {
+        expand = !expand;
+    }
+    return { mainFn, toggle, expand }
+})();
+
 // edit card
-const editFn = (input) => {
-    let toDoCard = input.parentElement.parentElement;
-    if (edit == true) {
-    // expand form
-        extendCard(toDoCard);
-        expand = false;
-    // change title and notes into inputs
-        let titleDiv = toDoCard.children[0].children[1];
-        editDisplayInput(titleDiv);
-        let notesDiv = toDoCard.children[1].children[0];
-        editDisplayInput(notesDiv);
-    // display date input
-        dateDisplayInput(toDoCard);
-    // project input
-        projectDisplayInput(toDoCard);
-    // populate the input fields with current object data... needs object as argument !!!
-    // could potentially group these in a seperate fn to try and clean up this editFn
-    // needs object passed as argument...need to figure that out!
-        editPopulateInput(toDoCard, first);
-        let optionsArray = projectPopulateInput(projectArray, toDoCard);
-        projectMarkSelected(optionsArray, second);
-        editCurrentRadioSelection(toDoCard, first);
-    } else if (edit == false) {
-        resetCard(toDoCard);
+const edit = (() => {
+    const mainFn = (input) => {
+        let toDoCard = input.parentElement.parentElement;
+        if (edit == true) {
+            // expand form
+            editableCard(toDoCard);
+            expand = false;
+            // display input fields
+            displayInputs(toDoCard);
+            // populate the input fields with current object data... needs object as argument !!!
+            // needs object passed as argument...need to figure that out!
+            edit.populateInput(toDoCard, first);
+        } else if (edit == false) {
+            resetCard(toDoCard);
+        }
+        toggle();
+        expand.toggle();
     }
-    editToggle();
-    expandToggle();
-}
-// card expanded to allow edits
-const extendCard = (cardDiv) => {
-    cardDiv.classList.add('cardEdit');
-    cardDiv.children[1].style.display = "flex";
-    cardDiv.children[2].classList.add('displayEdit');
-}
-// card minimized, hide notes & project, priority buttons and cancel/submit
-const minimizeCard = (cardDiv) => {
-    cardDiv.classList.remove('cardEdit');
-    cardDiv.children[1].style.display = "none";
-    cardDiv.children[2].classList.remove('displayEdit');
-}
-// switch from text display to input fields
-// is it possible/advantageous to change this into a fn that works for each of these (title, notes, priority, date, project). first argument = (exact element needing to be acted upon), second arg = (what should happen to it)..? !!!
-const editDisplayInput = (containerDiv) => {
-    containerDiv.children[0].style.display = "none";
-    containerDiv.children[1].style.display = "block";
-    containerDiv.children[2].style.display = "block";
-}
-// populate inputs with current object data
-const editPopulateInput = (cardDiv, object) =>  {
-    let currentTitle = cardDiv.querySelector('input.titleEdit');
-    currentTitle.value = object.title;
-    let currentNotes = cardDiv.querySelector('input#notesEdit');
-    currentNotes.value = object.notes; 
-}
-// other option, both need access to DOM and object
-// so I have to pass title and object.title for it to work...
-// const editPopulateInput = (inputDOM, value) => {
-//     inputDOM.value = value;
-// }
-// switch from input fields to text display
-const editHideInput = (containerDiv) => {
-    containerDiv.children[0].style.display = "flex";
-    containerDiv.children[1].style.display = "none";
-    containerDiv.children[2].style.display = "none";
-}
-// cancel edit button
-const cancelEditFn = (cardDiv) => {
-    resetCard(cardDiv);
-    edit = true;
-    expand = false;
-    // needs to be updated to be able to receive other objects (?)
-}
-// reset: clears inputs, hides them, displays text, minimizes card to normal size
-const resetCard = (cardDiv) => {
-    clearEditInputs(cardDiv);
-    editHideInput(cardDiv.children[0].children[1]);
-    editHideInput(cardDiv.children[1].children[0]);
-    projectHideInput(cardDiv);
-    dateHideInput(cardDiv);
-    minimizeCard(cardDiv);
-}
-// clears edits from input sources
-const clearEditInputs = (cardDiv) => {
-    clearTextInputs(cardDiv);
-    clearRadioSelection(cardDiv);
-    projectClearOptions(cardDiv);
-    dateClearInput(cardDiv);
-}
-const clearTextInputs = (cardDiv) => {
-    cardDiv.children[0].children[1].children[2].value = null;
-    cardDiv.children[1].children[0].children[2].value = null;
-}
+    // toggle 
+    let edit = true;
+    const toggle = () => {
+        edit = !edit;
+    }
+    // card expanded to allow edits
+    const editableCard = (cardDiv) => {
+        cardDiv.classList.add('cardEdit');
+        cardDiv.children[1].style.display = "flex";
+        cardDiv.children[2].classList.add('displayEdit');
+    }
+    // card minimized, hide notes & project, priority buttons and cancel/submit
+    const minimizeCard = (cardDiv) => {
+        cardDiv.classList.remove('cardEdit');
+        cardDiv.children[1].style.display = "none";
+        cardDiv.children[2].classList.remove('displayEdit');
+    }
+    // switch from text display to input fields
+    // is it possible/advantageous to change this into a fn that works for each of these (title, notes, priority, date, project). first argument = (exact element needing to be acted upon), second arg = (what should happen to it)..? !!!
+    const _displayInput = (containerDiv) => {
+        containerDiv.children[0].style.display = "none";
+        containerDiv.children[1].style.display = "block";
+        containerDiv.children[2].style.display = "block";
+    }
+    const displayInputs = (cardDiv) => {
+        // change title and notes into inputs
+        let titleDiv = cardDiv.children[0].children[1];
+        _displayInput(titleDiv);
+        let notesDiv = cardDiv.children[1].children[0];
+        _displayInput(notesDiv);
+        // display date input
+        date.displayInput(cardDiv);
+        // project input
+        project.displayInput(cardDiv); 
+    }
+    // populate inputs with current object data
+    // have to pass it the projectArray?? !!! regardless, it needs access.
+    const populateInput = (cardDiv, object) =>  {
+        let currentTitle = cardDiv.querySelector('input.titleEdit');
+        currentTitle.value = object.title;
+        let currentNotes = cardDiv.querySelector('input#notesEdit');
+        currentNotes.value = object.notes;
+        let optionsArray = project.populateInput(projectArray, cardDiv);
+        project.markSelected(optionsArray, object);
+        priority.editRadioSelection(cardDiv, object); 
+    }
+    // other option, both need access to DOM and object
+    // so I have to pass title and object.title for it to work...
+    // const editPopulateInput = (inputDOM, value) => {
+    //     inputDOM.value = value;
+    // }
+    // switch from input fields to text display
+    const _hideInput = (containerDiv) => {
+        containerDiv.children[0].style.display = "flex";
+        containerDiv.children[1].style.display = "none";
+        containerDiv.children[2].style.display = "none";
+    }
+    // cancel edit button
+    const cancelEditFn = (cardDiv) => {
+        resetCard(cardDiv);
+        edit = true;
+        expand.expand = false;
+        // needs to be updated to be able to receive other objects (?)
+    }
+    // reset: clears inputs, hides them, displays text, minimizes card to normal size
+    const resetCard = (cardDiv) => {
+        _clearInputs(cardDiv);
+        _hideInput(cardDiv.children[0].children[1]);
+        _hideInput(cardDiv.children[1].children[0]);
+        project.hideInput(cardDiv);
+        date.hideInput(cardDiv);
+        minimizeCard(cardDiv);
+    }
+    // clears edits from input sources
+    const _clearInputs = (cardDiv) => {
+        clearTextInputs(cardDiv);
+        priority.clearSelection(cardDiv);
+        project.clearOptions(cardDiv);
+        date.clearInput(cardDiv);
+    }
+    const clearTextInputs = (cardDiv) => {
+        cardDiv.children[0].children[1].children[2].value = null;
+        cardDiv.children[1].children[0].children[2].value = null;
+    }
+    return { mainFn, toggle, resetCard, edit, populateInput, cancelEditFn  }
+})();
 // for submit
-// gather inputs, update object, update To-Do card display
-const submitEditFn = (cardDiv, object) => {
-    let inputArray = submitGetInput(cardDiv);
-    updateObject(object, inputArray);
-    submitDisplayInput(cardDiv, inputArray);
-    cancelEditFn(cardDiv);
-}
-// updates card display
-const submitDisplayInput = (cardDiv, array) => {
-    let titleText = cardDiv.children[0].children[1].children[0];
-    titleText.textContent = array[0];
-    let notesText = cardDiv.children[1].children[0].children[0];
-    notesText.textContent = array[4];
-    let priorityText = cardDiv.children[0].children[3];
-    priorityText.textContent = array[2];
-    let projectText = cardDiv.children[1].children[1].children[0];
-    projectText.textContent = array[1];
-}
-// collect input values, returns array (indexes mimic position in object)
-// needs updating - project, date, checked !!!
-const submitGetInput = (cardDiv) => {
-    let titleInput = cardDiv.children[0].children[1].children[2].value;
-    let notesInput = cardDiv.children[1].children[0].children[2].value;
-    let priorityInput = radioSelection(btns).value;
-    let projectInput = `Project: ${projectGetInput(cardDiv)}`;
-    let array = [titleInput, projectInput, priorityInput, "", notesInput, ""];
-    return array;
-}
+const submit = (() => {
+    // gather inputs, update object, update To-Do card display
+    const mainFn = (cardDiv, object) => {
+        let inputArray = _getInput(cardDiv);
+        updateObject(object, inputArray);
+        _displayInput(cardDiv, inputArray);
+        edit.cancelEditFn(cardDiv);
+    }
+    // updates card display
+    const _displayInput = (cardDiv, array) => {
+        let titleText = cardDiv.children[0].children[1].children[0];
+        titleText.textContent = array[0];
+        let notesText = cardDiv.children[1].children[0].children[0];
+        notesText.textContent = array[4];
+        let priorityText = cardDiv.children[0].children[3];
+        priorityText.textContent = array[2];
+        let projectText = cardDiv.children[1].children[1].children[0];
+        projectText.textContent = array[1];
+    }
+    // collect input values, returns array (indexes mimic position in object)
+    // needs updating - project, date, checked !!!
+    const _getInput = (cardDiv) => {
+        let titleInput = cardDiv.children[0].children[1].children[2].value;
+        let notesInput = cardDiv.children[1].children[0].children[2].value;
+        let priorityInput = priority.currentSelection(btns).value;
+        let projectInput = `Project: ${project.getInput(cardDiv)}`;
+        let array = [titleInput, projectInput, priorityInput, "", notesInput, ""];
+        return array;
+    }
+    return { mainFn };
+})();
 // not using...do I need this? !!!
 // const editUpdateObject = (object, key, input) => {
 //     object[`${key}`] = input;
@@ -162,44 +180,49 @@ const deleteFn = (input) => {
     // needs access to "body" !!!
     body.removeChild(toDoCard);
 }
-// finds/returns selected priority level
-const priorityFn = (cardDiv) => {
-    let priorityBtns = Array.from(cardDiv.querySelector('input[type="radio'));
-    let selection = radioSelection(priorityBtns);
-    return selection;
-}
-// clear radio selection
-const clearRadioSelection = (cardDiv) => {
-    let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
-    for (i=0; i<priorityBtns.length; i++) {
-        priorityBtns[i].checked = false;
+// priority level input
+const priority = (() => {
+    // finds/returns selected priority level
+    const mainFn = (cardDiv) => {
+        let priorityBtns = Array.from(cardDiv.querySelector('input[type="radio'));
+        let selection = currentSelection(priorityBtns);
+        return selection;
     }
-}
-// not sure about this: editCurrentRadioSelection returns the btn (need condition...if btn == null, don't worry about it);
-// display the current selection (in edit mode)
-const editCurrentRadioSelection = (cardDiv, object) => {
-    let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
-    let btn = priorityBtns.find(index => {
-        return index.value === object.priority;
-    });
-    btn.checked = "checked";
-    // this also works, tried to improve it by using array methods... can delete later
-    // for (i=0; i<priorityBtns.length; i++) {
-    //     if (priorityBtns[i].value == object.priority) {
-    //         priorityBtns[i].checked = "checked";
-    //         btn = priorityBtns[i];
-    //     }
-    // }
-    return btn;
-}
-// find and return the "checked" radio button aka selected priority level
-const radioSelection = (input) => {
-    for (i=0; i<input.length; i++) {
-        if (input[i].checked) {
-            return input[i];
+    // clear radio selection
+    const clearSelection = (cardDiv) => {
+        let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
+        for (i=0; i<priorityBtns.length; i++) {
+            priorityBtns[i].checked = false;
         }
     }
-}
+    // not sure about this: editCurrentSelection returns the btn (need condition...if btn == null, don't worry about it);
+    // display the current selection (in edit mode)
+    const editCurrentSelection = (cardDiv, object) => {
+        let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
+        let btn = priorityBtns.find(index => {
+            return index.value === object.priority;
+        });
+        btn.checked = "checked";
+        // this also works, tried to improve it by using array methods... can delete later
+        // for (i=0; i<priorityBtns.length; i++) {
+        //     if (priorityBtns[i].value == object.priority) {
+        //         priorityBtns[i].checked = "checked";
+        //         btn = priorityBtns[i];
+        //     }
+        // }
+        return btn;
+    }
+    // find and return the "checked" radio button aka selected priority level
+    const currentSelection = (input) => {
+        for (i=0; i<input.length; i++) {
+            if (input[i].checked) {
+                return input[i];
+            }
+        }
+    }
+    return { mainFn, clearSelection, currentSelection, editCurrentSelection };
+})();
+
 // project input
 // -> populate display, clear input, gather input
 // -> do dropdown? w/ option to add?
@@ -291,26 +314,31 @@ const project = (() => {
 })();
 
 // date functionality
-const dateFn = () => {
+const date = (() => {
+    const mainFn = () => {
 
-}
-const dateHideInput = (cardDiv) => {
-    cardDiv.children[0].children[5].children[0].style.display = "block";
-    cardDiv.children[0].children[5].children[1].style.display = "none";
-    cardDiv.children[0].children[5].children[2].style.display = "none";
-}
-const dateDisplayInput = (cardDiv) => {
-    cardDiv.children[0].children[5].children[0].style.display = "none";
-    cardDiv.children[0].children[5].children[1].style.display = "block";
-    cardDiv.children[0].children[5].children[2].style.display = "block";
-}
-const dateClearInput = (cardDiv) => {
-    cardDiv.children[0].children[5].children[2].value = "";
-}
-const dateAddInput = (cardDiv) => {
-    let date = cardDiv.children[0].children[5].children[2].value;
-    // need to format date; currently goes yyyy-mm-dd
-}
+    }
+    const hideInput = (cardDiv) => {
+        cardDiv.children[0].children[5].children[0].style.display = "block";
+        cardDiv.children[0].children[5].children[1].style.display = "none";
+        cardDiv.children[0].children[5].children[2].style.display = "none";
+    }
+    const displayInput = (cardDiv) => {
+        cardDiv.children[0].children[5].children[0].style.display = "none";
+        cardDiv.children[0].children[5].children[1].style.display = "block";
+        cardDiv.children[0].children[5].children[2].style.display = "block";
+    }
+    const clearInput = (cardDiv) => {
+        cardDiv.children[0].children[5].children[2].value = "";
+    }
+    const addInput = (cardDiv) => {
+        let date = cardDiv.children[0].children[5].children[2].value;
+        // need to format date; currently goes yyyy-mm-dd
+        console.log(date);
+    }
+    return { mainFn, hideInput, displayInput, clearInput, addInput}
+})();
+
 const removeCardListeners = (input) => {
     input.removeEventListener('click', () => {
         checkboxFn(input);
