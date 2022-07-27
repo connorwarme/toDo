@@ -1,11 +1,12 @@
 import { createElement } from "./utility";
+import { objectOps } from "./modA";
 
 // To-Do card button listener functions
 // get card and toggle class
 // might need update - to check object.checked / then to update it !!!
 const checkboxFn = (input) => {
     input.parentElement.parentElement.classList.toggle('completedToDo');
-    updateObjectCheck(input);
+    objectOps.updateCheck(input);
 }
 const expand = (() => {
     // expand card
@@ -16,7 +17,7 @@ const expand = (() => {
         extendedCard.style.display = "flex";
         } else {
             extendedCard.style.display = "none";
-            if (edit == false) {
+            if (edit.edit == false) {
                 edit.resetCard(extendedCard.parentElement);
                 edit.toggle();
             }
@@ -38,12 +39,13 @@ const edit = (() => {
         if (edit == true) {
             // expand form
             editableCard(toDoCard);
-            expand = false;
+            expand.expand = false;
             // display input fields
             displayInputs(toDoCard);
             // populate the input fields with current object data... needs object as argument !!!
             // needs object passed as argument...need to figure that out!
-            edit.populateInput(toDoCard, first);
+            let object = objectOps.getObject(toDoCard);
+            populateInput(toDoCard, object);
         } else if (edit == false) {
             resetCard(toDoCard);
         }
@@ -92,9 +94,9 @@ const edit = (() => {
         currentTitle.value = object.title;
         let currentNotes = cardDiv.querySelector('input#notesEdit');
         currentNotes.value = object.notes;
-        let optionsArray = project.populateInput(projectArray, cardDiv);
+        let optionsArray = project.populateInput(objectOps.projectArray, cardDiv);
         project.markSelected(optionsArray, object);
-        priority.editRadioSelection(cardDiv, object); 
+        priority.editCurrentSelection(cardDiv, object); 
     }
     // other option, both need access to DOM and object
     // so I have to pass title and object.title for it to work...
@@ -140,8 +142,9 @@ const edit = (() => {
 const submit = (() => {
     // gather inputs, update object, update To-Do card display
     const mainFn = (cardDiv, object) => {
-        let inputArray = _getInput(cardDiv);
-        updateObject(object, inputArray);
+        let btns = Array.from(cardDiv.querySelectorAll('input[type="radio'));
+        let inputArray = _getInput(cardDiv, btns);
+        objectOps.update(object, inputArray);
         _displayInput(cardDiv, inputArray);
         edit.cancelEditFn(cardDiv);
     }
@@ -150,19 +153,27 @@ const submit = (() => {
         let titleText = cardDiv.children[0].children[1].children[0];
         titleText.textContent = array[0];
         let notesText = cardDiv.children[1].children[0].children[0];
-        notesText.textContent = array[4];
+        notesText.textContent = _emptyInputCheck(array[4], 'Notes');
         let priorityText = cardDiv.children[0].children[3];
         priorityText.textContent = array[2];
         let projectText = cardDiv.children[1].children[1].children[0];
-        projectText.textContent = array[1];
+        projectText.textContent = _emptyInputCheck(array[1], 'Project');
+    }
+    const _emptyInputCheck = (input, section) => {
+        let empty = "";
+        if (input == false || input == "" || input == undefined) {
+            return empty;
+        } else {
+            return `${section}: ${input}`;
+        }
     }
     // collect input values, returns array (indexes mimic position in object)
     // needs updating - project, date, checked !!!
-    const _getInput = (cardDiv) => {
+    const _getInput = (cardDiv, btnsArray) => {
         let titleInput = cardDiv.children[0].children[1].children[2].value;
         let notesInput = cardDiv.children[1].children[0].children[2].value;
-        let priorityInput = priority.currentSelection(btns).value;
-        let projectInput = `Project: ${project.getInput(cardDiv)}`;
+        let priorityInput = priority.currentSelection(btnsArray).value;
+        let projectInput = project.getInput(cardDiv);
         let array = [titleInput, projectInput, priorityInput, "", notesInput, ""];
         return array;
     }
@@ -191,7 +202,7 @@ const priority = (() => {
     // clear radio selection
     const clearSelection = (cardDiv) => {
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
-        for (i=0; i<priorityBtns.length; i++) {
+        for (let i=0; i<priorityBtns.length; i++) {
             priorityBtns[i].checked = false;
         }
     }
@@ -214,8 +225,9 @@ const priority = (() => {
     }
     // find and return the "checked" radio button aka selected priority level
     const currentSelection = (input) => {
-        for (i=0; i<input.length; i++) {
+        for (let i=0; i<input.length; i++) {
             if (input[i].checked) {
+                console.log(input[i]);
                 return input[i];
             }
         }
@@ -255,7 +267,9 @@ const project = (() => {
         return optionsArray;
     }
     const markSelected = (array, object) => {
+        console.log(object);
         let selectedProject = object.project;
+        console.log(selectedProject);
         let selectedOption = array.find(index => {
             return index.value === selectedProject;
         });
@@ -273,11 +287,15 @@ const project = (() => {
     // returns project name
     const getInput = (cardDiv) => {
         let select = cardDiv.children[1].children[1].children[2];
-        let optionsArray = Array.from(select.children);
-        let selection = optionsArray.find(index => {
-            return index.selected === true;
-        })
-        return selection.value;
+        if (select.children.length > 0) {
+            let optionsArray = Array.from(select.children);
+            let selection = optionsArray.find(index => {
+                return index.selected === true;
+            })
+            return selection.value;
+        } else {
+            return false;
+        }
     }
     // + button: opens input to add project to the dropdown list
     // click + button, display input field and cancel and save buttons
@@ -290,7 +308,7 @@ const project = (() => {
     const addInputFn = (cardDiv) => {
         let project = cardDiv.children[1].children[1].children[4].children[0].value;
         if (project != "") {
-            projectArray.push(project);
+            objectOps.projectArray.push(project);
         }
         // push project into projectArray
     }
@@ -300,17 +318,17 @@ const project = (() => {
         cardDiv.children[1].children[1].children[3].style.display = "block";
         cardDiv.children[1].children[1].children[4].style.display = "none";
     }
-    const addSaveFn = (cardDiv) => {
+    const addSaveFn = (cardDiv, object) => {
         addInputFn(cardDiv);
         // reset display
         addCancelFn(cardDiv);
         // remove and recreate dropdown menu
         clearOptions(cardDiv);
         // these need the project array and the object of the card !!!
-        let optionsArray = populateInput(projectArray, cardDiv);
-        markSelected(optionsArray, second);
+        let optionsArray = populateInput(objectOps.projectArray, cardDiv);
+        markSelected(optionsArray, object);
     }
-    return { hideInput, displayInput, populateInput, getInput, addBtnFn, clearOptions, addSaveFn }
+    return { hideInput, displayInput, populateInput, getInput, markSelected, addBtnFn, addCancelFn, clearOptions, addSaveFn }
 })();
 
 // date functionality
@@ -338,118 +356,125 @@ const date = (() => {
     }
     return { mainFn, hideInput, displayInput, clearInput, addInput}
 })();
-// object operations
-const updateObject = (object, array) => {
-    for (i=0; i<array.length; i++) {
-        object[object.properties[i]] = array[i];
-    }
-}
-const updateObjectCheck = (input) => {
-    let object = getObject(input.parentElement.parentElement);
-    if (input.checked) {
-        object.checked = true;
-    } else {
-        object.checked = false;
-    }
-}
-// needs updating once I have multiple objects... !!!
-// needs to be passed the project as well..? or should it just sort through the main array of objects?
-const getObject = (cardDiv) => {
-    let theTitle = cardDiv.children[0].children[1].children[0].textContent;
-    let object = objectArray.find(index => {
-        return index.title === theTitle;
-    });
-    // this works, but tried using find instead...can delete later 
-    // for (i=0; i<objectArray.length; i++) {
-    //     if (objectArray[i].title == title) {
-    //         object = objectArray[i];
-    //     }
-    // }
-    return object;
-}
+// // object operations
+// const updateObject = (object, array) => {
+//     for (let i=0; i<array.length; i++) {
+//         object[object.properties[i]] = array[i];
+//     }
+// }
+// const updateObjectCheck = (input) => {
+//     let object = getObject(input.parentElement.parentElement);
+//     if (input.checked) {
+//         object.checked = true;
+//     } else {
+//         object.checked = false;
+//     }
+// }
+// // needs updating once I have multiple objects... !!!
+// // needs to be passed the project as well..? or should it just sort through the main array of objects?
+// const getObject = (cardDiv) => {
+//     let theTitle = cardDiv.children[0].children[1].children[0].textContent;
+//     let object = objectArray.find(index => {
+//         return index.title === theTitle;
+//     });
+//     // this works, but tried using find instead...can delete later 
+//     // for (i=0; i<objectArray.length; i++) {
+//     //     if (objectArray[i].title == title) {
+//     //         object = objectArray[i];
+//     //     }
+//     // }
+//     return object;
+// }
 
-const listeners = (checkboxBtn, expandBtn, editBtn, deleteBtn, projAddBtn, projAddCancelBtn, projAddSaveBtn, cancelEditBtn, submitEditBtn, cardDiv, object) => {
-    // checkbox
-    checkboxBtn.addEventListener('click', () => {
-        checkboxFn(checkboxBtn);
-    })
-    // expand ToDo
-    expandBtn.addEventListener('click', () => {
-        expand.mainFn(expandBtn);
-    })
-    // edit ToDo
-    editBtn.addEventListener('click', () => {
-        edit.mainFn(editBtn);
-    })
-    // delete ToDo
-    deleteBtn.addEventListener('click', () => {
-        deleteFn(deleteBtn);
-    })
-    // priority level (radio buttons)
-    let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
-    priorityBtns.forEach(index => {
-        index.addEventListener('click', () => {
-            priority.mainFn(cardDiv);
-        })
-    })
-    // add project
-    projAddBtn.addEventListener('click', () => {
-        project.addBtnFn(cardDiv);
-    })
-    // cancel adding project
-    projAddCancelBtn.addEventListener('click', () => {
-        project.addCancelFn(cardDiv);
-    })
-    // save new project
-    projAddSaveBtn.addEventListener('click', () => {
-        project.addSaveFn(cardDiv);
-    })
-    // cancel
-    cancelEditBtn.addEventListener('click', () => {
-        edit.cancelEditFn(cardDiv);
-    })
-    // submit -> needs to have the object as an argument !!! needs updating !!!
-    submitEditBtn.addEventListener('click', () => {
-        submit.mainFn(cardDiv, object);
-    })
-    // remove all listeners (used when deleting the card);
-    // need to test if this is working... !!!
-    const removeAll = () => {
-        checkboxBtn.removeEventListener('click', () => {
+const listeners = (() => {
+    const elementsArray = [];
+    function addAll (checkboxBtn, expandBtn, editBtn, deleteBtn, projAddBtn, projAddCancelBtn, projAddSaveBtn, cancelEditBtn, submitEditBtn, cardDiv, object) {
+        for (let i = 0; i<arguments.length; i++) {
+            elementsArray.push(arguments[i]);
+        }
+        // checkbox
+        checkboxBtn.addEventListener('click', () => {
             checkboxFn(checkboxBtn);
         })
-        expandBtn.removeEventListener('click', () => {
+        // expand ToDo
+        expandBtn.addEventListener('click', () => {
             expand.mainFn(expandBtn);
         })
-        editBtn.removeEventListener('click', () => {
+        // edit ToDo
+        editBtn.addEventListener('click', () => {
             edit.mainFn(editBtn);
         })
-        deleteBtn.removeEventListener('click', () => {
+        // delete ToDo
+        deleteBtn.addEventListener('click', () => {
             deleteFn(deleteBtn);
         })
-        // I think it can piggyback on the previous priorityBtns array !!!
-        // let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
+        // priority level (radio buttons)
+        let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         priorityBtns.forEach(index => {
-            index.removeEventListener('click', () => {
+            index.addEventListener('click', () => {
                 priority.mainFn(cardDiv);
             })
         })
-        projAddBtn.removeEventListener('click', () => {
+        // add project
+        projAddBtn.addEventListener('click', () => {
             project.addBtnFn(cardDiv);
         })
-        projAddCancelBtn.removeEventListener('click', () => {
+        // cancel adding project
+        projAddCancelBtn.addEventListener('click', () => {
             project.addCancelFn(cardDiv);
         })
-        projAddSaveBtn.removeEventListener('click', () => {
-            project.addSaveFn(cardDiv);
+        // save new project
+        projAddSaveBtn.addEventListener('click', () => {
+            project.addSaveFn(cardDiv, object);
         })
-        cancelEditBtn.removeEventListener('click', () => {
+        // cancel
+        cancelEditBtn.addEventListener('click', () => {
             edit.cancelEditFn(cardDiv);
         })
-        submitEditBtn.removeEventListener('click', () => {
+        // submit -> needs to have the object as an argument !!! needs updating !!!
+        submitEditBtn.addEventListener('click', () => {
             submit.mainFn(cardDiv, object);
         })
     }
-    return { removeAll };
-}
+    // remove all listeners (used when deleting the card);
+    // need to test if this is working... !!!
+    const removeAll = () => {
+        elementsArray[0].removeEventListener('click', () => {
+            checkboxFn(elementsArray[0]);
+        })
+        elementsArray[1].removeEventListener('click', () => {
+            expand.mainFn(elementsArray[1]);
+        })
+        elementsArray[2].removeEventListener('click', () => {
+            edit.mainFn(elementsArray[2]);
+        })
+        elementsArray[3].removeEventListener('click', () => {
+            deleteFn(elementsArray[3]);
+        })
+        // I think it can piggyback on the previous priorityBtns array !!!
+        let priorityBtns = Array.from(elementsArray[9].querySelectorAll('input[type="radio"]'));
+        priorityBtns.forEach(index => {
+            index.removeEventListener('click', () => {
+                priority.mainFn(elementsArray[9]);
+            })
+        })
+        elementsArray[4].removeEventListener('click', () => {
+            project.addBtnFn(elementsArray[9]);
+        })
+        elementsArray[5].removeEventListener('click', () => {
+            project.addCancelFn(elementsArray[9]);
+        })
+        elementsArray[6].removeEventListener('click', () => {
+            project.addSaveFn(elementsArray[9], elementsArray[10]);
+        })
+        elementsArray[7].removeEventListener('click', () => {
+            edit.cancelEditFn(elementsArray[9]);
+        })
+        elementsArray[8].removeEventListener('click', () => {
+            submit.mainFn(elementsArray[9], elementsArray[10]);
+        })
+        console.log('bingo');
+    }
+    return { addAll, removeAll };
+})();
 export { listeners };

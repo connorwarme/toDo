@@ -46,7 +46,7 @@ let body = document.querySelector('div.body');
 
 const objectArray = [];
 
-const addToObjectArray = (project, object) => {
+const addToObjectArray = (array, object) => {
     let x = Object.keys(project).length;
     project[x] = object;
 }

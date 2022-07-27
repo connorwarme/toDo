@@ -56,7 +56,7 @@ const craftCard = (() => {
         editSize.appendChild(priorityEdit);
         editSize.appendChild(submitEdit);
         // add listeners to all the buttons
-        listeners(checked, expandCard, editCard, deleteCard, projectAdd, projectAddCancel, projectAddSave, cancelEditBtn, submitEditBtn, cardDiv, object)
+        listeners.addAll(checked, expandCard, editCard, deleteCard, projectAdd, projectAddCancel, projectAddSave, cancelEditBtn, submitEditBtn, cardDiv, object)
     }
     // helper fns
     const _title = (object) => {
