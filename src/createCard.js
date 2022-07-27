@@ -1,4 +1,5 @@
 import { createElement } from "./utility";
+import { listeners } from "./cardFunctionality";
 
 const craftCard = (() => {
 // I have these declared right away to be available in multiple functions...)
@@ -54,6 +55,8 @@ const craftCard = (() => {
         extendedSize.appendChild(project);
         editSize.appendChild(priorityEdit);
         editSize.appendChild(submitEdit);
+        // add listeners to all the buttons
+        listeners(checked, expandCard, editCard, deleteCard, projectAdd, projectAddCancel, projectAddSave, cancelEditBtn, submitEditBtn, cardDiv, object)
     }
     // helper fns
     const _title = (object) => {

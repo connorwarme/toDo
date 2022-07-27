@@ -175,10 +175,10 @@ const submit = (() => {
 // deletes To-Do card
 // should run a function to delete object too? !!! or to remove it from array of objects?
 const deleteFn = (input) => {
-    removeCardListeners(input);
     let toDoCard = input.parentElement.parentElement;
-    // needs access to "body" !!!
-    body.removeChild(toDoCard);
+    listeners.removeAll(toDoCard);
+    // needs access to "body" !!! did this fix work? (parentElement)
+    toDoCard.parentElement.removeChild(toDoCard);
 }
 // priority level input
 const priority = (() => {
@@ -338,21 +338,6 @@ const date = (() => {
     }
     return { mainFn, hideInput, displayInput, clearInput, addInput}
 })();
-
-const removeCardListeners = (input) => {
-    input.removeEventListener('click', () => {
-        checkboxFn(input);
-    })
-    input.removeEventListener('click', () => {
-        expandFn(input);
-    })
-    input.removeEventListener('click', () => {
-        editFn(input);
-    })
-    input.removeEventListener('click', () => {
-        deleteFn(input);
-    })
-}
 // object operations
 const updateObject = (object, array) => {
     for (i=0; i<array.length; i++) {
@@ -360,7 +345,7 @@ const updateObject = (object, array) => {
     }
 }
 const updateObjectCheck = (input) => {
-    let object = getObject(x);
+    let object = getObject(input.parentElement.parentElement);
     if (input.checked) {
         object.checked = true;
     } else {
@@ -383,49 +368,88 @@ const getObject = (cardDiv) => {
     return object;
 }
 
-// const addListeners = () => {
-        // checkbox
-        checked.addEventListener('click', () => {
-            checkboxFn(checked);
-        });
-        // expand ToDo
-        expandCard.addEventListener('click', () => {
-            expandFn(expandCard);
+const listeners = (checkboxBtn, expandBtn, editBtn, deleteBtn, projAddBtn, projAddCancelBtn, projAddSaveBtn, cancelEditBtn, submitEditBtn, cardDiv, object) => {
+    // checkbox
+    checkboxBtn.addEventListener('click', () => {
+        checkboxFn(checkboxBtn);
+    })
+    // expand ToDo
+    expandBtn.addEventListener('click', () => {
+        expand.mainFn(expandBtn);
+    })
+    // edit ToDo
+    editBtn.addEventListener('click', () => {
+        edit.mainFn(editBtn);
+    })
+    // delete ToDo
+    deleteBtn.addEventListener('click', () => {
+        deleteFn(deleteBtn);
+    })
+    // priority level (radio buttons)
+    let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
+    priorityBtns.forEach(index => {
+        index.addEventListener('click', () => {
+            priority.mainFn(cardDiv);
         })
-        // edit ToDo
-        editCard.addEventListener('click', () => {
-            editFn(editCard);
+    })
+    // add project
+    projAddBtn.addEventListener('click', () => {
+        project.addBtnFn(cardDiv);
+    })
+    // cancel adding project
+    projAddCancelBtn.addEventListener('click', () => {
+        project.addCancelFn(cardDiv);
+    })
+    // save new project
+    projAddSaveBtn.addEventListener('click', () => {
+        project.addSaveFn(cardDiv);
+    })
+    // cancel
+    cancelEditBtn.addEventListener('click', () => {
+        edit.cancelEditFn(cardDiv);
+    })
+    // submit -> needs to have the object as an argument !!! needs updating !!!
+    submitEditBtn.addEventListener('click', () => {
+        submit.mainFn(cardDiv, object);
+    })
+    // remove all listeners (used when deleting the card);
+    // need to test if this is working... !!!
+    const removeAll = () => {
+        checkboxBtn.removeEventListener('click', () => {
+            checkboxFn(checkboxBtn);
         })
-        // delete ToDo
-        deleteCard.addEventListener('click', () => {
-            deleteFn(deleteCard);
+        expandBtn.removeEventListener('click', () => {
+            expand.mainFn(expandBtn);
         })
-        // priority level (radio buttons)
-        let priorityBtns = Array.from(createdCard.querySelectorAll('input[type="radio"]'));
-        console.log(priorityBtns);
+        editBtn.removeEventListener('click', () => {
+            edit.mainFn(editBtn);
+        })
+        deleteBtn.removeEventListener('click', () => {
+            deleteFn(deleteBtn);
+        })
+        // I think it can piggyback on the previous priorityBtns array !!!
+        // let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         priorityBtns.forEach(index => {
-            index.addEventListener('click', () => {
-                priorityFn(createdCard);
+            index.removeEventListener('click', () => {
+                priority.mainFn(cardDiv);
             })
         })
-        // add project
-        projectAdd.addEventListener('click', () => {
-            projectAddBtnFn(createdCard);
+        projAddBtn.removeEventListener('click', () => {
+            project.addBtnFn(cardDiv);
         })
-        // cancel adding project
-        projectAddCancel.addEventListener('click', () => {
-            projectAddCancelFn(createdCard);
+        projAddCancelBtn.removeEventListener('click', () => {
+            project.addCancelFn(cardDiv);
         })
-        // save new project
-        projectAddSave.addEventListener('click', () => {
-            projectAddSaveFn(createdCard);
+        projAddSaveBtn.removeEventListener('click', () => {
+            project.addSaveFn(cardDiv);
         })
-        // cancel
-        cancelEditBtn.addEventListener('click', () => {
-            cancelEditFn(createdCard);
+        cancelEditBtn.removeEventListener('click', () => {
+            edit.cancelEditFn(cardDiv);
         })
-        // submit -> needs to have the object as an argument !!! needs updating !!!
-        submitEditBtn.addEventListener('click', () => {
-            submitEditFn(createdCard, first);
+        submitEditBtn.removeEventListener('click', () => {
+            submit.mainFn(cardDiv, object);
         })
-    // }
+    }
+    return { removeAll };
+}
+export { listeners };
