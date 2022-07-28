@@ -2,12 +2,16 @@ const cardFactory = (title, project, priority, dueDate, notes, checked) => {
     return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
 }
 const objectOps = (() => {
-    const objectArray = [];
+    let objectArray = [];
     const addToObjectArray = (object) => {
         objectArray.push(object);
     }
-    
-    const projectArray = [];
+    const deleteFromObjectArray = (object) => {
+        let filteredArray = objectArray.filter((index) => index !== object);
+        objectArray = filteredArray;
+        // does this need to return the updated array? !!!
+    }
+    let projectArray = [];
     // this is going to need a sort function to weed out "" (empty) projects and the like. !!! did current version work?
     // needs a clear function before this is run (to make sure projectArray is empty), or run a check to see if project already exists or if it needs to be added to the projectArray !!!
     const addToProjectArray = (array) => {
@@ -20,12 +24,25 @@ const objectOps = (() => {
             }
         })
     }
+    const deleteFromProjectArray = (object) => {
+        // check if other objects are also in the same project, or if this object is the only one
+        let project = Array.from(objectArray.find(index => {
+            return index.project === object.project;
+        }));
+        if (project.length == 1) {
+            let filteredArray = projectArray.filter(index => index !== object.project);
+            projectArray = filteredArray;
+        }
+        // does this need to return the updated array?? !!!
+    }
     // object operations
+    // update the object with input data (in array)
     const update = (object, array) => {
         for (let i=0; i<array.length; i++) {
             object[object.properties[i]] = array[i];
         }
     }
+    // update the checkmark (if to-do is complete)
     const updateCheck = (input) => {
         let object = getObject(input.parentElement.parentElement);
         if (input.checked) {

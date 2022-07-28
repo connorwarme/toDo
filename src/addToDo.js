@@ -16,7 +16,8 @@ const addFn = () => {
     let newToDo = cardFactory("", "", "", "", "", false);
     objectOps.addToObjectArray(newToDo);
     let newCard = createCard(newToDo);
-    // edit.mainFn(newCard.children[0].children[6])
+    console.log(newToDo.priority == "");
+    edit.mainFn(newCard.children[0].children[6]);
     return newCard;
 }
 export { add, addFn };

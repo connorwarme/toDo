@@ -103,10 +103,14 @@ const edit = (() => {
     }
     // cancel edit button
     const cancelEditFn = (cardDiv) => {
-        resetCard(cardDiv);
         let object = objectOps.getObject(cardDiv);
+        if (object.title == "") {
+            deleteFn(cardDiv.children[0].lastChild);
+        } else {
+        resetCard(cardDiv);
         object.editable = true;
         object.expanded = false;
+        }
         // needs to be updated to be able to receive other objects (?)
     }
     // reset: clears inputs, hides them, displays text, minimizes card to normal size
@@ -203,10 +207,15 @@ const priority = (() => {
     // display the current selection (in edit mode)
     const editCurrentSelection = (cardDiv, object) => {
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
-        let btn = priorityBtns.find(index => {
-            return index.value === object.priority;
-        });
-        btn.checked = "checked";
+        let btn;
+        if (object.priority != "") {
+            btn = priorityBtns.find(index => {
+                return index.value === object.priority;
+            });
+            btn.checked = "checked";
+        } else {
+            btn = "";
+        }
         // this also works, tried to improve it by using array methods... can delete later
         // for (i=0; i<priorityBtns.length; i++) {
         //     if (priorityBtns[i].value == object.priority) {
@@ -259,11 +268,13 @@ const project = (() => {
         return optionsArray;
     }
     const markSelected = (array, object) => {
-        let selectedProject = object.project;
-        let selectedOption = array.find(index => {
-            return index.value === selectedProject;
-        });
-        selectedOption.selected = true;
+        let selectedOption;
+        if (object.project != "") {
+            selectedOption = array.find(index => {
+                return index.value === object.project;
+            });
+            selectedOption.selected = true;
+        }
     }
     // project clear input (for cancel button)
     const clearOptions = (cardDiv) => {
