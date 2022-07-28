@@ -1,5 +1,5 @@
 import { createElement } from "./utility";
-import { objectOps } from "./modA";
+import { objectOps } from "./objectOps";
 
 // To-Do card button listener functions
 // get card and toggle class
@@ -20,7 +20,6 @@ const expand = (() => {
         } else {
             extendedCard.style.display = "none";
             object.expanded = false;
-            console.log(`edit.edit = ${edit.edit}`);
             if (object.editable == false) {
                 edit.cancelEditFn(extendedCard.parentElement)
             }
@@ -221,7 +220,6 @@ const priority = (() => {
     const currentSelection = (input) => {
         for (let i=0; i<input.length; i++) {
             if (input[i].checked) {
-                console.log(input[i]);
                 return input[i];
             }
         }
@@ -261,9 +259,7 @@ const project = (() => {
         return optionsArray;
     }
     const markSelected = (array, object) => {
-        console.log(object);
         let selectedProject = object.project;
-        console.log(selectedProject);
         let selectedOption = array.find(index => {
             return index.value === selectedProject;
         });
@@ -467,7 +463,6 @@ const listeners = (() => {
         elementsArray[8].removeEventListener('click', () => {
             submit.mainFn(elementsArray[9], elementsArray[10]);
         })
-        console.log('bingo');
     }
     return { addAll, removeAll };
 })();

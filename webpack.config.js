@@ -5,8 +5,9 @@ module.exports = {
     mode: 'production',
     entry: {
         index: './src/index.js',
-        modA: './src/modA.js', 
+        objectOps: './src/objectOps.js', 
         create: './src/createCard.js',
+        addToDo: './src/addToDo.js',
         utility: './src/utility.js'
     },
     // plugins: [
