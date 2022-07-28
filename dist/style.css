@@ -23,6 +23,10 @@
     height: inherit;
     width: calc(100vw - 200px);
 }
+.addContainer > input {
+    height: 50px;
+    width: 150px;
+}
 .checkboxLabel {
     display: none;
 }

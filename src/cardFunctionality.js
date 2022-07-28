@@ -466,4 +466,4 @@ const listeners = (() => {
     }
     return { addAll, removeAll };
 })();
-export { listeners };
+export { listeners, edit };

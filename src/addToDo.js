@@ -1,4 +1,7 @@
 import { createElement } from "./utility";
+import { cardFactory, objectOps } from "./objectOps";
+import { createCard } from "./createCard";
+import { edit } from "./cardFunctionality";
 
 const add = () => {
     const addContainer = createElement('div', {'class': 'addContainer'});
@@ -9,4 +12,11 @@ const add = () => {
     addContainer.appendChild(addBtnLabel);
     return addContainer;
 }
-export { add };
+const addFn = () => {
+    let newToDo = cardFactory("", "", "", "", "", false);
+    objectOps.addToObjectArray(newToDo);
+    let newCard = createCard(newToDo);
+    // edit.mainFn(newCard.children[0].children[6])
+    return newCard;
+}
+export { add, addFn };
