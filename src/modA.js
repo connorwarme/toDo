@@ -1,5 +1,5 @@
 const cardFactory = (title, project, priority, dueDate, notes, checked) => {
-    return { title, project, priority, dueDate, notes, checked, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
+    return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
 }
 const objectOps = (() => {
     const objectArray = [];

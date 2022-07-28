@@ -13,49 +13,42 @@ const expand = (() => {
     // or, if it's expanded already, minimize card
     const mainFn = (input) => {
         let extendedCard = input.parentElement.nextElementSibling;
-        if (expand == false) {
-        extendedCard.style.display = "flex";
+        let object = objectOps.getObject(extendedCard.parentElement);
+        if (object.expanded == false) {
+            extendedCard.style.display = "flex";
+            object.expanded = true;
         } else {
             extendedCard.style.display = "none";
-            if (edit.edit == false) {
-                edit.resetCard(extendedCard.parentElement);
-                edit.toggle();
+            object.expanded = false;
+            console.log(`edit.edit = ${edit.edit}`);
+            if (object.editable == false) {
+                edit.cancelEditFn(extendedCard.parentElement)
             }
         }
-        toggle();
     }
-    // toggle
-    let expand = false;
-    const toggle = () => {
-        expand = !expand;
-    }
-    return { mainFn, toggle, expand }
+    return { mainFn }
 })();
 
 // edit card
 const edit = (() => {
     const mainFn = (input) => {
         let toDoCard = input.parentElement.parentElement;
-        if (edit == true) {
+        let object = objectOps.getObject(toDoCard);
+        if (object.editable == true) {
             // expand form
             editableCard(toDoCard);
-            expand.expand = false;
+            object.expanded = true;
+            object.editable = false;
             // display input fields
             displayInputs(toDoCard);
             // populate the input fields with current object data... needs object as argument !!!
             // needs object passed as argument...need to figure that out!
-            let object = objectOps.getObject(toDoCard);
             populateInput(toDoCard, object);
-        } else if (edit == false) {
+        } else if (object.editable == false) {
             resetCard(toDoCard);
+            object.expanded = false;
+            object.editable = true;
         }
-        toggle();
-        expand.toggle();
-    }
-    // toggle 
-    let edit = true;
-    const toggle = () => {
-        edit = !edit;
     }
     // card expanded to allow edits
     const editableCard = (cardDiv) => {
@@ -112,8 +105,9 @@ const edit = (() => {
     // cancel edit button
     const cancelEditFn = (cardDiv) => {
         resetCard(cardDiv);
-        edit = true;
-        expand.expand = false;
+        let object = objectOps.getObject(cardDiv);
+        object.editable = true;
+        object.expanded = false;
         // needs to be updated to be able to receive other objects (?)
     }
     // reset: clears inputs, hides them, displays text, minimizes card to normal size
@@ -136,7 +130,7 @@ const edit = (() => {
         cardDiv.children[0].children[1].children[2].value = null;
         cardDiv.children[1].children[0].children[2].value = null;
     }
-    return { mainFn, toggle, resetCard, edit, populateInput, cancelEditFn  }
+    return { mainFn, resetCard, populateInput, cancelEditFn  }
 })();
 // for submit
 const submit = (() => {
