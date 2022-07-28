@@ -8,8 +8,10 @@ let second = cardFactory('doing it', "dudeage", "High", "", "all the time", fals
 objectOps.addToObjectArray(first);
 objectOps.addToObjectArray(second);
 objectOps.addToProjectArray(objectOps.objectArray);
+console.log(objectOps.objectArray);
 let body = document.querySelector('div.body');
 body.appendChild(add());
 body.appendChild(createCard(first));
 body.appendChild(createCard(second));
 body.appendChild(addFn());
+console.log(objectOps.projectArray);

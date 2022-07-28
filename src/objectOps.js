@@ -25,14 +25,20 @@ const objectOps = (() => {
         })
     }
     const deleteFromProjectArray = (object) => {
-        // check if other objects are also in the same project, or if this object is the only one
-        let project = Array.from(objectArray.find(index => {
-            return index.project === object.project;
-        }));
-        if (project.length == 1) {
-            let filteredArray = projectArray.filter(index => index !== object.project);
-            projectArray = filteredArray;
+        if (object.project == "") {
+            return;
+        } else {
+            // check if other objects are also in the same project, or if this object is the only one
+            let project = objectArray.filter(index => index.project === object.project);
+            console.log(project);
+            if (project.length == 1) {
+                console.log('fire');
+                let filteredArray = projectArray.filter(index => index !== object.project);
+                console.log(filteredArray);
+                projectArray = filteredArray;
+            }
         }
+        console.log(projectArray);
         // does this need to return the updated array?? !!!
     }
     // object operations
@@ -66,7 +72,7 @@ const objectOps = (() => {
         // }
         return object;
     }
-    return { addToObjectArray, addToProjectArray, objectArray, projectArray, update, updateCheck, getObject }    
+    return { addToObjectArray, addToProjectArray, objectArray, projectArray, update, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
 })();
 
 export { cardFactory, objectOps }

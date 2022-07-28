@@ -184,8 +184,13 @@ const submit = (() => {
 // should run a function to delete object too? !!! or to remove it from array of objects?
 const deleteFn = (input) => {
     let toDoCard = input.parentElement.parentElement;
+    // remove from arrays
+    let object = objectOps.getObject(toDoCard);
+    objectOps.deleteFromProjectArray(object);
+    objectOps.deleteFromObjectArray(object);
+    // remove listeners
     listeners.removeAll(toDoCard);
-    // needs access to "body" !!! did this fix work? (parentElement)
+    // remove from parentDiv
     toDoCard.parentElement.removeChild(toDoCard);
 }
 // priority level input
