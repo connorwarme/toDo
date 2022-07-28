@@ -15,3 +15,7 @@ body.appendChild(createCard(first));
 body.appendChild(createCard(second));
 body.appendChild(addFn());
 console.log(objectOps.projectArray);
+let x = JSON.stringify(first);
+console.log(x);
+let y = JSON.parse(x);
+console.log(y);
