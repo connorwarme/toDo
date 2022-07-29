@@ -10,20 +10,51 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/localStorage.js":
+/*!*****************************!*\
+  !*** ./src/localStorage.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"ls\": () => (/* binding */ ls)\n/* harmony export */ });\n// local storage\nconst ls = (() => {\n    // these work for both objectArray and projectArray\n    // take the array, stringify, and save it locally\n    const saveArray = (array, key) => {\n        // need to stringify data\n        let data = JSON.stringify(array);\n        // save to local\n        localStorage.setItem(key, data);\n    }\n    const updateArrays = (array1, array2) => {\n        saveArray(array1, \"obj\");\n        saveArray(array2, \"proj\");\n    }\n    // get the local data, parse it, and return the array\n    const returnArray = (key) => {\n        let arrayString = localStorage.getItem(key);\n        let regularArray = JSON.parse(arrayString);\n        return regularArray;\n    }\n    return { saveArray, updateArrays, returnArray }\n})();\n\n\n\n//# sourceURL=webpack://todo/./src/localStorage.js?");
+
+/***/ }),
+
 /***/ "./src/objectOps.js":
 /*!**************************!*\
   !*** ./src/objectOps.js ***!
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"cardFactory\": () => (/* binding */ cardFactory),\n/* harmony export */   \"objectOps\": () => (/* binding */ objectOps)\n/* harmony export */ });\nconst cardFactory = (title, project, priority, dueDate, notes, checked) => {\n    return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: [\"title\", \"project\", \"priority\", \"dueDate\", \"notes\", \"checked\"] }\n}\nconst objectOps = (() => {\n    let objectArray = [];\n    const addToObjectArray = (object) => {\n        objectArray.push(object);\n    }\n    const deleteFromObjectArray = (object) => {\n        let filteredArray = objectArray.filter((index) => index !== object);\n        objectArray = filteredArray;\n        // does this need to return the updated array? !!!\n    }\n    let projectArray = [];\n    // this is going to need a sort function to weed out \"\" (empty) projects and the like. !!! did current version work?\n    // needs a clear function before this is run (to make sure projectArray is empty), or run a check to see if project already exists or if it needs to be added to the projectArray !!!\n    const addToProjectArray = (array) => {\n        array.forEach(index => {\n            if (index.project == \"\" || index.project == null || index.project == undefined) {\n                let blank;\n                blank.push(index.project);\n            } else {\n                projectArray.push(index.project);\n            }\n        })\n    }\n    const deleteFromProjectArray = (object) => {\n        if (object.project == \"\") {\n            return;\n        } else {\n            // check if other objects are also in the same project, or if this object is the only one\n            let project = objectArray.filter(index => index.project === object.project);\n            console.log(project);\n            if (project.length == 1) {\n                console.log('fire');\n                let filteredArray = projectArray.filter(index => index !== object.project);\n                console.log(filteredArray);\n                projectArray = filteredArray;\n            }\n        }\n        console.log(projectArray);\n        // does this need to return the updated array?? !!!\n    }\n    // object operations\n    // update the object with input data (in array)\n    const update = (object, array) => {\n        for (let i=0; i<array.length; i++) {\n            object[object.properties[i]] = array[i];\n        }\n    }\n    // update the checkmark (if to-do is complete)\n    const updateCheck = (input) => {\n        let object = getObject(input.parentElement.parentElement);\n        if (input.checked) {\n            object.checked = true;\n        } else {\n            object.checked = false;\n        }\n    }\n    // needs updating once I have multiple objects... !!!\n    // needs to be passed the project as well..? or should it just sort through the main array of objects?\n    const getObject = (cardDiv) => {\n        let theTitle = cardDiv.children[0].children[1].children[0].textContent;\n        let object = objectArray.find(index => {\n            return index.title === theTitle;\n        });\n        // this works, but tried using find instead...can delete later \n        // for (i=0; i<objectArray.length; i++) {\n        //     if (objectArray[i].title == title) {\n        //         object = objectArray[i];\n        //     }\n        // }\n        return object;\n    }\n    return { addToObjectArray, addToProjectArray, objectArray, projectArray, update, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    \n})();\n\n\n\n//# sourceURL=webpack://todo/./src/objectOps.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"cardFactory\": () => (/* binding */ cardFactory),\n/* harmony export */   \"objectOps\": () => (/* binding */ objectOps)\n/* harmony export */ });\n/* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./localStorage */ \"./src/localStorage.js\");\n\n\nconst cardFactory = (title, project, priority, dueDate, notes, checked) => {\n    return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: [\"title\", \"project\", \"priority\", \"dueDate\", \"notes\", \"checked\"] }\n}\nconst objectOps = (() => {\n    let objectArray = [];\n    const addToObjectArray = (object) => {\n        objectArray.push(object);\n    }\n    const deleteFromObjectArray = (object) => {\n        let filteredArray = objectArray.filter((index) => index !== object);\n        objectArray = filteredArray;\n        console.log(`object array from objectOps ${objectArray}`);\n        _localStorage__WEBPACK_IMPORTED_MODULE_0__.ls.saveArray(objectArray, \"obj\");\n        // does this need to return the updated array? !!!\n    }\n    let projectArray = [];\n    // this is going to need a sort function to weed out \"\" (empty) projects and the like. !!! did current version work?\n    // needs a clear function before this is run (to make sure projectArray is empty), or run a check to see if project already exists or if it needs to be added to the projectArray !!!\n    const addToProjectArray = (array) => {\n        array.forEach(index => {\n            if (index.project == \"\" || index.project == null || index.project == undefined) {\n                let blank;\n                blank.push(index.project);\n            } else {\n                projectArray.push(index.project);\n            }\n        })\n    }\n    const deleteFromProjectArray = (object) => {\n        if (object.project == \"\") {\n            return;\n        } else {\n            // check if other objects are also in the same project, or if this object is the only one\n            let project = objectArray.filter(index => index.project === object.project);\n            console.log(project);\n            if (project.length == 1) {\n                console.log('fire');\n                let filteredArray = projectArray.filter(index => index !== object.project);\n                console.log(filteredArray);\n                projectArray = filteredArray;\n            }\n        }\n        console.log(`proj array from objectOps ${projectArray}`);\n        _localStorage__WEBPACK_IMPORTED_MODULE_0__.ls.saveArray(projectArray, \"proj\");\n        // does this need to return the updated array?? !!!\n    }\n    // object operations\n    // update the object with input data (in array)\n    const update = (object, array) => {\n        for (let i=0; i<array.length; i++) {\n            object[object.properties[i]] = array[i];\n        }\n    }\n    // update the checkmark (if to-do is complete)\n    const updateCheck = (input) => {\n        let object = getObject(input.parentElement.parentElement);\n        if (input.checked) {\n            object.checked = true;\n        } else {\n            object.checked = false;\n        }\n    }\n    // needs updating once I have multiple objects... !!!\n    // needs to be passed the project as well..? or should it just sort through the main array of objects?\n    const getObject = (cardDiv) => {\n        let theTitle = cardDiv.children[0].children[1].children[0].textContent;\n        console.log(`getObject ${theTitle}`);\n        console.log(objectOps.objectArray);\n        let object = objectOps.objectArray.find(index => {\n            return index.title === theTitle;\n        });\n        console.log(`getObject ${object} object`);\n        // this works, but tried using find instead...can delete later \n        // for (i=0; i<objectArray.length; i++) {\n        //     if (objectArray[i].title == title) {\n        //         object = objectArray[i];\n        //     }\n        // }\n        return object;\n    }\n    return { addToObjectArray, addToProjectArray, objectArray, projectArray, update, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    \n})();\n\n\n\n//# sourceURL=webpack://todo/./src/objectOps.js?");
 
 /***/ })
 
 /******/ 	});
 /************************************************************************/
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
@@ -59,8 +90,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/objectOps.js"](0, __webpack_exports__, __webpack_require__);
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/objectOps.js");
 /******/ 	
 /******/ })()
 ;

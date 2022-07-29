@@ -1,3 +1,5 @@
+import { ls } from "./localStorage";
+
 const cardFactory = (title, project, priority, dueDate, notes, checked) => {
     return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
 }
@@ -9,6 +11,8 @@ const objectOps = (() => {
     const deleteFromObjectArray = (object) => {
         let filteredArray = objectArray.filter((index) => index !== object);
         objectArray = filteredArray;
+        console.log(`object array from objectOps ${objectArray}`);
+        ls.saveArray(objectArray, "obj");
         // does this need to return the updated array? !!!
     }
     let projectArray = [];
@@ -38,7 +42,8 @@ const objectOps = (() => {
                 projectArray = filteredArray;
             }
         }
-        console.log(projectArray);
+        console.log(`proj array from objectOps ${projectArray}`);
+        ls.saveArray(projectArray, "proj");
         // does this need to return the updated array?? !!!
     }
     // object operations
@@ -61,9 +66,12 @@ const objectOps = (() => {
     // needs to be passed the project as well..? or should it just sort through the main array of objects?
     const getObject = (cardDiv) => {
         let theTitle = cardDiv.children[0].children[1].children[0].textContent;
-        let object = objectArray.find(index => {
+        console.log(`getObject ${theTitle}`);
+        console.log(objectOps.objectArray);
+        let object = objectOps.objectArray.find(index => {
             return index.title === theTitle;
         });
+        console.log(`getObject ${object} object`);
         // this works, but tried using find instead...can delete later 
         // for (i=0; i<objectArray.length; i++) {
         //     if (objectArray[i].title == title) {

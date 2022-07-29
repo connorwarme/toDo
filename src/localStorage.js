@@ -8,13 +8,17 @@ const ls = (() => {
         // save to local
         localStorage.setItem(key, data);
     }
-    // take the local data, parse it, and return the array
+    const updateArrays = (array1, array2) => {
+        saveArray(array1, "obj");
+        saveArray(array2, "proj");
+    }
+    // get the local data, parse it, and return the array
     const returnArray = (key) => {
         let arrayString = localStorage.getItem(key);
         let regularArray = JSON.parse(arrayString);
         return regularArray;
     }
-    return { saveArray, returnArray }
+    return { saveArray, updateArrays, returnArray }
 })();
 
 export { ls };

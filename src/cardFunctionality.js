@@ -1,5 +1,6 @@
 import { createElement } from "./utility";
 import { objectOps } from "./objectOps";
+import { ls } from "./localStorage";
 
 // To-Do card button listener functions
 // get card and toggle class
@@ -192,6 +193,9 @@ const deleteFn = (input) => {
     listeners.removeAll(toDoCard);
     // remove from parentDiv
     toDoCard.parentElement.removeChild(toDoCard);
+    // remove from local storage
+    console.log(`deletefn ${objectOps.objectArray} and ${objectOps.projectArray}`);
+
 }
 // priority level input
 const priority = (() => {
