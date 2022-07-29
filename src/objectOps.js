@@ -66,12 +66,9 @@ const objectOps = (() => {
     // needs to be passed the project as well..? or should it just sort through the main array of objects?
     const getObject = (cardDiv) => {
         let theTitle = cardDiv.children[0].children[1].children[0].textContent;
-        console.log(`getObject ${theTitle}`);
-        console.log(objectOps.objectArray);
         let object = objectOps.objectArray.find(index => {
             return index.title === theTitle;
         });
-        console.log(`getObject ${object} object`);
         // this works, but tried using find instead...can delete later 
         // for (i=0; i<objectArray.length; i++) {
         //     if (objectArray[i].title == title) {

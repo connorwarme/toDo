@@ -8,6 +8,7 @@ const ls = (() => {
         // save to local
         localStorage.setItem(key, data);
     }
+    // not currently using this one.. !!!
     const updateArrays = (array1, array2) => {
         saveArray(array1, "obj");
         saveArray(array2, "proj");
@@ -18,7 +19,16 @@ const ls = (() => {
         let regularArray = JSON.parse(arrayString);
         return regularArray;
     }
-    return { saveArray, updateArrays, returnArray }
+    const checkContent = (key) => {
+        let content = returnArray(key);
+        console.log(`checking for content ${content}`);
+        if (content[0] == undefined || content === null) {
+            return false;
+        } else {
+            return content;
+        }
+    }
+    return { saveArray, updateArrays, returnArray, checkContent }
 })();
 
 export { ls };

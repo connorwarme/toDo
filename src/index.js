@@ -27,3 +27,4 @@ objectOps.projectArray = ls.returnArray("proj");
 // 
 console.log(objectOps.objectArray);
 console.log(objectOps.projectArray);
+console.log(ls.checkContent("obj"));
