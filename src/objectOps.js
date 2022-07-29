@@ -6,13 +6,15 @@ const cardFactory = (title, project, priority, dueDate, notes, checked) => {
 const objectOps = (() => {
     let objectArray = [];
     const addToObjectArray = (object) => {
-        objectArray.push(object);
+        objectOps.objectArray.push(object);
+        // save/update local storage
+        ls.saveArray(objectOps.objectArray, "obj");
     }
     const deleteFromObjectArray = (object) => {
-        let filteredArray = objectArray.filter((index) => index !== object);
-        objectArray = filteredArray;
-        console.log(`object array from objectOps ${objectArray}`);
-        ls.saveArray(objectArray, "obj");
+        let filteredArray = objectOps.objectArray.filter((index) => index !== object);
+        objectOps.objectArray = filteredArray;
+        console.log(`object array from objectOps ${objectOps.objectArray}`);
+        ls.saveArray(objectOps.objectArray, "obj");
         // does this need to return the updated array? !!!
     }
     let projectArray = [];
@@ -24,26 +26,28 @@ const objectOps = (() => {
                 let blank;
                 blank.push(index.project);
             } else {
-                projectArray.push(index.project);
+                objectOps.projectArray.push(index.project);
             }
         })
+        // save/update local storage
+        ls.saveArray(objectOps.projectArray, "proj");
     }
     const deleteFromProjectArray = (object) => {
         if (object.project == "") {
             return;
         } else {
             // check if other objects are also in the same project, or if this object is the only one
-            let project = objectArray.filter(index => index.project === object.project);
+            let project = objectOps.objectArray.filter(index => index.project === object.project);
             console.log(project);
             if (project.length == 1) {
                 console.log('fire');
-                let filteredArray = projectArray.filter(index => index !== object.project);
+                let filteredArray = objectOps.projectArray.filter(index => index !== object.project);
                 console.log(filteredArray);
-                projectArray = filteredArray;
+                objectOps.projectArray = filteredArray;
             }
         }
-        console.log(`proj array from objectOps ${projectArray}`);
-        ls.saveArray(projectArray, "proj");
+        console.log(`proj array from objectOps ${objectOps.projectArray}`);
+        ls.saveArray(objectOps.projectArray, "proj");
         // does this need to return the updated array?? !!!
     }
     // object operations
