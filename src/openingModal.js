@@ -1,4 +1,5 @@
 import { createElement } from "./utility";
+import { addToDo } from "./addToDo";
 
 // create modal, show on page load
 // options: 1) blank slate 2) demo the app 3) load locally stored data
@@ -24,6 +25,22 @@ const createModal = () => {
     modalBox.appendChild(demo);
 
     main.appendChild(modalContainer);
+
+    const listeners = () => {
+        blank.addEventListener('click', () => {
+            console.log('blank');
+            modalContainer.style.display = "none";
+            main.children[1].children[1].appendChild(addToDo.addDOM());
+            addToDo.addListener();
+        });
+        local.addEventListener('click', () => {
+            console.log('local');
+        });
+        demo.addEventListener('click', () => {
+            console.log('demo');
+        });
+    }
+    listeners();
 }
 
 export { createModal };

@@ -266,15 +266,20 @@ const project = (() => {
     // might want to separate forEach fn on its own... !!!
     // another fn to find object.property value and to select it (set "option.selected = true")
     const populateInput = (array, cardDiv) => {
-        let select = cardDiv.children[1].children[1].children[2];
-        let optionsArray = [];
-        array.forEach(index => {
-            let option = createElement('option', {"value": `${index}`});
-            option.textContent = `${index}`;
-            select.appendChild(option);
-            optionsArray.push(option);
-        })
-        return optionsArray;
+        if (array == null || array == undefined) {
+            console.log('populate input worked');
+            return false;
+        } else {
+            let select = cardDiv.children[1].children[1].children[2];
+            let optionsArray = [];
+            array.forEach(index => {
+                let option = createElement('option', {"value": `${index}`});
+                option.textContent = `${index}`;
+                select.appendChild(option);
+                optionsArray.push(option);
+            })
+            return optionsArray;
+        }
     }
     const markSelected = (array, object) => {
         let selectedOption;

@@ -22,7 +22,7 @@ const ls = (() => {
     const checkContent = (key) => {
         let content = returnArray(key);
         console.log(`checking for content ${content}`);
-        if (content[0] == undefined || content === null) {
+        if (content === null || content[0] == undefined) {
             return false;
         } else {
             return content;
