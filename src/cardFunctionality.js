@@ -14,7 +14,8 @@ const expand = (() => {
     // or, if it's expanded already, minimize card
     const mainFn = (input) => {
         let extendedCard = input.parentElement.nextElementSibling;
-        let object = objectOps.getObject(extendedCard.parentElement);
+        let index = objectOps.getObject(extendedCard.parentElement);
+        let object = objectOps.objectArray[index];
         if (object.expanded == false) {
             extendedCard.style.display = "flex";
             object.expanded = true;
@@ -33,12 +34,14 @@ const expand = (() => {
 const edit = (() => {
     const mainFn = (input) => {
         let toDoCard = input.parentElement.parentElement;
-        let object = objectOps.getObject(toDoCard);
+        let index = objectOps.getObject(toDoCard);
+        let object = objectOps.objectArray[index];
         if (object.editable == true) {
             // expand form
             editableCard(toDoCard);
             object.expanded = true;
             object.editable = false;
+            console.log(object);
             // display input fields
             displayInputs(toDoCard);
             // populate the input fields with current object data... needs object as argument !!!
@@ -48,6 +51,8 @@ const edit = (() => {
             resetCard(toDoCard);
             object.expanded = false;
             object.editable = true;
+            console.log(`from reset side`);
+            console.log(object);
         }
     }
     // card expanded to allow edits
@@ -104,7 +109,8 @@ const edit = (() => {
     }
     // cancel edit button
     const cancelEditFn = (cardDiv) => {
-        let object = objectOps.getObject(cardDiv);
+        let index = objectOps.getObject(cardDiv);
+        let object = objectOps.objectArray[index];
         if (object.title == "") {
             deleteFn(cardDiv.children[0].lastChild);
         } else {
@@ -186,7 +192,8 @@ const submit = (() => {
 const deleteFn = (input) => {
     let toDoCard = input.parentElement.parentElement;
     // remove from arrays
-    let object = objectOps.getObject(toDoCard);
+    let index = objectOps.getObject(toDoCard);
+    let object = objectOps.objectArray[index];
     objectOps.deleteFromProjectArray(object);
     objectOps.deleteFromObjectArray(object);
     // remove listeners

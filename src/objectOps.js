@@ -1,7 +1,7 @@
 import { ls } from "./localStorage";
 
-const cardFactory = (title, project, priority, dueDate, notes, checked) => {
-    return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
+const cardFactory = (title, project, priority, dueDate, notes, checked, value) => {
+    return { title, project, priority, dueDate, notes, checked, value, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
 }
 const objectOps = (() => {
     let objectArray = [];
@@ -69,9 +69,10 @@ const objectOps = (() => {
     // needs updating once I have multiple objects... !!!
     // needs to be passed the project as well..? or should it just sort through the main array of objects?
     const getObject = (cardDiv) => {
-        let theTitle = cardDiv.children[0].children[1].children[0].textContent;
-        let object = objectOps.objectArray.find(index => {
-            return index.title === theTitle;
+        let theValue = cardDiv.value;
+        console.log(objectOps.objectArray);
+        let indexPosition = objectOps.objectArray.findIndex(object => {
+            return object.value == theValue;
         });
         // this works, but tried using find instead...can delete later 
         // for (i=0; i<objectArray.length; i++) {
@@ -79,7 +80,7 @@ const objectOps = (() => {
         //         object = objectArray[i];
         //     }
         // }
-        return object;
+        return indexPosition;
     }
     return { addToObjectArray, addToProjectArray, objectArray, projectArray, update, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
 })();

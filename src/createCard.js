@@ -19,6 +19,7 @@ const craftCard = (() => {
     }
     // make to-do card
     const card = (object, cardDiv) => {
+        cardDiv.value = object.value;
         // -> 3 zones (regular, extended, and editable)
         const regularSize = createElement('div', {"class": "regularSize"});
         const extendedSize = createElement('div', {"class": "extendedSize"});
@@ -166,6 +167,7 @@ const craftCard = (() => {
 const createCard = (object) => {
     let card = craftCard.initial();
     craftCard.card(object, card);
+    console.log(object);
     return card;
 }
 export { createCard }

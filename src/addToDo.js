@@ -5,6 +5,9 @@ import { edit } from "./cardFunctionality";
 
 const addToDo = (() => {
     let addBtn;
+    // count is value of the card. increments with each to-do card created. 
+    // allows for identification of object from array (objectOps.getObject);
+    let count = 0;
     const addDOM = () => {
         // create container and button
         const addContainer = createElement('div', {'class': 'addContainer'});
@@ -17,10 +20,11 @@ const addToDo = (() => {
         return addContainer;
     }
     const mainFn = () => {
-        let newToDo = cardFactory("", "", "", "", "", false);
+        let newToDo = cardFactory("", "", "", "", "", false, count);
+        count++;
         objectOps.addToObjectArray(newToDo);
         let newCard = createCard(newToDo);
-        console.log(newToDo.priority == "");
+        // console.log(newToDo.priority == "");
         edit.mainFn(newCard.children[0].children[6]);
         return newCard;
     }
