@@ -23,7 +23,7 @@ const expand = (() => {
             extendedCard.style.display = "none";
             object.expanded = false;
             if (object.editable == false) {
-                edit.cancelEditFn(extendedCard.parentElement)
+                edit.cancelEditFnLite(extendedCard.parentElement)
             }
         }
     }
@@ -41,7 +41,6 @@ const edit = (() => {
             editableCard(toDoCard);
             object.expanded = true;
             object.editable = false;
-            console.log(object);
             // display input fields
             displayInputs(toDoCard);
             // populate the input fields with current object data... needs object as argument !!!
@@ -51,8 +50,6 @@ const edit = (() => {
             resetCard(toDoCard);
             object.expanded = false;
             object.editable = true;
-            console.log(`from reset side`);
-            console.log(object);
         }
     }
     // card expanded to allow edits
@@ -120,6 +117,13 @@ const edit = (() => {
         }
         // needs to be updated to be able to receive other objects (?)
     }
+    const cancelEditFnLite = (cardDiv) => {
+        let index = objectOps.getObject(cardDiv);
+        let object = objectOps.objectArray[index];
+        resetCard(cardDiv);
+        object.editable = true;
+        object.expanded = false;
+    }
     // reset: clears inputs, hides them, displays text, minimizes card to normal size
     const resetCard = (cardDiv) => {
         _clearInputs(cardDiv);
@@ -140,7 +144,7 @@ const edit = (() => {
         cardDiv.children[0].children[1].children[2].value = null;
         cardDiv.children[1].children[0].children[2].value = null;
     }
-    return { mainFn, resetCard, populateInput, cancelEditFn  }
+    return { mainFn, resetCard, populateInput, cancelEditFn, cancelEditFnLite  }
 })();
 // for submit
 const submit = (() => {
@@ -274,7 +278,6 @@ const project = (() => {
     // another fn to find object.property value and to select it (set "option.selected = true")
     const populateInput = (array, cardDiv) => {
         if (array == null || array == undefined) {
-            console.log('populate input worked');
             return false;
         } else {
             let select = cardDiv.children[1].children[1].children[2];

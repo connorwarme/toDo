@@ -24,13 +24,11 @@ const addToDo = (() => {
         count++;
         objectOps.addToObjectArray(newToDo);
         let newCard = createCard(newToDo);
-        // console.log(newToDo.priority == "");
         edit.mainFn(newCard.children[0].children[6]);
         return newCard;
     }
     const addListener = () => {
         let btn = document.getElementById('addToDo');
-        console.log(btn);
         // add listener
         btn.addEventListener('click', () => {
             document.querySelector('div.body').appendChild(mainFn())});

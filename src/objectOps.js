@@ -13,7 +13,6 @@ const objectOps = (() => {
     const deleteFromObjectArray = (object) => {
         let filteredArray = objectOps.objectArray.filter((index) => index !== object);
         objectOps.objectArray = filteredArray;
-        console.log(`object array from objectOps ${objectOps.objectArray}`);
         ls.saveArray(objectOps.objectArray, "obj");
         // does this need to return the updated array? !!!
     }
@@ -38,15 +37,11 @@ const objectOps = (() => {
         } else {
             // check if other objects are also in the same project, or if this object is the only one
             let project = objectOps.objectArray.filter(index => index.project === object.project);
-            console.log(project);
             if (project.length == 1) {
-                console.log('fire');
                 let filteredArray = objectOps.projectArray.filter(index => index !== object.project);
-                console.log(filteredArray);
                 objectOps.projectArray = filteredArray;
             }
         }
-        console.log(`proj array from objectOps ${objectOps.projectArray}`);
         ls.saveArray(objectOps.projectArray, "proj");
         // does this need to return the updated array?? !!!
     }
@@ -70,7 +65,6 @@ const objectOps = (() => {
     // needs to be passed the project as well..? or should it just sort through the main array of objects?
     const getObject = (cardDiv) => {
         let theValue = cardDiv.value;
-        console.log(objectOps.objectArray);
         let indexPosition = objectOps.objectArray.findIndex(object => {
             return object.value == theValue;
         });

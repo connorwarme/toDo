@@ -167,7 +167,6 @@ const craftCard = (() => {
 const createCard = (object) => {
     let card = craftCard.initial();
     craftCard.card(object, card);
-    console.log(object);
     return card;
 }
 export { createCard }
