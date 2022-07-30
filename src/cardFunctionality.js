@@ -14,8 +14,7 @@ const expand = (() => {
     // or, if it's expanded already, minimize card
     const mainFn = (input) => {
         let extendedCard = input.parentElement.nextElementSibling;
-        let index = objectOps.getObject(extendedCard.parentElement);
-        let object = objectOps.objectArray[index];
+        let object = objectOps.getObject(extendedCard.parentElement);
         if (object.expanded == false) {
             extendedCard.style.display = "flex";
             object.expanded = true;
@@ -34,8 +33,7 @@ const expand = (() => {
 const edit = (() => {
     const mainFn = (input) => {
         let toDoCard = input.parentElement.parentElement;
-        let index = objectOps.getObject(toDoCard);
-        let object = objectOps.objectArray[index];
+        let object = objectOps.getObject(toDoCard);
         if (object.editable == true) {
             // expand form
             editableCard(toDoCard);
@@ -106,8 +104,7 @@ const edit = (() => {
     }
     // cancel edit button
     const cancelEditFn = (cardDiv) => {
-        let index = objectOps.getObject(cardDiv);
-        let object = objectOps.objectArray[index];
+        let object = objectOps.getObject(cardDiv);
         if (object.title == "") {
             deleteFn(cardDiv.children[0].lastChild);
         } else {
@@ -118,8 +115,7 @@ const edit = (() => {
         // needs to be updated to be able to receive other objects (?)
     }
     const cancelEditFnLite = (cardDiv) => {
-        let index = objectOps.getObject(cardDiv);
-        let object = objectOps.objectArray[index];
+        let object = objectOps.getObject(cardDiv);
         resetCard(cardDiv);
         object.editable = true;
         object.expanded = false;
@@ -196,8 +192,7 @@ const submit = (() => {
 const deleteFn = (input) => {
     let toDoCard = input.parentElement.parentElement;
     // remove from arrays
-    let index = objectOps.getObject(toDoCard);
-    let object = objectOps.objectArray[index];
+    let object = objectOps.getObject(cardDiv);
     objectOps.deleteFromProjectArray(object);
     objectOps.deleteFromObjectArray(object);
     // remove listeners

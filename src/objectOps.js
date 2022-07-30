@@ -51,6 +51,8 @@ const objectOps = (() => {
         for (let i=0; i<array.length; i++) {
             object[object.properties[i]] = array[i];
         }
+        // update local storage
+        ls.saveArray(objectOps.objectArray, "obj");
     }
     // update the checkmark (if to-do is complete)
     const updateCheck = (input) => {
@@ -74,7 +76,7 @@ const objectOps = (() => {
         //         object = objectArray[i];
         //     }
         // }
-        return indexPosition;
+        return objectOps.objectArray[indexPosition];
     }
     return { addToObjectArray, addToProjectArray, objectArray, projectArray, update, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
 })();
