@@ -8,19 +8,27 @@ module.exports = {
         objectOps: './src/objectOps.js', 
         create: './src/createCard.js',
         addToDo: './src/addToDo.js',
+        hf: './src/h&f.js',
         utility: './src/utility.js'
     },
     devServer: {
         static: './dist',
     },
-    // plugins: [
-    //     new HtmlWebpackPlugin({
-    //         title: 'ToDo List',
-    //     }),
-    // ],
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
         // clean: true,
+    },
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+              },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+            },
+        ],
     },
 };

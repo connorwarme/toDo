@@ -40,13 +40,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/h&f.js":
+/*!********************!*\
+  !*** ./src/h&f.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"makeHF\": () => (/* binding */ makeHF)\n/* harmony export */ });\n/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ \"./src/utility.js\");\n// header and footer\n\nconst Header = new URL(/* asset import */ __webpack_require__(/*! ./src/headercheck.png */ \"./src/headercheck.png\"), __webpack_require__.b);\nconst Github = new URL(/* asset import */ __webpack_require__(/*! ./src/github.png */ \"./src/github.png\"), __webpack_require__.b);\nconst LinkedIn = new URL(/* asset import */ __webpack_require__(/*! ./src/linkedin.png */ \"./src/linkedin.png\"), __webpack_require__.b);\n\nconst makeHF = () => {\n    const header = () => {\n        let header = document.querySelector('div.header');\n        let headerImgBox = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"headerImgBox\"});\n        const icon = new Image();\n        icon.src = Header;\n        let headerTextBox = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"headerTextBox\"});\n        headerTextBox.textContent = \"MATE\";\n\n        // append it all together\n        header.appendChild(headerImgBox);\n        headerImgBox.appendChild(icon);\n        header.appendChild(headerTextBox);\n    }\n    const footer = () => {\n        let footer = document.querySelector('div.footer');\n        let footerBox = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"footerBox\"});\n        let linkContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"linkContainer\"});\n        let gitLink = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('a', {\"href\": \"https://github.com/connorwarme\", \"alt\": \"Github Profile\"});\n        let gitIcon = new Image();\n        gitIcon.src = Github;\n        gitIcon.alt = \"Github Profile\";\n        let linkLink = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('a', {\"href\": \"https://www.linkedin.com/in/connor-warme-103a09167\", \"alt\": \"LinkedIn Profile\"});\n        let linkIcon = new Image();\n        linkIcon.src = LinkedIn;\n        linkIcon.alt = \"LinkedIn Profile\";\n        let textContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"textContainer\"});\n\n        // append it all together\n        footer.appendChild(footerBox);\n        footerBox.appendChild(linkContainer);\n        linkContainer.appendChild(gitLink);\n        gitLink.appendChild(gitIcon);\n        linkContainer.appendChild(linkLink);\n        linkLink.appendChild(linkIcon);\n        footerBox.appendChild(textContainer);\n    }\n    header();\n    footer();\n}\n\n\n//# sourceURL=webpack://todo/./src/h&f.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _objectOps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./objectOps.js */ \"./src/objectOps.js\");\n/* harmony import */ var _createCard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createCard.js */ \"./src/createCard.js\");\n/* harmony import */ var _addToDo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addToDo.js */ \"./src/addToDo.js\");\n/* harmony import */ var _localStorage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage.js */ \"./src/localStorage.js\");\n/* harmony import */ var _openingModal_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./openingModal.js */ \"./src/openingModal.js\");\n\n\n\n\n\n\n\nlet first = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('update README', 'winning', 'High', '07/14/22', 'kinda like the other dudes', false);\nlet second = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('doing it', \"dudeage\", \"High\", \"\", \"all the time\", false);\n// if (ls.checkContent(\"obj\") == false) {\n//     objectOps.addToObjectArray(first);\n//     objectOps.addToObjectArray(second);\n//     objectOps.addToProjectArray(objectOps.objectArray);\n// }\nlet body = document.querySelector('div.body');\n// body.appendChild(add());\n// body.appendChild(createCard(first));\n// body.appendChild(createCard(second));\n// body.appendChild(addFn());\n// ls.saveArray(objectOps.objectArray, \"obj\");\n// let x = ls.returnArray(\"obj\");\n// console.log(x);\n// for (let i=0; i<x.length; i++) {\n//     body.appendChild(createCard(x[i]));\n// }\n// ls.saveArray(objectOps.projectArray, \"proj\");\n// console.log(ls.returnArray(\"proj\"));\n// objectOps.objectArray = ls.returnArray(\"obj\");\n// objectOps.projectArray = ls.returnArray(\"proj\");\n// // \nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.objectArray);\nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.projectArray);\n// console.log(ls.checkContent(\"obj\"));\n(0,_openingModal_js__WEBPACK_IMPORTED_MODULE_4__.createModal)();\n\n//# sourceURL=webpack://todo/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _objectOps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./objectOps.js */ \"./src/objectOps.js\");\n/* harmony import */ var _createCard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createCard.js */ \"./src/createCard.js\");\n/* harmony import */ var _addToDo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addToDo.js */ \"./src/addToDo.js\");\n/* harmony import */ var _localStorage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage.js */ \"./src/localStorage.js\");\n/* harmony import */ var _openingModal_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./openingModal.js */ \"./src/openingModal.js\");\n/* harmony import */ var _h_f_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./h&f.js */ \"./src/h&f.js\");\n\n\n\n\n\n\n\n\nlet first = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('update README', 'winning', 'High', '07/14/22', 'kinda like the other dudes', false);\nlet second = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('doing it', \"dudeage\", \"High\", \"\", \"all the time\", false);\n// if (ls.checkContent(\"obj\") == false) {\n//     objectOps.addToObjectArray(first);\n//     objectOps.addToObjectArray(second);\n//     objectOps.addToProjectArray(objectOps.objectArray);\n// }\nlet body = document.querySelector('div.body');\n// body.appendChild(add());\n// body.appendChild(createCard(first));\n// body.appendChild(createCard(second));\n// body.appendChild(addFn());\n// ls.saveArray(objectOps.objectArray, \"obj\");\n// let x = ls.returnArray(\"obj\");\n// console.log(x);\n// for (let i=0; i<x.length; i++) {\n//     body.appendChild(createCard(x[i]));\n// }\n// ls.saveArray(objectOps.projectArray, \"proj\");\n// console.log(ls.returnArray(\"proj\"));\n// objectOps.objectArray = ls.returnArray(\"obj\");\n// objectOps.projectArray = ls.returnArray(\"proj\");\n// // \nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.objectArray);\nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.projectArray);\n// console.log(ls.checkContent(\"obj\"));\n(0,_openingModal_js__WEBPACK_IMPORTED_MODULE_4__.createModal)();\n(0,_h_f_js__WEBPACK_IMPORTED_MODULE_5__.makeHF)();\n\n//# sourceURL=webpack://todo/./src/index.js?");
 
 /***/ }),
 
@@ -88,6 +98,36 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"createElement\": () => (/* binding */ createElement)\n/* harmony export */ });\n// DOM functions\n// helper functions to create DOM element and add attributes\nconst createElement = (type, attributes) => {\n    const newElement = document.createElement(`${type}`);\n    if (attributes == null) return newElement;\n    setAttributes(newElement, attributes);\n    return newElement;\n}\nconst setAttributes = (element, attributes) => {\n    Object.entries(attributes).forEach(([key, value]) => {\n        element.setAttribute(key, value);\n    })\n}\n\n\n//# sourceURL=webpack://todo/./src/utility.js?");
 
+/***/ }),
+
+/***/ "./src/github.png":
+/*!************************!*\
+  !*** ./src/github.png ***!
+  \************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"1d0be6b574e3608586cd.png\";\n\n//# sourceURL=webpack://todo/./src/github.png?");
+
+/***/ }),
+
+/***/ "./src/headercheck.png":
+/*!*****************************!*\
+  !*** ./src/headercheck.png ***!
+  \*****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"7f14347a57375553bfec.png\";\n\n//# sourceURL=webpack://todo/./src/headercheck.png?");
+
+/***/ }),
+
+/***/ "./src/linkedin.png":
+/*!**************************!*\
+  !*** ./src/linkedin.png ***!
+  \**************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"93aeb677ca64ec9026ed.png\";\n\n//# sourceURL=webpack://todo/./src/linkedin.png?");
+
 /***/ })
 
 /******/ 	});
@@ -116,6 +156,9 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -127,6 +170,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 				}
 /******/ 			}
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
@@ -143,6 +198,52 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"index": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// no jsonp function
 /******/ 	})();
 /******/ 	
 /************************************************************************/
