@@ -192,7 +192,7 @@ const submit = (() => {
 const deleteFn = (input) => {
     let toDoCard = input.parentElement.parentElement;
     // remove from arrays
-    let object = objectOps.getObject(cardDiv);
+    let object = objectOps.getObject(toDoCard);
     objectOps.deleteFromProjectArray(object);
     objectOps.deleteFromObjectArray(object);
     // remove listeners
@@ -242,10 +242,18 @@ const priority = (() => {
     }
     // find and return the "checked" radio button aka selected priority level
     const currentSelection = (input) => {
-        for (let i=0; i<input.length; i++) {
-            if (input[i].checked) {
-                return input[i];
-            }
+        let checked = input.find(index => {
+            return index.checked;
+        })
+        // for (let i=0; i<input.length; i++) {
+        //     if (input[i].checked) {
+        //         return input[i];
+        //     }
+        // }
+        if (checked == undefined) {
+            return "";
+        } else {
+            return checked;
         }
     }
     return { mainFn, clearSelection, currentSelection, editCurrentSelection };
@@ -287,6 +295,7 @@ const project = (() => {
         }
     }
     const markSelected = (array, object) => {
+        // does this need another check - for when no project is selected? !!!
         let selectedOption;
         if (object.project != "") {
             selectedOption = array.find(index => {
@@ -325,12 +334,24 @@ const project = (() => {
         cardDiv.children[1].children[1].children[3].style.display = "none";
         cardDiv.children[1].children[1].children[4].style.display = "block";
     }
-    const addInputFn = (cardDiv) => {
-        let project = cardDiv.children[1].children[1].children[4].children[0].value;
-        if (project != "") {
-            objectOps.projectArray.push(project);
+    const addInputFn = (cardDiv, object) => {
+        let input = cardDiv.children[1].children[1].children[4].children[0].value;
+        if (input != "" && !(checkAlreadyInArray(input))) {
+            objectOps.addSingleToProjectArray(input);
+            objectOps.updateSingle(object, `project`, input);
         }
-        // push project into projectArray
+    }
+    const checkAlreadyInArray = (input) => {
+        let already = objectOps.projectArray.find(index => {
+            return index == input;
+        });
+        if (already == undefined) {
+            return false;
+        } else {
+            console.log('already there!');
+            // this could fire an alert or something !!!
+            return true;
+        }
     }
     // clear input field value; show "add new project" button; hide input, cancel, and save.
     const addCancelFn = (cardDiv) => {
@@ -339,7 +360,7 @@ const project = (() => {
         cardDiv.children[1].children[1].children[4].style.display = "none";
     }
     const addSaveFn = (cardDiv, object) => {
-        addInputFn(cardDiv);
+        addInputFn(cardDiv, object);
         // reset display
         addCancelFn(cardDiv);
         // remove and recreate dropdown menu

@@ -63,7 +63,7 @@
     width: inherit;
     border: 1px solid black;
 }
-.bodyContainer {
+.mainContainer {
     min-height: calc(100vh - 225px);
     display: flex;
 }
@@ -72,9 +72,15 @@
     width: 200px;
     border: 2px solid rgba(0, 0, 0, 0.8);
 }
-.body {
+.bodyContainer {
     height: inherit;
     width: calc(100vw - 200px);
+}
+.body {
+    display: grid;
+}
+.addContainer {
+    grid-row: -2/-1;
 }
 .addContainer > input {
     height: 50px;

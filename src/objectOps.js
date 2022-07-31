@@ -31,6 +31,10 @@ const objectOps = (() => {
         // save/update local storage
         ls.saveArray(objectOps.projectArray, "proj");
     }
+    const addSingleToProjectArray = (input) => {
+        objectOps.projectArray.push(input);
+        ls.saveArray(objectOps.projectArray, "proj");
+    }
     const deleteFromProjectArray = (object) => {
         if (object.project == "") {
             return;
@@ -54,6 +58,9 @@ const objectOps = (() => {
         // update local storage
         ls.saveArray(objectOps.objectArray, "obj");
     }
+    const updateSingle = (object, key, input) => {
+        object[key] = input;
+    }
     // update the checkmark (if to-do is complete)
     const updateCheck = (input) => {
         let object = getObject(input.parentElement.parentElement);
@@ -62,6 +69,7 @@ const objectOps = (() => {
         } else {
             object.checked = false;
         }
+        ls.saveArray(objectOps.objectArray, "obj");
     }
     // needs updating once I have multiple objects... !!!
     // needs to be passed the project as well..? or should it just sort through the main array of objects?
@@ -78,7 +86,7 @@ const objectOps = (() => {
         // }
         return objectOps.objectArray[indexPosition];
     }
-    return { addToObjectArray, addToProjectArray, objectArray, projectArray, update, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
+    return { addToObjectArray, addToProjectArray, addSingleToProjectArray, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
 })();
 
 export { cardFactory, objectOps }
