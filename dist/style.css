@@ -61,7 +61,7 @@
 .header {
     height: 150px;
     width: inherit;
-    border: 1px solid black;
+    background-color: #1d3557;
 }
 .mainContainer {
     min-height: calc(100vh - 225px);
@@ -88,23 +88,19 @@
     width: 85px;
     border-radius: 50%;
     border: none;
-    transition-duration: 750ms; 
-    opacity: 0.8;
-}
-.addContainer > button::before {
-    content: "+";
+    color: #1d3557;
     font-size: 100px;
     font-weight: bold; 
     font-family: courier;
-    color: black;
-    position: fixed;
-    margin-top: -43px;
-    margin-left: -29px;
+    background-color: #a8dadc;
+    transition-duration: 1000ms;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    opacity: 0.8;
+    padding-left: 2px;
 }
 .addContainer > button:hover {
-    transform: rotate(270deg);
+    transform: rotate(360deg);
     opacity: 1;
-    background-color: green;
 }
 .checkboxLabel {
     display: none;
@@ -195,5 +191,5 @@ button {
 .footer {
     height: 75px;
     width: inherit;
-    border: 1px solid black;
+    background-color: #1d3557;
 }
