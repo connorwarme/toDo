@@ -80,11 +80,31 @@
     display: grid;
 }
 .addContainer {
-    grid-row: -2/-1;
+    display: flex;
+    justify-content: center;
 }
-.addContainer > input {
-    height: 50px;
-    width: 150px;
+.addContainer > button {
+    height: 85px;
+    width: 85px;
+    border-radius: 50%;
+    border: none;
+    transition-duration: 750ms; 
+    opacity: 0.8;
+}
+.addContainer > button::before {
+    content: "+";
+    font-size: 100px;
+    font-weight: bold; 
+    font-family: courier;
+    color: black;
+    position: fixed;
+    margin-top: -43px;
+    margin-left: -29px;
+}
+.addContainer > button:hover {
+    transform: rotate(270deg);
+    opacity: 1;
+    background-color: green;
 }
 .checkboxLabel {
     display: none;

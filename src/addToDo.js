@@ -11,12 +11,12 @@ const addToDo = (() => {
     const addDOM = () => {
         // create container and button
         const addContainer = createElement('div', {'class': 'addContainer'});
-        addBtn = createElement('input', {'type': 'button', 'class': 'addBtn', 'id': 'addToDo'});
-        const addBtnLabel = createElement('label', {'for': 'addToDo'});
-        addBtnLabel.textContent = "Add To-Do";
+        addBtn = createElement('button', {'class': 'addBtn', 'id': 'addToDo', 'value': '+', 'aria-label': 'Add To-Do'});
+        // const addBtnLabel = createElement('label', {'for': 'addToDo'});
+        // addBtnLabel.textContent = "Add To-Do";
         // append together
         addContainer.appendChild(addBtn);
-        addContainer.appendChild(addBtnLabel);
+        // addContainer.appendChild(addBtnLabel);
         return addContainer;
     }
     const mainFn = () => {
