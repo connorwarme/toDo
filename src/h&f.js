@@ -22,15 +22,16 @@ const makeHF = () => {
         let footer = document.querySelector('div.footer');
         let footerBox = createElement('div', {"class": "footerBox"});
         let linkContainer = createElement('div', {"class": "linkContainer"});
-        let gitLink = createElement('a', {"href": "https://github.com/connorwarme", "alt": "Github Profile"});
+        let gitLink = createElement('a', {"href": "https://github.com/connorwarme", "alt": "Github Profile", "target": "_blank"});
         let gitIcon = new Image();
         gitIcon.src = Github;
         gitIcon.alt = "Github Profile";
-        let linkLink = createElement('a', {"href": "https://www.linkedin.com/in/connor-warme-103a09167", "alt": "LinkedIn Profile"});
+        let linkLink = createElement('a', {"href": "https://www.linkedin.com/in/connor-warme-103a09167", "alt": "LinkedIn Profile", "target": "_blank"});
         let linkIcon = new Image();
         linkIcon.src = LinkedIn;
         linkIcon.alt = "LinkedIn Profile";
         let textContainer = createElement('div', {"class": "textContainer"});
+        textContainer.textContent = "Peregrinning Productions";
 
         // append it all together
         footer.appendChild(footerBox);

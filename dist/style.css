@@ -59,9 +59,23 @@
     grid-row: 5/6;
 }
 .header {
+    display: flex;
     height: 150px;
     width: inherit;
     background-color: #1d3557;
+}
+.headerImgBox {
+    margin-left: 50px;
+}
+.headerImgBox > img {
+    height: 150px;
+}
+.headerTextBox {
+    font-size: 88px;
+    font-weight: 800;
+    color: #a8dadc;
+    align-self: center;
+    padding-left: 8px;
 }
 .mainContainer {
     min-height: calc(100vh - 225px);
@@ -192,4 +206,22 @@ button {
     height: 75px;
     width: inherit;
     background-color: #1d3557;
+}
+.footerBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.linkContainer {
+    margin-top: 2px;
+}
+.linkContainer > a > img {
+    height: 50px;
+}
+.footerBox > .textContainer {
+    height: 25px;
+    color: #a8dadc;
+    font-weight: 800;
+    margin-top: -5px;
 }
