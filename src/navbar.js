@@ -53,8 +53,26 @@ const navbar = () => {
         dateNavContainer.appendChild(dateNavBtn);
         dateNavContainer.appendChild(dateNavBtnLabel);
         // should I have used a fn to dynamically create that? ^^^
+        // listeners for those^^ !!!
 
-        //
+
+        // project
+        const projectText = createElement('div', {"class": "projectText"});
+        projectText.textContent = "Projects";
+        // when user adds a project to the dropdown, I want to add the project to the nav
+        // 
+        const newProject = (input) => {
+            // create container
+            let container = createElement('div', {"class": `${input}Container`});
+            // create button
+            let button = createElement('button', {"class": `${input}Btn`, "id": `${input}Btn`});
+            // create label
+            let label = createElement('label', {"for": `${input}BtnLabel`});
+            label.textContent = `${input}`;
+            // it will need a listener
+            // listenerFn....runs ProjectNavFn(projectNameHere)
+            // that function can sort the display to only include those projects...
+        }
 
 
     }
