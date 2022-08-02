@@ -61,7 +61,7 @@ const navbar = () => {
         projectText.textContent = "Projects";
         // when user adds a project to the dropdown, I want to add the project to the nav
         // 
-        const newProject = (input) => {
+        const newProject = (input, parentElement) => {
             // create container
             let container = createElement('div', {"class": `${input}Container`});
             // create button
@@ -72,9 +72,15 @@ const navbar = () => {
             // it will need a listener
             // listenerFn....runs ProjectNavFn(projectNameHere)
             // that function can sort the display to only include those projects...
+            parentElement.appendChild(container);
+            container.appendChild(button);
+            container.appendChild(label);
+            // could have the third argument be the function to have the listener run...
+            // could use this fn to dynamically create the sort zone too...
         }
 
 
     }
 
 }
+export { navbar }
