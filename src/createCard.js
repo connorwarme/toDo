@@ -1,5 +1,11 @@
 import { createElement } from "./utility";
 import { listeners } from "./cardFunctionality";
+import Delete from "./icons/delete.png";
+import Edit from "./icons/edit.png";
+import Expand from "./icons/expand.png";
+import Add from "./icons/add.png";
+import Cancel from "./icons/cancel.png";
+import Save from "./icons/save.png";
 
 const craftCard = (() => {
 // I have these declared right away to be available in multiple functions...)
@@ -34,9 +40,12 @@ const craftCard = (() => {
         const spacerDiv = createElement('div', {"class": "spacerDiv"});
         let priority = _priority(object);
         expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card"});
+        const expandIcon = createElement('img', {"src": `${Expand}`, "alt": "Expand"});
         let date = _date(object);
         editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
+        const editIcon = createElement('img', {"src": `${Edit}`, "alt": "Edit"});
         deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
+        const deleteIcon = createElement('img', {"src": `${Delete}`, "alt": "Delete"});
         // extended size
         let note = _notes(object);
         let project = _project(object);
@@ -49,9 +58,12 @@ const craftCard = (() => {
         regularSize.appendChild(spacerDiv);
         regularSize.appendChild(priority);
         regularSize.appendChild(expandCard);
+        expandCard.appendChild(expandIcon);
         regularSize.appendChild(date);
         regularSize.appendChild(editCard);
+        editCard.appendChild(editIcon);
         regularSize.appendChild(deleteCard);
+        deleteCard.appendChild(deleteIcon);
         extendedSize.appendChild(note);
         extendedSize.appendChild(project);
         editSize.appendChild(priorityEdit);
@@ -110,18 +122,24 @@ const craftCard = (() => {
         const projectEditLabel = createElement('label', {"class": "projectEditLabel", "for": "projectDropdown"});
         const projectSelect = createElement('select', {"class": "projectSelect", "id": "projectDropdown"});
         projectAdd = createElement('button', {"class": "projectAddBtn", "aria-label": "Add Project"});
+        const projectAddIcon = createElement('img', {"src": `${Add}`, "alt": "Add Project"});
         const projectAddContainer = createElement('div', {"class": "projectAddContainer"});
         const projectAddInput = createElement('input', {"type": "text", "class": "projectAddInput", "aria-label": "Add New Project"});
         projectAddCancel = createElement('button', {"class": "projectAddCancel", "aria-label": "Cancel"});
+        const projectCancelIcon = createElement('img', {"src": `${Cancel}`, "alt": "Cancel"});
         projectAddSave = createElement('button', {"class": "projectAddSave"});
+        const projectSaveIcon = createElement('img', {"src": `${Save}`, "alt": "Save Project"});
         projectContainer.appendChild(projectText);
         projectContainer.appendChild(projectEditLabel);
         projectContainer.appendChild(projectSelect);
         projectContainer.appendChild(projectAdd);
+        projectAdd.appendChild(projectAddIcon);
         projectContainer.appendChild(projectAddContainer);
         projectAddContainer.appendChild(projectAddInput);
         projectAddContainer.appendChild(projectAddCancel);
+        projectAddCancel.appendChild(projectCancelIcon);
         projectAddContainer.appendChild(projectAddSave);
+        projectAddSave.appendChild(projectSaveIcon);
         return projectContainer;
     }
     const _priorityEdit = () => {
