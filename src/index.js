@@ -4,6 +4,7 @@ import { add, addFn } from './addToDo.js';
 import { ls } from './localStorage.js';
 import { createModal } from './openingModal.js';
 import { makeHF } from './h&f.js';
+import { navbar } from './navbar.js';
 
 
 let first = cardFactory('update README', 'winning', 'High', '07/14/22', 'kinda like the other dudes', false);
@@ -34,3 +35,5 @@ console.log(objectOps.projectArray);
 // console.log(ls.checkContent("obj"));
 createModal();
 makeHF();
+navbar.createNav();
+navbar.newProject('first Project');

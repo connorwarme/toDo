@@ -56,7 +56,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _objectOps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./objectOps.js */ \"./src/objectOps.js\");\n/* harmony import */ var _createCard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createCard.js */ \"./src/createCard.js\");\n/* harmony import */ var _addToDo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addToDo.js */ \"./src/addToDo.js\");\n/* harmony import */ var _localStorage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage.js */ \"./src/localStorage.js\");\n/* harmony import */ var _openingModal_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./openingModal.js */ \"./src/openingModal.js\");\n/* harmony import */ var _h_f_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./h&f.js */ \"./src/h&f.js\");\n\n\n\n\n\n\n\n\nlet first = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('update README', 'winning', 'High', '07/14/22', 'kinda like the other dudes', false);\nlet second = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('doing it', \"dudeage\", \"High\", \"\", \"all the time\", false);\n// if (ls.checkContent(\"obj\") == false) {\n//     objectOps.addToObjectArray(first);\n//     objectOps.addToObjectArray(second);\n//     objectOps.addToProjectArray(objectOps.objectArray);\n// }\nlet body = document.querySelector('div.body');\n// body.appendChild(add());\n// body.appendChild(createCard(first));\n// body.appendChild(createCard(second));\n// body.appendChild(addFn());\n// ls.saveArray(objectOps.objectArray, \"obj\");\n// let x = ls.returnArray(\"obj\");\n// console.log(x);\n// for (let i=0; i<x.length; i++) {\n//     body.appendChild(createCard(x[i]));\n// }\n// ls.saveArray(objectOps.projectArray, \"proj\");\n// console.log(ls.returnArray(\"proj\"));\n// objectOps.objectArray = ls.returnArray(\"obj\");\n// objectOps.projectArray = ls.returnArray(\"proj\");\n// // \nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.objectArray);\nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.projectArray);\n// console.log(ls.checkContent(\"obj\"));\n(0,_openingModal_js__WEBPACK_IMPORTED_MODULE_4__.createModal)();\n(0,_h_f_js__WEBPACK_IMPORTED_MODULE_5__.makeHF)();\n\n//# sourceURL=webpack://todo/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _objectOps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./objectOps.js */ \"./src/objectOps.js\");\n/* harmony import */ var _createCard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createCard.js */ \"./src/createCard.js\");\n/* harmony import */ var _addToDo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./addToDo.js */ \"./src/addToDo.js\");\n/* harmony import */ var _localStorage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./localStorage.js */ \"./src/localStorage.js\");\n/* harmony import */ var _openingModal_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./openingModal.js */ \"./src/openingModal.js\");\n/* harmony import */ var _h_f_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./h&f.js */ \"./src/h&f.js\");\n/* harmony import */ var _navbar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./navbar.js */ \"./src/navbar.js\");\n\n\n\n\n\n\n\n\n\nlet first = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('update README', 'winning', 'High', '07/14/22', 'kinda like the other dudes', false);\nlet second = (0,_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.cardFactory)('doing it', \"dudeage\", \"High\", \"\", \"all the time\", false);\n// if (ls.checkContent(\"obj\") == false) {\n//     objectOps.addToObjectArray(first);\n//     objectOps.addToObjectArray(second);\n//     objectOps.addToProjectArray(objectOps.objectArray);\n// }\nlet body = document.querySelector('div.body');\n// body.appendChild(add());\n// body.appendChild(createCard(first));\n// body.appendChild(createCard(second));\n// body.appendChild(addFn());\n// ls.saveArray(objectOps.objectArray, \"obj\");\n// let x = ls.returnArray(\"obj\");\n// console.log(x);\n// for (let i=0; i<x.length; i++) {\n//     body.appendChild(createCard(x[i]));\n// }\n// ls.saveArray(objectOps.projectArray, \"proj\");\n// console.log(ls.returnArray(\"proj\"));\n// objectOps.objectArray = ls.returnArray(\"obj\");\n// objectOps.projectArray = ls.returnArray(\"proj\");\n// // \nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.objectArray);\nconsole.log(_objectOps_js__WEBPACK_IMPORTED_MODULE_0__.objectOps.projectArray);\n// console.log(ls.checkContent(\"obj\"));\n(0,_openingModal_js__WEBPACK_IMPORTED_MODULE_4__.createModal)();\n(0,_h_f_js__WEBPACK_IMPORTED_MODULE_5__.makeHF)();\n_navbar_js__WEBPACK_IMPORTED_MODULE_6__.navbar.createNav();\n_navbar_js__WEBPACK_IMPORTED_MODULE_6__.navbar.newProject('first Project');\n\n//# sourceURL=webpack://todo/./src/index.js?");
 
 /***/ }),
 
@@ -67,6 +67,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _obj
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"ls\": () => (/* binding */ ls)\n/* harmony export */ });\n// local storage\nconst ls = (() => {\n    // these work for both objectArray and projectArray\n    // take the array, stringify, and save it locally\n    const saveArray = (array, key) => {\n        // need to stringify data\n        let data = JSON.stringify(array);\n        // save to local\n        localStorage.setItem(key, data);\n    }\n    // not currently using this one.. !!!\n    const updateArrays = (array1, array2) => {\n        saveArray(array1, \"obj\");\n        saveArray(array2, \"proj\");\n    }\n    // get the local data, parse it, and return the array\n    const returnArray = (key) => {\n        let arrayString = localStorage.getItem(key);\n        let regularArray = JSON.parse(arrayString);\n        return regularArray;\n    }\n    const checkContent = (key) => {\n        let content = returnArray(key);\n        console.log(`checking for content ${content}`);\n        if (content === null || content[0] == undefined) {\n            return false;\n        } else {\n            return content;\n        }\n    }\n    return { saveArray, updateArrays, returnArray, checkContent }\n})();\n\n\n\n//# sourceURL=webpack://todo/./src/localStorage.js?");
+
+/***/ }),
+
+/***/ "./src/navbar.js":
+/*!***********************!*\
+  !*** ./src/navbar.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"navbar\": () => (/* binding */ navbar)\n/* harmony export */ });\n/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utility */ \"./src/utility.js\");\n/* harmony import */ var _icons_home_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./icons/home.png */ \"./src/icons/home.png\");\n/* harmony import */ var _icons_day_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons/day.png */ \"./src/icons/day.png\");\n/* harmony import */ var _icons_week_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons/week.png */ \"./src/icons/week.png\");\n/* harmony import */ var _icons_priority_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons/priority.png */ \"./src/icons/priority.png\");\n/* harmony import */ var _icons_duedate_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./icons/duedate.png */ \"./src/icons/duedate.png\");\n/* harmony import */ var _icons_nav_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./icons/nav.png */ \"./src/icons/nav.png\");\n\n\n\n\n\n\n\n\n\n// navbar: create & functions\nconst navbar = (() => {\n    const navbar = document.querySelector('div.nav');\n    let projContainer;\n    const createNav = () => {\n        // create 3 subsections: home, sort feature, and projects menu\n        const homeContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"homeContainer\"});\n        const sortContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"sortContainer\"});\n        projContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"projContainer\"});\n        navbar.appendChild(homeContainer);\n        navbar.appendChild(sortContainer);\n        navbar.appendChild(projContainer);\n        // content in each subsection\n        // home\n        const homeBtn = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('button', {\"class\": \"homeBtn\", \"id\": \"homeBtn\"});\n        const homeIcon = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('img', {\"src\": `${_icons_home_png__WEBPACK_IMPORTED_MODULE_1__}`, \"alt\": \"Home\"});\n        homeBtn.appendChild(homeIcon);\n        const homeBtnLabel = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('label', {\"for\": \"homeBtn\"});\n        homeBtnLabel.textContent = \"Home\";\n        // add home icon?\n        homeContainer.appendChild(homeBtn);\n        homeContainer.appendChild(homeBtnLabel);\n\n        // sort\n        const sortText = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"sortText\"});\n        sortText.textContent = \"Sort To-Dos\";\n        sortContainer.appendChild(sortText);\n        const todayContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"todayContainer\"});\n        const todayBtn = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('button', {\"class\": \"todayBtn\", \"id\": \"todayBtn\"});\n        const todayIcon = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('img', {\"src\": `${_icons_day_png__WEBPACK_IMPORTED_MODULE_2__}`, \"alt\": \"Today\"});\n        todayBtn.appendChild(todayIcon);\n        const todayBtnLabel = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('label', {\"for\": \"todayBtn\"});\n        todayBtnLabel.textContent = \"Today\";\n        sortContainer.appendChild(todayContainer);\n        todayContainer.appendChild(todayBtn);\n        todayContainer.appendChild(todayBtnLabel);\n        const weekContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"weekContainer\"});\n        const weekBtn = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('button', {\"class\": \"weekBtn\", \"id\": \"weekBtn\"});\n        const weekIcon = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('img', {\"src\": `${_icons_week_png__WEBPACK_IMPORTED_MODULE_3__}`, \"alt\": \"Week\"});\n        weekBtn.appendChild(weekIcon);\n        const weekBtnLabel = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('label', {\"for\": \"weekBtn\"});\n        weekBtnLabel.textContent = \"Week\";\n        sortContainer.appendChild(weekContainer);\n        weekContainer.appendChild(weekBtn);\n        weekContainer.appendChild(weekBtnLabel);\n        const priorityNavContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"priorityNavContainer\"});\n        const priorityNavBtn = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('button', {\"class\": \"priorityNavBtn\", \"id\": \"priorityNavBtn\"});\n        const priorityIcon = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('img', {\"src\": `${_icons_priority_png__WEBPACK_IMPORTED_MODULE_4__}`, \"alt\": \"Priority\"});\n        priorityNavBtn.appendChild(priorityIcon);\n        const priorityNavBtnLabel = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('label', {\"for\": \"priorityNavBtn\"});\n        priorityNavBtnLabel.textContent = \"Priority\";\n        sortContainer.appendChild(priorityNavContainer);\n        priorityNavContainer.appendChild(priorityNavBtn);\n        priorityNavContainer.appendChild(priorityNavBtnLabel);\n        const dateNavContainer = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"dateNavContainer\"});\n        const dateNavBtn = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('button', {\"class\": \"dateNavBtn\", \"id\": \"dateNavBtn\"});\n        const dateIcon = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('img', {\"src\": `${_icons_duedate_png__WEBPACK_IMPORTED_MODULE_5__}`, \"alt\": \"Due Date\"});\n        dateNavBtn.appendChild(dateIcon);\n        const dateNavBtnLabel = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('label', {\"for\": \"dateNavBtn\"});\n        dateNavBtnLabel.textContent = \"Due Date\";\n        sortContainer.appendChild(dateNavContainer);\n        dateNavContainer.appendChild(dateNavBtn);\n        dateNavContainer.appendChild(dateNavBtnLabel);\n        // should I have used a fn to dynamically create that? ^^^\n        // listeners for those^^ !!!\n\n        // project\n        const projectText = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": \"projectText\"});\n        projectText.textContent = \"Projects\";\n        projContainer.appendChild(projectText);\n    }\n    // when user adds a project to the dropdown, I want to add the project to the nav\n    // \n    const newProject = (input) => {\n        // create container\n        let container = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('div', {\"class\": `${input}Container`});\n        // create button\n        let button = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('button', {\"class\": `${input}Btn`, \"id\": `${input}Btn`});\n        let icon = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('img', {\"src\": `${_icons_nav_png__WEBPACK_IMPORTED_MODULE_6__}`, \"alt\": `Project ${input}`});\n\n        // create label\n        let label = (0,_utility__WEBPACK_IMPORTED_MODULE_0__.createElement)('label', {\"for\": `${input}BtnLabel`});\n        label.textContent = `${input}`;\n        // it will need a listener\n        // listenerFn....runs ProjectNavFn(projectNameHere)\n        // that function can sort the display to only include those projects...\n        projContainer.appendChild(container);\n        container.appendChild(button);\n        button.appendChild(icon);\n        container.appendChild(label);\n        // could have the third argument be the function to have the listener run...\n        // could use this fn to dynamically create the sort zone too...\n    }\n\n    return { createNav, newProject };\n})();\n\n\n\n\n//# sourceURL=webpack://todo/./src/navbar.js?");
 
 /***/ }),
 
@@ -140,6 +150,16 @@ eval("module.exports = __webpack_require__.p + \"b696f6f2f33e98df6a89.png\";\n\n
 
 /***/ }),
 
+/***/ "./src/icons/day.png":
+/*!***************************!*\
+  !*** ./src/icons/day.png ***!
+  \***************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"dfdebe0342e830af904c.png\";\n\n//# sourceURL=webpack://todo/./src/icons/day.png?");
+
+/***/ }),
+
 /***/ "./src/icons/delete.png":
 /*!******************************!*\
   !*** ./src/icons/delete.png ***!
@@ -147,6 +167,16 @@ eval("module.exports = __webpack_require__.p + \"b696f6f2f33e98df6a89.png\";\n\n
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 eval("module.exports = __webpack_require__.p + \"8f2168383cecacc23de0.png\";\n\n//# sourceURL=webpack://todo/./src/icons/delete.png?");
+
+/***/ }),
+
+/***/ "./src/icons/duedate.png":
+/*!*******************************!*\
+  !*** ./src/icons/duedate.png ***!
+  \*******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"af4ca1dc579356f39a53.png\";\n\n//# sourceURL=webpack://todo/./src/icons/duedate.png?");
 
 /***/ }),
 
@@ -170,6 +200,36 @@ eval("module.exports = __webpack_require__.p + \"9e1ba84ef20756fb365e.png\";\n\n
 
 /***/ }),
 
+/***/ "./src/icons/home.png":
+/*!****************************!*\
+  !*** ./src/icons/home.png ***!
+  \****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"810b61d4033010ce2ddb.png\";\n\n//# sourceURL=webpack://todo/./src/icons/home.png?");
+
+/***/ }),
+
+/***/ "./src/icons/nav.png":
+/*!***************************!*\
+  !*** ./src/icons/nav.png ***!
+  \***************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"c0a5192c686952052b0e.png\";\n\n//# sourceURL=webpack://todo/./src/icons/nav.png?");
+
+/***/ }),
+
+/***/ "./src/icons/priority.png":
+/*!********************************!*\
+  !*** ./src/icons/priority.png ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"0477af241c20cbf9dbbd.png\";\n\n//# sourceURL=webpack://todo/./src/icons/priority.png?");
+
+/***/ }),
+
 /***/ "./src/icons/save.png":
 /*!****************************!*\
   !*** ./src/icons/save.png ***!
@@ -177,6 +237,16 @@ eval("module.exports = __webpack_require__.p + \"9e1ba84ef20756fb365e.png\";\n\n
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 eval("module.exports = __webpack_require__.p + \"4ce6e1decb69e6b38471.png\";\n\n//# sourceURL=webpack://todo/./src/icons/save.png?");
+
+/***/ }),
+
+/***/ "./src/icons/week.png":
+/*!****************************!*\
+  !*** ./src/icons/week.png ***!
+  \****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"f70dfc1396ebb87edfd6.png\";\n\n//# sourceURL=webpack://todo/./src/icons/week.png?");
 
 /***/ }),
 

@@ -9,6 +9,7 @@ module.exports = {
         create: './src/createCard.js',
         addToDo: './src/addToDo.js',
         hf: './src/h&f.js',
+        navbar: './src/navbar.js',
         utility: './src/utility.js'
     },
     devServer: {
