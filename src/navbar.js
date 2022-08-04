@@ -77,8 +77,7 @@ const navbar = (() => {
         projectText.textContent = "Projects";
         projContainer.appendChild(projectText);
     }
-    // when user adds a project to the dropdown, I want to add the project to the nav
-    // 
+    // when user adds a project to the dropdown, I want to add the project to the nav 
     const newProject = (input) => {
         // create container
         let container = createElement('div', {"class": `${input}Container`});
@@ -99,6 +98,8 @@ const navbar = (() => {
         // could use this fn to dynamically create the sort zone too...
     }
     // button functions
+    // also want the button grid cell to highlight / darken to indicate which one is selected
+    // or should I have a "display" class ...
     // clear display function
     // - remove listeners, delete cardDiv's for all
     //
