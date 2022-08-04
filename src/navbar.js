@@ -23,11 +23,10 @@ const navbar = (() => {
         // home
         const homeBtn = createElement('button', {"class": "homeBtn", "id": "homeBtn"});
         const homeIcon = createElement('img', {"src": `${Home}`, "alt": "Home"});
-        homeBtn.appendChild(homeIcon);
         const homeBtnLabel = createElement('label', {"for": "homeBtn"});
         homeBtnLabel.textContent = "Home";
-        // add home icon?
         homeContainer.appendChild(homeBtn);
+        homeBtn.appendChild(homeIcon);
         homeContainer.appendChild(homeBtnLabel);
 
         // sort
@@ -99,6 +98,30 @@ const navbar = (() => {
         // could have the third argument be the function to have the listener run...
         // could use this fn to dynamically create the sort zone too...
     }
+    // button functions
+    // clear display function
+    // - remove listeners, delete cardDiv's for all
+    //
+    // display function
+    // - take an array, forEach => createCard
+    //
+    // home 
+    // - display all cards (might involve deleting what's there, then create & display all);
+    //
+    // today
+    // - sort out only those due today, display those
+    //
+    // week
+    // - sort out those due this week, display those
+    //
+    // priority
+    // - display all, but sorted from highest priority to lowest
+    //
+    // due date
+    // - display all, sorted by due date (earliest to latest)
+    //
+    // project
+    // - display the cards with same project tag
 
     return { createNav, newProject };
 })();
