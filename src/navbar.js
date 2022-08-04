@@ -7,7 +7,7 @@ import Week from './icons/week.png';
 import Priority from './icons/priority.png';
 import DateIcon from './icons/duedate.png';
 import Proj from './icons/nav.png';
-import { isToday, parse } from 'date-fns';
+import { isThisWeek, isToday, parse } from 'date-fns';
 
 
 // navbar: create & functions
@@ -131,36 +131,32 @@ const navFns = (() => {
     // today
     // - sort out only those due today, display those
     const todayFn = (array) => {
-        const body = document.querySelector('div.body');
-        clearDisplay(body);
         let todayArray = array.filter(index => {
             let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
             return isToday(date);
         })
-        display(todayArray, body);
+        homeFn(todayArray);
     }
     // week
     // - sort out those due this week, display those
-    // const weekFn = (array) => {
-    //     const body = document.querySelector('div.body');
-    //     clearDisplay(body);
-    //     let weekArray = array.filter(index => {
-    //         return index.dueDate == thisWeek !!!
-    //     })
-    //     display(weekArray, body);
-    // }
+    const weekFn = (array) => {
+        let weekArray = array.filter(index => {
+            let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
+            console.log(index);
+            return isThisWeek(date, { weekStartsOn: 0 });
+        })
+        homeFn(weekArray);
+    }
     // priority
     // - display all, but sorted from highest priority to lowest
     const priorityFn = (array) => {
-        const body = document.querySelector('div.body');
-        clearDisplay(body);
         let priorityArray = array;
         _assignPValue(priorityArray);
         priorityArray.sort((a,b) => {
             return a.pvalue - b.pvalue;
 
         })
-        display(priorityArray, body);
+        homeFn(priorityArray);
 
     }
     const _assignPValue = (array) => {
@@ -188,7 +184,7 @@ const navFns = (() => {
     }
     // project
     // - display the cards with same project tag
-    return { clearDisplay, display, todayFn };
+    return { clearDisplay, display, todayFn, weekFn, priorityFn };
 })();
 
 export { navbar, navFns }
