@@ -74,9 +74,9 @@ const objectOps = (() => {
     // needs updating once I have multiple objects... !!!
     // needs to be passed the project as well..? or should it just sort through the main array of objects?
     const getObject = (cardDiv) => {
-        let theValue = cardDiv.value;
+        let theObject = cardDiv.value;
         let indexPosition = objectOps.objectArray.findIndex(object => {
-            return object.value == theValue;
+            return object == theObject;
         });
         // this works, but tried using find instead...can delete later 
         // for (i=0; i<objectArray.length; i++) {

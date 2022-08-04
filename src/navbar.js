@@ -107,43 +107,65 @@ const navFns = (() => {
     // or should I have a "display" class ...
     // clear display function
     // - remove listeners, delete cardDiv's for all
-    const body = document.querySelector('div.body');
-    const clearDisplay = () => {
-        const body = document.querySelector('div.body');
-        console.log(body);
-        while (body.firstChild) {
-            listeners.removeAll(body.firstChild);
-            body.removeChild(body.firstChild);
+    const clearDisplay = (parentDiv) => {
+        while (parentDiv.firstChild) {
+            deleteFn.deleteDisplay(parentDiv.firstChild);
         }
-        console.log(body.children);
     }
     // display function
     // - take an array, forEach => createCard
-    const display = (array) => {
-        const body = document.querySelector('div.body');
+    const display = (array, parentDiv) => {
         array.forEach(index => {
-            body.appendChild(createCard(index));
+            parentDiv.appendChild(createCard(index));
             console.log(index);
         })
     }
     // home 
     // - display all cards (might involve deleting what's there, then create & display all);
-    //
+    const homeFn = (array) => {
+        const body = document.querySelector('div.body');
+        clearDisplay(body);
+        display(array, body);
+    }
     // today
     // - sort out only those due today, display those
-    //
+    // const todayFn = (array) => {
+    //     const body = document.querySelector('div.body');
+    //     clearDisplay(body);
+    //     let todayArray = array.filter(index => {
+    //         return index.dueDate == today !!!!
+    //     })
+    //     display(todayArray, body);
+    // }
     // week
     // - sort out those due this week, display those
-    //
+    // const weekFn = (array) => {
+    //     const body = document.querySelector('div.body');
+    //     clearDisplay(body);
+    //     let weekArray = array.filter(index => {
+    //         return index.dueDate == thisWeek !!!
+    //     })
+    //     display(weekArray, body);
+    // }
     // priority
     // - display all, but sorted from highest priority to lowest
-    //
+    const priorityFn = (array) => {
+        const body = document.querySelector('div.body');
+        clearDisplay(body);
+        let priorityArray = array;
+        priorityArray.sort((a,b) => {
+            const aPriority = a.priority;
+            const bPriority = b.priority;
+
+        })
+
+    }
     // due date
     // - display all, sorted by due date (earliest to latest)
     //
     // project
     // - display the cards with same project tag
-    return { body, clearDisplay, display };
+    return { clearDisplay, display };
 })();
 
 export { navbar, navFns }
