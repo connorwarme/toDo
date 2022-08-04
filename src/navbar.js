@@ -153,16 +153,37 @@ const navFns = (() => {
         const body = document.querySelector('div.body');
         clearDisplay(body);
         let priorityArray = array;
+        _assignPValue(priorityArray);
         priorityArray.sort((a,b) => {
-            const aPriority = a.priority;
-            const bPriority = b.priority;
+            return a.pvalue - b.pvalue;
 
         })
+        display(priorityArray, body);
 
+    }
+    const _assignPValue = (array) => {
+        array.forEach(index => {
+            if (index.priority == "Defcon") {
+                index.pvalue = 0;
+            } else if (index.priority == "High") {
+                index.pvalue = 1;
+            } else if (index.priority == "Medium") {
+                index.pvalue = 2;
+            } else if (index.priority == "Low") {
+                index.pvalue = 3;
+            } else {
+                index.pvalue = 4;
+            }
+        })
     }
     // due date
     // - display all, sorted by due date (earliest to latest)
-    //
+    const dueDateFn = (array) => {
+        const body = document.querySelector('div.body');
+        clearDisplay(body);
+        let dateArray = array;
+        dateArray.sort
+    }
     // project
     // - display the cards with same project tag
     return { clearDisplay, display };

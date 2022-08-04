@@ -1,6 +1,7 @@
 import { createElement } from "./utility";
 import { objectOps } from "./objectOps";
 import { ls } from "./localStorage";
+import { format, parseISO } from "date-fns";
 
 // To-Do card button listener functions
 // get card and toggle class
@@ -149,6 +150,7 @@ const submit = (() => {
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio'));
         let inputArray = _getInput(cardDiv, btns);
         objectOps.update(object, inputArray);
+        console.log(object);
         _displayInput(cardDiv, inputArray);
         edit.cancelEditFn(cardDiv);
     }
@@ -162,6 +164,8 @@ const submit = (() => {
         priorityText.textContent = array[2];
         let projectText = cardDiv.children[1].children[1].children[0];
         projectText.textContent = _emptyInputCheck(array[1], 'Project');
+        let dateText = cardDiv.children[0].children[5].children[0];
+        dateText.textContent = array[3];
     }
     const _emptyInputCheck = (input, section) => {
         let empty = "";
@@ -178,7 +182,8 @@ const submit = (() => {
         let notesInput = cardDiv.children[1].children[0].children[2].value;
         let priorityInput = priority.currentSelection(btnsArray).value;
         let projectInput = project.getInput(cardDiv);
-        let array = [titleInput, projectInput, priorityInput, "", notesInput, ""];
+        let dateInput = date.getInput(cardDiv);
+        let array = [titleInput, projectInput, priorityInput, dateInput, notesInput, ""];
         return array;
     }
     return { mainFn };
@@ -380,7 +385,10 @@ const project = (() => {
 
 // date functionality
 const date = (() => {
-    const mainFn = () => {
+    const mainFn = (cardDiv) => {
+        let dateInput = getInput(cardDiv);
+        // do I need a mainFn?
+        // need a function to populate the input with current dueDate
 
     }
     const hideInput = (cardDiv) => {
@@ -396,12 +404,16 @@ const date = (() => {
     const clearInput = (cardDiv) => {
         cardDiv.children[0].children[5].children[2].value = "";
     }
-    const addInput = (cardDiv) => {
-        let date = cardDiv.children[0].children[5].children[2].value;
-        // need to format date; currently goes yyyy-mm-dd
-        console.log(date);
+    const getInput = (cardDiv) => {
+        let input = cardDiv.children[0].children[5].children[2].value;
+        if (input != "") {
+            let date = format(parseISO(input), 'MM/dd/yyyy');
+            return date;
+        } else {
+            return input;
+        }
     }
-    return { mainFn, hideInput, displayInput, clearInput, addInput}
+    return { mainFn, hideInput, displayInput, clearInput, getInput}
 })();
 // // object operations
 // const updateObject = (object, array) => {
