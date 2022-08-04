@@ -22,8 +22,7 @@ const objectOps = (() => {
     const addToProjectArray = (array) => {
         array.forEach(index => {
             if (index.project == "" || index.project == null || index.project == undefined) {
-                let blank;
-                blank.push(index.project);
+                console.log(index.project);
             } else {
                 objectOps.projectArray.push(index.project);
             }

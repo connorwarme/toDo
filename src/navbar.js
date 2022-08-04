@@ -5,8 +5,9 @@ import Home from './icons/home.png';
 import Day from './icons/day.png';
 import Week from './icons/week.png';
 import Priority from './icons/priority.png';
-import Date from './icons/duedate.png';
+import DateIcon from './icons/duedate.png';
 import Proj from './icons/nav.png';
+import { isToday, parse } from 'date-fns';
 
 
 // navbar: create & functions
@@ -64,7 +65,7 @@ const navbar = (() => {
         priorityNavContainer.appendChild(priorityNavBtnLabel);
         const dateNavContainer = createElement('div', {"class": "dateNavContainer"});
         const dateNavBtn = createElement('button', {"class": "dateNavBtn", "id": "dateNavBtn"});
-        const dateIcon = createElement('img', {"src": `${Date}`, "alt": "Due Date"});
+        const dateIcon = createElement('img', {"src": `${DateIcon}`, "alt": "Due Date"});
         dateNavBtn.appendChild(dateIcon);
         const dateNavBtnLabel = createElement('label', {"for": "dateNavBtn"});
         dateNavBtnLabel.textContent = "Due Date";
@@ -129,14 +130,15 @@ const navFns = (() => {
     }
     // today
     // - sort out only those due today, display those
-    // const todayFn = (array) => {
-    //     const body = document.querySelector('div.body');
-    //     clearDisplay(body);
-    //     let todayArray = array.filter(index => {
-    //         return index.dueDate == today !!!!
-    //     })
-    //     display(todayArray, body);
-    // }
+    const todayFn = (array) => {
+        const body = document.querySelector('div.body');
+        clearDisplay(body);
+        let todayArray = array.filter(index => {
+            let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
+            return isToday(date);
+        })
+        display(todayArray, body);
+    }
     // week
     // - sort out those due this week, display those
     // const weekFn = (array) => {
@@ -186,7 +188,7 @@ const navFns = (() => {
     }
     // project
     // - display the cards with same project tag
-    return { clearDisplay, display };
+    return { clearDisplay, display, todayFn };
 })();
 
 export { navbar, navFns }
