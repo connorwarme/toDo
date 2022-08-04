@@ -1,4 +1,6 @@
 import { createElement } from './utility';
+import { createCard } from './createCard';
+import { listeners, deleteFn } from './cardFunctionality';
 import Home from './icons/home.png';
 import Day from './icons/day.png';
 import Week from './icons/week.png';
@@ -97,15 +99,33 @@ const navbar = (() => {
         // could have the third argument be the function to have the listener run...
         // could use this fn to dynamically create the sort zone too...
     }
+    return { createNav, newProject };
+})();
     // button functions
+const navFns = (() => {
     // also want the button grid cell to highlight / darken to indicate which one is selected
     // or should I have a "display" class ...
     // clear display function
     // - remove listeners, delete cardDiv's for all
-    //
+    const body = document.querySelector('div.body');
+    const clearDisplay = () => {
+        const body = document.querySelector('div.body');
+        console.log(body);
+        while (body.firstChild) {
+            listeners.removeAll(body.firstChild);
+            body.removeChild(body.firstChild);
+        }
+        console.log(body.children);
+    }
     // display function
     // - take an array, forEach => createCard
-    //
+    const display = (array) => {
+        const body = document.querySelector('div.body');
+        array.forEach(index => {
+            body.appendChild(createCard(index));
+            console.log(index);
+        })
+    }
     // home 
     // - display all cards (might involve deleting what's there, then create & display all);
     //
@@ -123,9 +143,7 @@ const navbar = (() => {
     //
     // project
     // - display the cards with same project tag
-
-    return { createNav, newProject };
+    return { body, clearDisplay, display };
 })();
 
-
-export { navbar }
+export { navbar, navFns }

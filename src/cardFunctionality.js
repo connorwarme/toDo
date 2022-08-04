@@ -106,7 +106,7 @@ const edit = (() => {
     const cancelEditFn = (cardDiv) => {
         let object = objectOps.getObject(cardDiv);
         if (object.title == "") {
-            deleteFn(cardDiv.children[0].lastChild);
+            deleteFn.mainFn(cardDiv.children[0].lastChild);
         } else {
         resetCard(cardDiv);
         object.editable = true;
@@ -189,20 +189,26 @@ const submit = (() => {
 // }
 // deletes To-Do card
 // should run a function to delete object too? !!! or to remove it from array of objects?
-const deleteFn = (input) => {
-    let toDoCard = input.parentElement.parentElement;
-    // remove from arrays
-    let object = objectOps.getObject(toDoCard);
-    objectOps.deleteFromProjectArray(object);
-    objectOps.deleteFromObjectArray(object);
-    // remove listeners
-    listeners.removeAll(toDoCard);
-    // remove from parentDiv
-    toDoCard.parentElement.removeChild(toDoCard);
-    // remove from local storage
-    console.log(`deletefn ${objectOps.objectArray} and ${objectOps.projectArray}`);
-
-}
+const deleteFn = (() => {
+    const mainFn = (input) => {
+        let toDoCard = input.parentElement.parentElement;
+        // remove from arrays
+        let object = objectOps.getObject(toDoCard);
+        objectOps.deleteFromProjectArray(object);
+        objectOps.deleteFromObjectArray(object);
+        // remove from local storage
+        console.log(`deletefn ${objectOps.objectArray} and ${objectOps.projectArray}`);
+        // delete display
+        deleteDisplay(toDoCard);
+    }
+    const deleteDisplay = (cardDiv) => {
+        // remove listeners
+        listeners.removeAll(cardDiv);
+        // remove from parentDiv
+        cardDiv.parentElement.removeChild(cardDiv);   
+    }
+    return { mainFn, deleteDisplay };
+})();
 // priority level input
 const priority = (() => {
     // finds/returns selected priority level
@@ -447,7 +453,7 @@ const listeners = (() => {
         })
         // delete ToDo
         deleteBtn.addEventListener('click', () => {
-            deleteFn(deleteBtn);
+            deleteFn.mainFn(deleteBtn);
         })
         // priority level (radio buttons)
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
@@ -490,7 +496,7 @@ const listeners = (() => {
             edit.mainFn(elementsArray[2]);
         })
         elementsArray[3].removeEventListener('click', () => {
-            deleteFn(elementsArray[3]);
+            deleteFn.mainFn(elementsArray[3]);
         })
         // I think it can piggyback on the previous priorityBtns array !!!
         let priorityBtns = Array.from(elementsArray[9].querySelectorAll('input[type="radio"]'));
@@ -517,4 +523,4 @@ const listeners = (() => {
     }
     return { addAll, removeAll };
 })();
-export { listeners, edit };
+export { listeners, edit, deleteFn };
