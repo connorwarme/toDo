@@ -1,14 +1,14 @@
 import { createElement } from './utility';
 import { createCard } from './createCard';
-import { listeners, deleteFn } from './cardFunctionality';
+import { deleteFn } from './cardFunctionality';
+import { objectOps } from './objectOps';
+import { compareAsc, isThisWeek, isToday, parse, format, parseJSON } from 'date-fns';
 import Home from './icons/home.png';
 import Day from './icons/day.png';
 import Week from './icons/week.png';
 import Priority from './icons/priority.png';
 import DateIcon from './icons/duedate.png';
 import Proj from './icons/nav.png';
-import { isThisWeek, isToday, parse } from 'date-fns';
-
 
 // navbar: create & functions
 const navbar = (() => {
@@ -28,6 +28,11 @@ const navbar = (() => {
         const homeIcon = createElement('img', {"src": `${Home}`, "alt": "Home"});
         const homeBtnLabel = createElement('label', {"for": "homeBtn"});
         homeBtnLabel.textContent = "Home";
+        // home listener
+        homeBtn.addEventListener('click', () => {
+            navFns.homeFn(objectOps.objectArray);
+        })
+        // append it all together
         homeContainer.appendChild(homeBtn);
         homeBtn.appendChild(homeIcon);
         homeContainer.appendChild(homeBtnLabel);
@@ -72,9 +77,19 @@ const navbar = (() => {
         sortContainer.appendChild(dateNavContainer);
         dateNavContainer.appendChild(dateNavBtn);
         dateNavContainer.appendChild(dateNavBtnLabel);
-        // should I have used a fn to dynamically create that? ^^^
-        // listeners for those^^ !!!
-
+        // sort listeners
+        todayBtn.addEventListener('click', () => {
+            navFns.todayFn(objectOps.objectArray);
+        })
+        weekBtn.addEventListener('click', () => {
+            navFns.weekFn(objectOps.objectArray);
+        })
+        priorityNavBtn.addEventListener('click', () => {
+            navFns.priorityFn(objectOps.objectArray);
+        })
+        dateNavBtn.addEventListener('click', () => {
+            navFns.dueDateFn(objectOps.objectArray);
+        })
         // project
         const projectText = createElement('div', {"class": "projectText"});
         projectText.textContent = "Projects";
@@ -90,9 +105,11 @@ const navbar = (() => {
         // create label
         let label = createElement('label', {"for": `${input}BtnLabel`});
         label.textContent = `${input}`;
-        // it will need a listener
-        // listenerFn....runs ProjectNavFn(projectNameHere)
-        // that function can sort the display to only include those projects...
+        // add listener
+        button.addEventListener('click', () => {
+            navFns.projectFn(objectOps.objectArray, input);
+        })
+        // append it all together
         projContainer.appendChild(container);
         container.appendChild(button);
         button.appendChild(icon);
@@ -118,7 +135,6 @@ const navFns = (() => {
     const display = (array, parentDiv) => {
         array.forEach(index => {
             parentDiv.appendChild(createCard(index));
-            console.log(index);
         })
     }
     // home 
@@ -142,7 +158,6 @@ const navFns = (() => {
     const weekFn = (array) => {
         let weekArray = array.filter(index => {
             let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
-            console.log(index);
             return isThisWeek(date, { weekStartsOn: 0 });
         })
         homeFn(weekArray);
@@ -154,11 +169,10 @@ const navFns = (() => {
         _assignPValue(priorityArray);
         priorityArray.sort((a,b) => {
             return a.pvalue - b.pvalue;
-
         })
         homeFn(priorityArray);
-
     }
+    // give each priority a number value, easier to compare/sort
     const _assignPValue = (array) => {
         array.forEach(index => {
             if (index.priority == "Defcon") {
@@ -177,14 +191,43 @@ const navFns = (() => {
     // due date
     // - display all, sorted by due date (earliest to latest)
     const dueDateFn = (array) => {
-        const body = document.querySelector('div.body');
-        clearDisplay(body);
-        let dateArray = array;
-        dateArray.sort
+        let dateArray = _parseDates(array);
+        let result = _sortDates(dateArray);
+        _reformatDates(result);
+        homeFn(result);
+    }
+    // change dates from displayed format to the format date-fns "compareAsc" can use
+    const _parseDates = (array) => {
+        let dateArray = array.map(index => {
+            let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
+            index.dueDate = date;
+            return index;
+        })
+        return dateArray;
+    }
+    // sort the dates, soonest to latest
+    const _sortDates = (array) => {
+        let result = array.sort((a, b) => {
+            return compareAsc(a.dueDate, b.dueDate);
+        })
+        return result;
+    }
+    // change dates back into display format
+    const _reformatDates = (array) => {
+        array.forEach(index => {
+            let update = format(parseJSON(index.dueDate), 'MM/dd/yyyy');
+            index.dueDate = update;
+        })
     }
     // project
     // - display the cards with same project tag
-    return { clearDisplay, display, todayFn, weekFn, priorityFn };
+    const projectFn = (array, projectName) => {
+        let filteredArray = array.filter(index => {
+            return index.project == projectName;
+        })
+        homeFn(filteredArray);
+    }
+    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn };
 })();
 
 export { navbar, navFns }

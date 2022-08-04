@@ -9,7 +9,7 @@ import { navbar, navFns } from './navbar.js';
 
 let first = cardFactory('update README', 'winning', 'High', '08/03/2022', 'kinda like the other dudes', false);
 let second = cardFactory('doing it', "dudeage", "High", "08/16/2022", "all the time", false);
-let third = cardFactory('round three', "", "Low", "08/06/2022", "", false);
+let third = cardFactory('round three', "winning", "Low", "08/04/2022", "", false);
 let fourth = cardFactory('send the Honeymoon', "Diamond", "Defcon", "09/18/2022", "give er hell", false);
 // if (ls.checkContent("obj") == false) {
     objectOps.addToObjectArray(first);
@@ -42,7 +42,6 @@ console.log(objectOps.projectArray);
 createModal();
 makeHF();
 navbar.createNav();
-navbar.newProject('first Project');
-// these navFns work
-// navFns.clearDisplay();
-navFns.priorityFn([first, second, third, fourth]);
+navbar.newProject('winning');
+
+navFns.dueDateFn([first, second, third, fourth]);
