@@ -90,10 +90,20 @@ const navbar = (() => {
         dateNavBtn.addEventListener('click', () => {
             navFns.dueDateFn(objectOps.objectArray);
         })
+    }
+    const project = () => {
         // project
         const projectText = createElement('div', {"class": "projectText"});
         projectText.textContent = "Projects";
         projContainer.appendChild(projectText);
+        // project add button
+        const projNavAddContainer = createElement('div', {"class": "projNavAddContainer"});
+        const projNavAddBtn = createElement('button', {"class": "projNavAdd", "value": "+", "aria-label": "Add Project"});
+        navbar.appendChild(projNavAddContainer);
+        projNavAddContainer.appendChild(projNavAddBtn);
+        // project input field, cancel and save buttons
+        const projNewContainer = createElement("div", {"class": "projNewContainer", "display": "none"});
+        const
     }
     // when user adds a project to the dropdown, I want to add the project to the nav 
     const newProject = (input) => {
@@ -227,7 +237,11 @@ const navFns = (() => {
         })
         homeFn(filteredArray);
     }
-    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn };
+    const projAddFn = () => {
+        // on click, show input field, cancel, save
+        // 
+    }
+    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn };
 })();
 
 export { navbar, navFns }
