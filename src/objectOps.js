@@ -34,6 +34,27 @@ const objectOps = (() => {
         objectOps.projectArray.push(input);
         ls.saveArray(objectOps.projectArray, "proj");
     }
+    // an attempt at a check to see if project already exists in array
+    const _checkProjectArray = (input) => {
+        let check = objectOps.projectArray.find(index => {
+            return index == input;
+        })
+        console.log(check);
+        if (check == undefined) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    const checkAndAdd = (input) => {
+        if (!(_checkProjectArray(input))) {
+            addSingleToProjectArray(input);
+            return true;
+        } else {
+            alert(`This project already exists! For a new project, choose a new name.`);
+            return false;
+        }
+    }
     const deleteFromProjectArray = (object) => {
         if (object.project == "") {
             return;
@@ -85,7 +106,7 @@ const objectOps = (() => {
         // }
         return objectOps.objectArray[indexPosition];
     }
-    return { addToObjectArray, addToProjectArray, addSingleToProjectArray, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
+    return { addToObjectArray, addToProjectArray, addSingleToProjectArray, checkAndAdd, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
 })();
 
 export { cardFactory, objectOps }

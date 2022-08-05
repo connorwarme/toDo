@@ -121,6 +121,16 @@ const navbar = (() => {
         projNewCancel.appendChild(projNewCancelIcon);
         projNewContainer.appendChild(projNewSave);
         projNewSave.appendChild(projNewSaveIcon);
+        // project add listeners
+        projNavAddBtn.addEventListener('click', () => {
+            navFns.projAddFn(projNavAddContainer);
+        })
+        projNewCancel.addEventListener('click', () => {
+            navFns.projNewCancelFn(projNewContainer);
+        })
+        projNewSave.addEventListener('click', () => {
+            navFns.projNewSaveFn(projNewContainer);
+        })
     }
     // when user adds a project to the dropdown, I want to add the project to the nav 
     const newProject = (input) => {
@@ -254,22 +264,27 @@ const navFns = (() => {
         })
         homeFn(filteredArray);
     }
-    const projAddFn = (element) => {
+    const projAddFn = (container) => {
         // on click, show input field, cancel, save
-        _displayInput(element.parentElement);
+        _displayInput(container);
     }
-    const projNewCancelFn = (element) => {
+    const projNewCancelFn = (parent) => {
         // reset input.value
-        _resetInput(element.parentElement);
+        _resetInput(parent);
         // hide input / display add button
-        _hideInput(element.parentElement.parentElement);
+        _hideInput(parent.parentElement);
     }
-    const projNewSaveFn = () => {
+    const projNewSaveFn = (parent) => {
         // get new input.value
+        let input = _getInput(parent);
         // check if it already exists
         // add to projectArray
-        // add to navbar display
+        if (objectOps.checkAndAdd(input)) {
+            // add to navbar display
+        navbar.newProject(input);
+        }
         // then run cancelfn
+        projNewCancelFn(parent);
     }
     const _displayInput = (container) => {
         container.children[0].style.display = "none";
@@ -277,15 +292,15 @@ const navFns = (() => {
     }
     const _hideInput = (container) => {
         container.children[0].style.display = "block";
-        container.childrenn[1].style.display = "none";
+        container.children[1].style.display = "none";
     }
     const _resetInput = (parent) => {
         parent.children[0].value = "";
     }
     const _getInput = (parent) => {
-        let input = parent.children[0].value;
+        return parent.children[0].value;
     }
-    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn };
+    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn };
 })();
 
 export { navbar, navFns }
