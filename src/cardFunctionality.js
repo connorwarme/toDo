@@ -1,7 +1,7 @@
 import { createElement } from "./utility";
 import { objectOps } from "./objectOps";
 import { ls } from "./localStorage";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, parse } from "date-fns";
 
 // To-Do card button listener functions
 // get card and toggle class
@@ -90,7 +90,8 @@ const edit = (() => {
         currentNotes.value = object.notes;
         let optionsArray = project.populateInput(objectOps.projectArray, cardDiv);
         project.markSelected(optionsArray, object);
-        priority.editCurrentSelection(cardDiv, object); 
+        priority.editCurrentSelection(cardDiv, object);
+        date.populateInput(cardDiv, object); 
     }
     // other option, both need access to DOM and object
     // so I have to pass title and object.title for it to work...
@@ -413,7 +414,15 @@ const date = (() => {
             return input;
         }
     }
-    return { mainFn, hideInput, displayInput, clearInput, getInput}
+    // when user goes to edit to-do, show current due date on input
+    const populateInput = (cardDiv, object) => {
+        let input = cardDiv.children[0].children[5].children[2];
+        if (object.dueDate != "") {
+            let currentDate = format(parse(object.dueDate, 'MM/dd/yyyy', new Date()), 'yyyy-MM-dd');
+            input.value = currentDate;
+        }
+    }
+    return { mainFn, hideInput, displayInput, clearInput, getInput, populateInput}
 })();
 // // object operations
 // const updateObject = (object, array) => {
