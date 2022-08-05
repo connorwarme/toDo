@@ -9,6 +9,10 @@ import Week from './icons/week.png';
 import Priority from './icons/priority.png';
 import DateIcon from './icons/duedate.png';
 import Proj from './icons/nav.png';
+import Add from './icons/add.png';
+import Cancel from './icons/cancel.png';
+import Save from './icons/save.png';
+
 
 // navbar: create & functions
 const navbar = (() => {
@@ -90,6 +94,7 @@ const navbar = (() => {
         dateNavBtn.addEventListener('click', () => {
             navFns.dueDateFn(objectOps.objectArray);
         })
+        project();
     }
     const project = () => {
         // project
@@ -99,11 +104,23 @@ const navbar = (() => {
         // project add button
         const projNavAddContainer = createElement('div', {"class": "projNavAddContainer"});
         const projNavAddBtn = createElement('button', {"class": "projNavAdd", "value": "+", "aria-label": "Add Project"});
+        const projNavAddIcon = createElement('img', {"src": `${Add}`, "alt": "Add New Project"});
         navbar.appendChild(projNavAddContainer);
         projNavAddContainer.appendChild(projNavAddBtn);
+        projNavAddBtn.appendChild(projNavAddIcon);
         // project input field, cancel and save buttons
-        const projNewContainer = createElement("div", {"class": "projNewContainer", "display": "none"});
-        const
+        const projNewContainer = createElement("div", {"class": "projNewContainer", "style": "display: none"});
+        const projNewInput = createElement('input', {"type": "text", "id": "projNewInput", "placeholder": "Project", "aria-label": "Add New Project"});
+        const projNewCancel = createElement('button', {"class": "projNewCancel", "aria-label": "Cancel"});
+        const projNewCancelIcon = createElement('img', {"src": `${Cancel}`, "alt": "Cancel"});
+        const projNewSave = createElement('button', {"class": "projNewSave", "aria-label": "Save Project"});
+        const projNewSaveIcon = createElement('img', {"src": `${Save}`, "alt": "Save New Project"});
+        projNavAddContainer.appendChild(projNewContainer);
+        projNewContainer.appendChild(projNewInput);
+        projNewContainer.appendChild(projNewCancel);
+        projNewCancel.appendChild(projNewCancelIcon);
+        projNewContainer.appendChild(projNewSave);
+        projNewSave.appendChild(projNewSaveIcon);
     }
     // when user adds a project to the dropdown, I want to add the project to the nav 
     const newProject = (input) => {
@@ -237,9 +254,36 @@ const navFns = (() => {
         })
         homeFn(filteredArray);
     }
-    const projAddFn = () => {
+    const projAddFn = (element) => {
         // on click, show input field, cancel, save
-        // 
+        _displayInput(element.parentElement);
+    }
+    const projNewCancelFn = (element) => {
+        // reset input.value
+        _resetInput(element.parentElement);
+        // hide input / display add button
+        _hideInput(element.parentElement.parentElement);
+    }
+    const projNewSaveFn = () => {
+        // get new input.value
+        // check if it already exists
+        // add to projectArray
+        // add to navbar display
+        // then run cancelfn
+    }
+    const _displayInput = (container) => {
+        container.children[0].style.display = "none";
+        container.children[1].style.display = "block";
+    }
+    const _hideInput = (container) => {
+        container.children[0].style.display = "block";
+        container.childrenn[1].style.display = "none";
+    }
+    const _resetInput = (parent) => {
+        parent.children[0].value = "";
+    }
+    const _getInput = (parent) => {
+        let input = parent.children[0].value;
     }
     return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn };
 })();
