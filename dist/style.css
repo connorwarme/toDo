@@ -147,14 +147,92 @@
     font-weight: 700;
     font-size: 28px;
 }
-.projNavContainer:hover {
-    background-color: lightgray;
+.projNavBtn {
+    border: none;
+    background-color: #f1faee;
+    margin-left: 8px;
+}
+.projNavBtn > img {
+    height: 30px;
+    rotate: 90deg;
 }
 .projDeleteBtn {
     display: none;
+    background-color: #f1faee;
+    border: none;
+}
+.projDeleteBtn > img {
+    height: 20px;
+}
+.projNavContainer {
+    display: flex;
+    align-items: center;
+}
+
+.projNavContainer > label {
+    color:#1d3557;
+    font-size: 18px;
+    padding-left: 14px;
+    width: 92px;
+}
+.projNavContainer > button > img {
+    filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
 }
 .projNavContainer:hover .projDeleteBtn {
     display: block;
+}
+.projNavAddContainer {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+}
+.projNavAdd {
+    border: none;
+    border-radius: 10px;
+    background-color: #f1faee;
+    margin: 10px;
+    transition-duration: 450ms;
+}
+.projNavAdd:hover {
+    transform: scale(1.15);
+    background-color: #1d3557;
+    border-radius: 10px;
+}
+.projNavAdd:hover img {
+    filter: invert(96%) sepia(3%) saturate(606%) hue-rotate(62deg) brightness(104%) contrast(96%);
+}
+.projNavAdd > img {
+    filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
+}
+.projNavAdd > label {
+    height: 40px;
+}
+.projNewContainer {
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.projNewContainer > input {
+    height: 25px;
+    width: 120px;
+    border: 1px solid #1d3557;
+    border-radius: 5px;
+    margin: 0;
+}
+.projNewCancel,
+.projNewSave {
+    height: 25px;
+    width: 25px;
+    border: none;
+    background-color: #f1faee;
+}
+.projNewCancel > img,
+.projNewSave > img {
+    height: 25px;
+    filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
 }
 .bodyContainer {
     height: inherit;

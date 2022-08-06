@@ -8,11 +8,11 @@ import Day from './icons/day.svg';
 import Week from './icons/week.svg';
 import Priority from './icons/priority.svg';
 import DateIcon from './icons/date.svg';
-import Proj from './icons/nav.png';
-import Add from './icons/add.png';
+import Proj from './icons/nav.svg';
+import Add from './icons/add.svg';
 import Cancel from './icons/cancel.png';
 import Save from './icons/save.png';
-import DeleteIcon from './icons/delete.png';
+import DeleteIcon from './icons/trash.svg';
 
 
 // navbar: create & functions
@@ -137,10 +137,10 @@ const navbar = (() => {
         let container = createElement('div', {"class": `projNavContainer`});
         container.value = `${input}`;
         // create button
-        let button = createElement('button', {"class": `${input}Btn`, "id": `${input}Btn`});
+        let button = createElement('button', {"class": `projNavBtn`, "id": `${input}Btn`});
         let icon = createElement('img', {"src": `${Proj}`, "alt": `Project ${input}`});
         // create label
-        let label = createElement('label', {"for": `${input}BtnLabel`});
+        let label = createElement('label', {"for": `${input}Btn`});
         label.textContent = `${input}`;
         let deleteBtn = createElement('button', {"class": "projDeleteBtn", "aria-label": "Delete Project"});
         let deleteIcon = createElement('img', {"src": `${DeleteIcon}`, "alt": "Delete Project"});
@@ -295,11 +295,11 @@ const navFns = (() => {
     }
     const _displayInput = (container) => {
         container.children[0].style.display = "none";
-        container.children[1].style.display = "block";
+        container.children[1].style.display = "flex";
         container.children[1].children[0].focus();
     }
     const _hideInput = (container) => {
-        container.children[0].style.display = "block";
+        container.children[0].style.display = "flex";
         container.children[1].style.display = "none";
     }
     const _resetInput = (parent) => {
