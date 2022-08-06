@@ -71,8 +71,9 @@ const objectOps = (() => {
         console.log(`this is the project ${project}`);
         // find objects with this project, reset project value
         let resetArray = objectOps.objectArray.filter(index => index.project === project);
-        console.log(`Resetarray ${resetArray}`);
         resetArray.forEach(index => index.project = "");
+        // update local storage
+        ls.saveArray(objectOps.objectArray, "obj");
         // delete project from project Array
         _deleteProject(project);
     }

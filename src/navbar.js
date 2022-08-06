@@ -321,6 +321,11 @@ const navFns = (() => {
         // do I need to remove listeners?
         parent.parentElement.removeChild(parent);
     }
+    const _updateCardProjText = () => {
+        let cardsArray = document.querySelectorAll('')
+
+        // start here !!!!
+    }
     return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn };
 })();
 
