@@ -84,7 +84,65 @@
 .nav {
     height: inherit;
     width: 200px;
+    background-color: #f1faee;
     border: 2px solid rgba(0, 0, 0, 0.8);
+}
+.homeContainer,
+.todayContainer,
+.weekContainer,
+.priorityNavContainer,
+.dateNavContainer {
+    display: flex;
+    align-items: center;
+}
+.homeContainer > label,
+.todayContainer > label,
+.weekContainer > label,
+.priorityNavContainer > label,
+.dateNavContainer > label {
+    color:#1d3557;
+    font-size: 24px;
+    font-weight: 500;
+    padding-left: 14px;
+    width: 138px;
+}
+.homeBtn,
+.todayBtn,
+.weekBtn,
+.priorityNavBtn,
+.dateNavBtn {
+    border: none;
+    background-color: #f1faee;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.homeBtn > img,
+.todayBtn > img,
+.weekBtn > img,
+.priorityNavBtn > img,
+.dateNavBtn > img {
+    filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
+    height: 40px;
+}
+.homeBtn:hover,
+.todayBtn:hover,
+.weekBtn:hover,
+.priorityNavBtn:hover,
+.dateNavBtn:hover {
+    border: 1px solid black;
+}
+.sortText,
+.projectText {
+    height: 40px;
+    background-color: #1d3557;
+    color: #a8dadc;
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .projNavContainer:hover {
     background-color: lightgray;
