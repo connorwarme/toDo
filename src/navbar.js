@@ -44,7 +44,6 @@ const navbar = (() => {
 
         // sort
         const sortText = createElement('div', {"class": "sortText"});
-        sortText.textContent = "Sort To-Dos";
         sortContainer.appendChild(sortText);
         const todayContainer = createElement('div', {"class": "todayContainer"});
         const todayBtn = createElement('button', {"class": "todayBtn", "id": "todayBtn"});
@@ -100,7 +99,6 @@ const navbar = (() => {
     const project = () => {
         // project
         const projectText = createElement('div', {"class": "projectText"});
-        projectText.textContent = "Projects";
         projContainer.appendChild(projectText);
         // project add button
         const projNavAddContainer = createElement('div', {"class": "projNavAddContainer"});

@@ -135,14 +135,17 @@
 }
 .sortText,
 .projectText {
-    height: 40px;
+    height: 10px;
     background-color: #1d3557;
-    color: #a8dadc;
-    font-size: 28px;
+    margin: 5px 10px 5px 10px;
+    border-radius: 3px;
+}
+.homeContainer {
+    margin-top: 5px;
+}
+.homeContainer > label {
     font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 28px;
 }
 .projNavContainer:hover {
     background-color: lightgray;
