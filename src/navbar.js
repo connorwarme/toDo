@@ -320,11 +320,15 @@ const navFns = (() => {
         // delete display
         // do I need to remove listeners?
         parent.parentElement.removeChild(parent);
+        // update current to-dos (i.e. remove that project text)
+        _updateCardProjText();
     }
     const _updateCardProjText = () => {
-        let cardsArray = document.querySelectorAll('')
-
-        // start here !!!!
+        let cardsArray = document.querySelectorAll('div.card');
+        cardsArray.forEach(index => {
+            index.children[1].children[1].children[0].textContent = `Project: ${index.value.project}`; 
+            console.log(index.value.project);
+        })
     }
     return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn };
 })();
