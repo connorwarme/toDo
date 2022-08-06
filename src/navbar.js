@@ -12,6 +12,7 @@ import Proj from './icons/nav.png';
 import Add from './icons/add.png';
 import Cancel from './icons/cancel.png';
 import Save from './icons/save.png';
+import DeleteIcon from './icons/delete.png';
 
 
 // navbar: create & functions
@@ -135,22 +136,30 @@ const navbar = (() => {
     // when user adds a project to the dropdown, I want to add the project to the nav 
     const newProject = (input) => {
         // create container
-        let container = createElement('div', {"class": `${input}Container`});
+        let container = createElement('div', {"class": `projNavContainer`});
+        container.value = `${input}`;
         // create button
         let button = createElement('button', {"class": `${input}Btn`, "id": `${input}Btn`});
         let icon = createElement('img', {"src": `${Proj}`, "alt": `Project ${input}`});
         // create label
         let label = createElement('label', {"for": `${input}BtnLabel`});
         label.textContent = `${input}`;
-        // add listener
+        let deleteBtn = createElement('button', {"class": "projDeleteBtn", "aria-label": "Delete Project"});
+        let deleteIcon = createElement('img', {"src": `${DeleteIcon}`, "alt": "Delete Project"});
+        // add listeners
         button.addEventListener('click', () => {
             navFns.projectFn(objectOps.objectArray, input);
+        })
+        deleteBtn.addEventListener('click', () => {
+            navFns.projDeleteFn(container);
         })
         // append it all together
         projContainer.appendChild(container);
         container.appendChild(button);
         button.appendChild(icon);
         container.appendChild(label);
+        container.appendChild(deleteBtn);
+        deleteBtn.appendChild(deleteIcon);
         // could have the third argument be the function to have the listener run...
         // could use this fn to dynamically create the sort zone too...
     }
@@ -278,10 +287,10 @@ const navFns = (() => {
         // get new input.value
         let input = _getInput(parent);
         // check if it already exists
-        // add to projectArray
+        // if it doesn't, add to projectArray
         if (objectOps.checkAndAdd(input)) {
-            // add to navbar display
-        navbar.newProject(input);
+            // and add to navbar display
+            navbar.newProject(input);
         }
         // then run cancelfn
         projNewCancelFn(parent);
@@ -289,6 +298,7 @@ const navFns = (() => {
     const _displayInput = (container) => {
         container.children[0].style.display = "none";
         container.children[1].style.display = "block";
+        container.children[1].children[0].focus();
     }
     const _hideInput = (container) => {
         container.children[0].style.display = "block";
@@ -300,7 +310,18 @@ const navFns = (() => {
     const _getInput = (parent) => {
         return parent.children[0].value;
     }
-    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn };
+    const projDeleteFn = (parent) => {
+        let project = parent.value;
+        console.log(parent.value);
+        // delete project from project Array
+        // do I need to go thru the to-dos and update the ones with that project? Like reset it to ""? !!!
+        // i attempted to in deleteProjectNavbar, we'll see if it works
+        objectOps.deleteProjectNavbar(project);
+        // delete display
+        // do I need to remove listeners?
+        parent.parentElement.removeChild(parent);
+    }
+    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn };
 })();
 
 export { navbar, navFns }

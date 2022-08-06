@@ -62,12 +62,27 @@ const objectOps = (() => {
             // check if other objects are also in the same project, or if this object is the only one
             let project = objectOps.objectArray.filter(index => index.project === object.project);
             if (project.length == 1) {
-                let filteredArray = objectOps.projectArray.filter(index => index !== object.project);
-                objectOps.projectArray = filteredArray;
+                _deleteProject(object.project);
             }
         }
-        ls.saveArray(objectOps.projectArray, "proj");
         // does this need to return the updated array?? !!!
+    }
+    const deleteProjectNavbar = (project) => {
+        console.log(`this is the project ${project}`);
+        // find objects with this project, reset project value
+        let resetArray = objectOps.objectArray.filter(index => index.project === project);
+        console.log(`Resetarray ${resetArray}`);
+        resetArray.forEach(index => index.project = "");
+        // delete project from project Array
+        _deleteProject(project);
+    }
+    const _deleteProject = (project) => {
+        // filter out all the other projects
+        let filteredArray = objectOps.projectArray.filter(index => index !== project);
+        // update the projectArray
+        objectOps.projectArray = filteredArray;
+        // update the local storage
+        ls.saveArray(objectOps.projectArray, "proj");
     }
     // object operations
     // update the object with input data (in array)
@@ -106,7 +121,7 @@ const objectOps = (() => {
         // }
         return objectOps.objectArray[indexPosition];
     }
-    return { addToObjectArray, addToProjectArray, addSingleToProjectArray, checkAndAdd, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray }    
+    return { addToObjectArray, addToProjectArray, addSingleToProjectArray, checkAndAdd, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray, deleteProjectNavbar }    
 })();
 
 export { cardFactory, objectOps }
