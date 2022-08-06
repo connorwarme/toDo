@@ -102,11 +102,14 @@ const navbar = (() => {
         projContainer.appendChild(projectText);
         // project add button
         const projNavAddContainer = createElement('div', {"class": "projNavAddContainer"});
-        const projNavAddBtn = createElement('button', {"class": "projNavAdd", "value": "+", "aria-label": "Add Project"});
+        const projNavAddBtn = createElement('button', {"class": "projNavAdd", "id": "projNavAdd", "aria-label": "Add Project"});
         const projNavAddIcon = createElement('img', {"src": `${Add}`, "alt": "Add New Project"});
+        const projNavAddLabel = createElement('label', {"for": "projNavAdd"});
+        projNavAddLabel.textContent = "Add Project";
         navbar.appendChild(projNavAddContainer);
         projNavAddContainer.appendChild(projNavAddBtn);
         projNavAddBtn.appendChild(projNavAddIcon);
+        projNavAddContainer.appendChild(projNavAddLabel);
         // project input field, cancel and save buttons
         const projNewContainer = createElement("div", {"class": "projNewContainer", "style": "display: none"});
         const projNewInput = createElement('input', {"type": "text", "id": "projNewInput", "placeholder": "Project", "aria-label": "Add New Project"});
@@ -295,12 +298,14 @@ const navFns = (() => {
     }
     const _displayInput = (container) => {
         container.children[0].style.display = "none";
-        container.children[1].style.display = "flex";
-        container.children[1].children[0].focus();
+        container.children[1].style.display = "none";
+        container.children[2].style.display = "flex";
+        container.children[2].children[0].focus();
     }
     const _hideInput = (container) => {
         container.children[0].style.display = "flex";
-        container.children[1].style.display = "none";
+        container.children[1].style.display = "block";
+        container.children[2].style.display = "none";
     }
     const _resetInput = (parent) => {
         parent.children[0].value = "";

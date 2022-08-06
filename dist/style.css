@@ -183,17 +183,21 @@
 }
 .projNavAddContainer {
     height: 60px;
+    width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5px;
 }
 .projNavAdd {
     border: none;
     border-radius: 10px;
     background-color: #f1faee;
-    margin: 10px;
+    margin: 10px 0px 10px -10px;
     transition-duration: 450ms;
+}
+.projNavAddContainer > label {
+    color: #1d3557;
+    padding-left: 6px;
 }
 .projNavAdd:hover {
     transform: scale(1.15);
@@ -206,28 +210,43 @@
 .projNavAdd > img {
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
 }
-.projNavAdd > label {
-    height: 40px;
-}
 .projNewContainer {
+    height: 40px;
     width: inherit;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .projNewContainer > input {
-    height: 25px;
+    height: 30px;
     width: 120px;
     border: 1px solid #1d3557;
     border-radius: 5px;
-    margin: 0;
+    padding-left: 5px;
+    font-size: 14px;
+    margin: 0 5px 0 8px;
+    transition-duration: 350ms;
+}
+.projNewContainer > input:hover {
+    height: 34px;
+}
+.projNewContainer > input:focus {
+    height: 34px;
+    outline: 2px solid #457b98;
 }
 .projNewCancel,
 .projNewSave {
     height: 25px;
     width: 25px;
     border: none;
+    border-radius: 5px;
     background-color: #f1faee;
+}
+.projNewCancel:hover {
+    background-color: rgba(230, 57, 70, 0.7);
+}
+.projNewSave:hover {
+    background-color: rgba(85, 166, 48, 0.7);
 }
 .projNewCancel > img,
 .projNewSave > img {
