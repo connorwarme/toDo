@@ -219,8 +219,9 @@ const deleteFn = (() => {
 const priority = (() => {
     // finds/returns selected priority level
     const mainFn = (cardDiv) => {
-        let priorityBtns = Array.from(cardDiv.querySelector('input[type="radio'));
+        let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let selection = currentSelection(priorityBtns);
+        markLabel(selection);
         return selection;
     }
     // clear radio selection
@@ -267,6 +268,19 @@ const priority = (() => {
         } else {
             return checked;
         }
+    }
+    const markLabel = (radio) => {
+        // clear labels of active class
+        let container = document.querySelector('div.priorityEditContainer');
+        let labels = Array.from(container.querySelectorAll('label'));
+        labels.forEach(index => {
+            index.removeAttribute('class');
+        })
+        // put active on checked radio button label
+        let checkedLabel = labels.find(index => {
+            return index.textContent == radio.value;
+        })
+        checkedLabel.classList.add(`active${checkedLabel.textContent}`);
     }
     return { mainFn, clearSelection, currentSelection, editCurrentSelection };
 })();

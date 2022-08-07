@@ -464,6 +464,10 @@
 }
 .priorityEditContainer > label {
     width: 75px;
+    border: 1px solid #1d3557;
+}
+label:checked {
+    border: 5px solid #1d3557;
 }
 .submitContainer > button {
     width: 75px;
