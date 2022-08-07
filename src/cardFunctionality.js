@@ -306,7 +306,7 @@ const project = (() => {
         cardDiv.children[1].children[1].children[0].style.display = "none";
         cardDiv.children[1].children[1].children[1].style.display = "block";
         cardDiv.children[1].children[1].children[2].style.display = "block";
-        cardDiv.children[1].children[1].children[3].style.display = "block";
+        cardDiv.children[1].children[1].children[3].style.display = "flex";
     }
     // might want to separate forEach fn on its own... !!!
     // another fn to find object.property value and to select it (set "option.selected = true")
@@ -363,7 +363,8 @@ const project = (() => {
     // save - gathers input, adds project to array, hides display^^, reruns creating dropdown menu (with the new addition)
     const addBtnFn = (cardDiv) => {
         cardDiv.children[1].children[1].children[3].style.display = "none";
-        cardDiv.children[1].children[1].children[4].style.display = "block";
+        cardDiv.children[1].children[1].children[4].style.display = "flex";
+        cardDiv.children[1].children[1].children[4].children[0].focus();
     }
     const addInputFn = (cardDiv, object) => {
         let input = cardDiv.children[1].children[1].children[4].children[0].value;
@@ -387,7 +388,7 @@ const project = (() => {
     // clear input field value; show "add new project" button; hide input, cancel, and save.
     const addCancelFn = (cardDiv) => {
         cardDiv.children[1].children[1].children[4].children[0].value = "";
-        cardDiv.children[1].children[1].children[3].style.display = "block";
+        cardDiv.children[1].children[1].children[3].style.display = "flex";
         cardDiv.children[1].children[1].children[4].style.display = "none";
     }
     const addSaveFn = (cardDiv, object) => {

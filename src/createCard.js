@@ -107,7 +107,7 @@ const craftCard = (() => {
         notes.textContent = `Notes: ${object.notes}`;
         const notesEditLabel = createElement('label', {"for": "notesEdit"});
         notesEditLabel.textContent = "Notes:";
-        const notesEditInput = createElement('textarea', {"id": "notesEdit", "rows": "3", "cols": "30"});
+        const notesEditInput = createElement('textarea', {"id": "notesEdit", "rows": "2", "cols": "30"});
         notesContainer.appendChild(notes);
         notesContainer.appendChild(notesEditLabel);
         notesContainer.appendChild(notesEditInput);
@@ -120,6 +120,7 @@ const craftCard = (() => {
             projectText.textContent = `Project: ${object.project}`;
         }
         const projectEditLabel = createElement('label', {"class": "projectEditLabel", "for": "projectDropdown"});
+        projectEditLabel.textContent = "Project:";
         const projectSelect = createElement('select', {"class": "projectSelect", "id": "projectDropdown"});
         projectAdd = createElement('button', {"class": "projectAddBtn", "aria-label": "Add Project"});
         const projectAddIcon = createElement('img', {"src": `${Add}`, "alt": "Add Project"});

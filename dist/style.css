@@ -261,10 +261,12 @@
     border-radius: 5px;
     background-color: #f1faee;
 }
-.projNewCancel:hover {
+.projNewCancel:hover,
+.projectAddCancel:hover {
     background-color: rgba(230, 57, 70, 0.7);
 }
-.projNewSave:hover {
+.projNewSave:hover,
+.projectAddSave:hover {
     background-color: rgba(85, 166, 48, 0.7);
 }
 .projNewCancel > img,
@@ -285,16 +287,14 @@
 .bodyContainer {
     height: inherit;
     width: calc(100vw - 200px);
-    background-color: rgba(168, 218, 220, 0.4);
+    background-color: rgba(168, 218, 220, 0.3);
 }
 .body {
     display: grid;
-    background-color: rgba(168, 218, 220, 0.4);
 }
 .addContainer {
     display: flex;
     justify-content: center;
-    background-color: rgba(168, 218, 220, 0.4);
 }
 .addContainer > button {
     height: 85px;
@@ -341,13 +341,15 @@
 .extendedSize {
     display: none;
     justify-content: space-between;
+    align-items: center;
 }
 .editSize {
     display: none;
 }
 .displayEdit {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 50px;
 }
 .checkboxLabel {
     display: none;
@@ -424,11 +426,15 @@
 .card button > img {
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
 }
+.dateContainer {
+    margin: 0px 5px;
+}
 .card .notes {
     padding: 0 15px 6px 20px;
 }
 .notesContainer {
     display: flex;
+    padding-left: 22px;
 }
 .notesContainer > label,
 .notesContainer > textarea {
@@ -436,55 +442,153 @@
 }
 .notesContainer > label {
     padding: 4px 5px 6px 20px;
+    align-self: center;
 }
 .notesContainer > textarea {
     text-align: start;
     border: 1px solid #1d3557;
+    background-color: rgba(241, 250, 238, 0.3);
     border-radius: 4px;
-    padding: 2px 4px;
-    width: 248px;
+    padding: 3px 5px;
+    width: 35vw;
+    height: 35px;
+    resize: none;
 }
 .card .projectText {
     width: 153px;
     padding: 0 15px 6px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.projectEditLabel {
+    align-self: center;
+    padding-right: 5px;
 }
 .projectSelect {
     display: none;
+    height: 30px;
+    padding: 0 10px;
+    margin-right: 5px;
+    color: #1d3557;
+    background-color: #f1faee;
+    border: 1px solid #1d3557;
+    border-radius: 5px;
+}
+.projectContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 40px;
 }
 .projectAddBtn {
     display: none;
+    justify-content: center;
+    align-items: center;
+}
+.projectAddBtn > img {
+    height: 30px;
 }
 .projectAddContainer {
     display: none;
+    justify-content: center;
+    align-items: center;
+    margin-right: -40px;
+}
+.projectAddContainer > input {
+    height: 28px;
+    width: 105px;
+    background-color: rgba(168, 218, 220, 0.3);
+    border: 1px solid #1d3557;
+    border-radius: 5px;
+    margin-right: 5px;
+    padding: 0 5px;
+}
+.projectAddContainer > button {
+    border-radius: 5px;
+    width: 39px;
+}
+.projectAddSave {
+    margin-right: 2px;
+}
+.projectAddContainer > button > img {
+    height: 30px;
 }
 .priorityEditContainer {
     display: flex;
     align-items: center;
+    padding-left: 22px;
+}
+.priorityEditTitle {
+    margin: 4px -5px 6px 9px;
+}
+.priorityEditContainer > input {
+    display: none;
 }
 .priorityEditContainer > label {
-    width: 75px;
-    padding: 5px 0;
+    width: 65px;
+    padding: 4px 0;
+    margin: 0 0 0 10px;
     text-align: center;
     border-radius: 4px;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
+.priorityEditContainer > label:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.priorityEditContainer .Low:hover,
 #activeLow {
     background-color: #55a630;
     color: #f1faee;
 }
+.priorityEditContainer .Medium:hover,
 #activeMedium {
     background-color: #FCBF49;
     color: #f1faee;
 }
+.priorityEditContainer .High:hover,
 #activeHigh {
     background-color: #f77f00;
     color: #f1faee;
 }
+.priorityEditContainer .Defcon:hover,
 #activeDefcon {
     background-color: #d62828;
     color: #f1faee;
 }
+.submitContainer {
+    justify-self: flex-end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 5vw;
+}
 .submitContainer > button {
-    width: 75px;
+    height: 36px;
+    width: 90px;
+    border: 2px solid #1d3557;
+    border-radius: 5px;
+    margin: 0 1vw;
+    transition-duration: 150ms;
+}
+.submitContainer > button:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+.submitContainer .cancelEditBtn {
+    background-color: rgba(214, 40, 40, 0.7);
+}
+.submitContainer .submitEditBtn {
+    background-color: rgba(85, 166, 48, 0.7);
+}
+.submitContainer .cancelEditBtn:hover {
+    background-color: rgba(214, 40, 40, 1);
+}
+.submitContainer .submitEditBtn:hover {
+    background-color: rgba(85, 166, 48, 1);
 }
 button {
     height: 40px;
