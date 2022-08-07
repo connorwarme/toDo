@@ -1,5 +1,6 @@
 import { createElement } from "./utility";
 import { addToDo } from "./addToDo";
+import Check from './icons/checkcircle.svg';
 
 // create modal, show on page load
 // options: 1) blank slate 2) demo the app 3) load locally stored data
@@ -11,7 +12,8 @@ const createModal = () => {
     const modalBox = createElement('div', {"class": "modalBox"});
     // title
     const title = createElement('div', {"class": "modalTitle"});
-    title.textContent = `Check Mate`;
+    const check = createElement('img', {"src": `${Check}`, "alt": "Check"});
+    title.textContent = `Mate`;
     // three options 
     const blank = createElement('input', {"type": "button", "class": "blank", "aria-label": "Blank Slate", "value": "Blank Slate"});
     const local = createElement('input', {"type": "button", "class": "local", "aria-label": "Check Local Storage", "value": "Check Local Storage"});
@@ -20,6 +22,7 @@ const createModal = () => {
     // append it together
     modalContainer.appendChild(modalBox);
     modalBox.appendChild(title);
+    title.appendChild(check);
     modalBox.appendChild(blank);
     modalBox.appendChild(local);
     modalBox.appendChild(demo);

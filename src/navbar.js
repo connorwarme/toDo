@@ -10,8 +10,8 @@ import Priority from './icons/priority.svg';
 import DateIcon from './icons/date.svg';
 import Proj from './icons/nav.svg';
 import Add from './icons/add.svg';
-import Cancel from './icons/cancel.png';
-import Save from './icons/save.png';
+import Cancel from './icons/close.svg';
+import Save from './icons/check.svg';
 import DeleteIcon from './icons/trash.svg';
 
 
@@ -103,7 +103,7 @@ const navbar = (() => {
     }
     const project = () => {
         // project
-        const projectText = createElement('div', {"class": "projectText"});
+        const projectText = createElement('div', {"class": "projectNavText"});
         projContainer.appendChild(projectText);
         // project add button
         const projNavAddContainer = createElement('div', {"class": "projNavAddContainer"});
