@@ -383,29 +383,28 @@
 .spacerDiv {
     flex-grow: 1;
 }
-.card .priority {
+.card #priority {
     padding: 10px;
     width: 60px;
     border-radius: 5px;
-    color:#f1faee;
     font-weight: 600;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-#Low {
+.Low {
     border: 2px solid #55a630;
     color: #55a630;
 }
-#Medium {
+.Medium {
     border: 2px solid #FCBF49;
     color: #FCBF49;
 }
-#High {
+.High {
     border: 2px solid #f77f00;
     color: #f77f00;
 }
-#Defcon {
+.Defcon {
     border: 2px solid #d62828;
     color: #d62828;
 }
@@ -464,10 +463,25 @@
 }
 .priorityEditContainer > label {
     width: 75px;
-    border: 1px solid #1d3557;
+    padding: 5px 0;
+    text-align: center;
+    border-radius: 4px;
 }
-label:checked {
-    border: 5px solid #1d3557;
+#activeLow {
+    background-color: #55a630;
+    color: #f1faee;
+}
+#activeMedium {
+    background-color: #FCBF49;
+    color: #f1faee;
+}
+#activeHigh {
+    background-color: #f77f00;
+    color: #f1faee;
+}
+#activeDefcon {
+    background-color: #d62828;
+    color: #f1faee;
 }
 .submitContainer > button {
     width: 75px;

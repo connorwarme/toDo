@@ -162,6 +162,7 @@ const submit = (() => {
         let notesText = cardDiv.children[1].children[0].children[0];
         notesText.textContent = _emptyInputCheck(array[4], 'Notes');
         let priorityText = cardDiv.children[0].children[3];
+        priority.updateDisplay(priorityText, array[2]);
         priorityText.textContent = array[2];
         let projectText = cardDiv.children[1].children[1].children[0];
         projectText.textContent = _emptyInputCheck(array[1], 'Project');
@@ -269,20 +270,24 @@ const priority = (() => {
             return checked;
         }
     }
+    const updateDisplay = (element, value) => {
+        element.removeAttribute('class');
+        element.classList.add(value);
+    }
     const markLabel = (radio) => {
         // clear labels of active class
         let container = document.querySelector('div.priorityEditContainer');
         let labels = Array.from(container.querySelectorAll('label'));
         labels.forEach(index => {
-            index.removeAttribute('class');
+            index.removeAttribute('id');
         })
         // put active on checked radio button label
         let checkedLabel = labels.find(index => {
             return index.textContent == radio.value;
         })
-        checkedLabel.classList.add(`active${checkedLabel.textContent}`);
+        checkedLabel.setAttribute('id', `active${checkedLabel.textContent}`);
     }
-    return { mainFn, clearSelection, currentSelection, editCurrentSelection };
+    return { mainFn, clearSelection, currentSelection, editCurrentSelection, updateDisplay };
 })();
 
 // project input

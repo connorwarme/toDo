@@ -85,7 +85,7 @@ const craftCard = (() => {
         return titleContainer;
     }
     const _priority = (object) => {
-        const priority = createElement('div', {"class": "priority", "id": `${object.priority}`});
+        const priority = createElement('div', {"id": "priority", "class": `${object.priority}`});
         priority.textContent = `${object.priority}`;
         return priority;
     } 
@@ -147,16 +147,16 @@ const craftCard = (() => {
         const priorityEditTitle = createElement('div', {"class": "priorityEditTitle"});
         priorityEditTitle.textContent = "Priority:"
         const priorityEditLow = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditLow", "value": "Low"});
-        const priorityEditLowLabel = createElement('label', {"for": "priorityEditLow"});
+        const priorityEditLowLabel = createElement('label', {"for": "priorityEditLow", "class": "Low"});
         priorityEditLowLabel.textContent = "Low";
         const priorityEditMed = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditMed", "value": "Medium"});
-        const priorityEditMedLabel = createElement('label', {"for": "priorityEditMed"});
+        const priorityEditMedLabel = createElement('label', {"for": "priorityEditMed", "class": "Medium"});
         priorityEditMedLabel.textContent = "Medium";
         const priorityEditHigh = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditHigh", "value": "High"});
-        const priorityEditHighLabel = createElement('label', {"for": "priorityEditHigh"});
+        const priorityEditHighLabel = createElement('label', {"for": "priorityEditHigh", "class": "High"});
         priorityEditHighLabel.textContent = "High";
         const priorityEditDefcon = createElement('input', {"type": "radio", "name": "priorityEditBtns", "id": "priorityEditDefcon", "value": "Defcon"});
-        const priorityEditDefconLabel = createElement('label', {"for": "priorityEditDefcon"});
+        const priorityEditDefconLabel = createElement('label', {"for": "priorityEditDefcon", "class": "Defcon"});
         priorityEditDefconLabel.textContent = "Defcon";
         priorityEditContainer.appendChild(priorityEditTitle);
         priorityEditContainer.appendChild(priorityEditLow);
