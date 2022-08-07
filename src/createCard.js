@@ -1,11 +1,11 @@
 import { createElement } from "./utility";
 import { listeners } from "./cardFunctionality";
-import Delete from "./icons/delete.png";
-import Edit from "./icons/edit.png";
-import Expand from "./icons/expand.png";
-import Add from "./icons/add.png";
-import Cancel from "./icons/cancel.png";
-import Save from "./icons/save.png";
+import Delete from "./icons/trash.svg";
+import Edit from "./icons/edit.svg";
+import Expand from "./icons/expand.svg";
+import Add from "./icons/add.svg";
+import Cancel from "./icons/close.svg";
+import Save from "./icons/check.svg";
 
 const craftCard = (() => {
 // I have these declared right away to be available in multiple functions...)
