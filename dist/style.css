@@ -16,6 +16,7 @@
     background-color: rgba(2, 5, 8, 0.7);
     justify-content: center;
     align-items: center;
+    backdrop-filter: blur(10px);
 }
 .modalBox {
     height: 30vh;
@@ -97,7 +98,6 @@
     height: inherit;
     width: 200px;
     background-color: #f1faee;
-    border: 2px solid rgba(0, 0, 0, 0.8);
 }
 .homeContainer,
 .todayContainer,
@@ -285,24 +285,27 @@
 .bodyContainer {
     height: inherit;
     width: calc(100vw - 200px);
+    background-color: #a8dadc;
 }
 .body {
     display: grid;
+    background-color: #a8dadc;
 }
 .addContainer {
     display: flex;
     justify-content: center;
+    background-color: #a8dadc;
 }
 .addContainer > button {
     height: 85px;
     width: 85px;
     border-radius: 50%;
     border: none;
-    color: #1d3557;
+    color: #a8dadc;
     font-size: 100px;
     font-weight: bold; 
     font-family: courier;
-    background-color: #a8dadc;
+    background-color: #1d3557;
     transition-duration: 1000ms;
     transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
     opacity: 0.8;
@@ -312,24 +315,12 @@
     transform: rotate(360deg);
     opacity: 1;
 }
-.checkboxLabel {
-    display: none;
-}
-.checkbox {
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-}
-.priority {
-    border: 1px solid lightgreen;
-}
-.date {
-    border: 1px solid rebeccapurple;
-}
 .card {
     width: inherit;
-    background-color: lightgoldenrodyellow;
-    border: 2px solid blue;
+    background-color: #f1faee;
+    margin: 10px 10px 0 10px;
+    border: 2px solid #1d3557;
+    
 }
 .cardEdit {
     display: flex;
@@ -339,6 +330,8 @@
     display: flex;
     height: 50px;
     width: inherit;
+    justify-content: center;
+    align-items: center;
 }
 .extendedSize {
     display: none;
@@ -350,11 +343,22 @@
 .displayEdit {
     display: flex;
     justify-content: space-around;
-    background-color: violet;
+}
+.checkboxLabel {
+    display: none;
+}
+.checkbox {
+    height: 35px;
+    width: 35px;
+    border: #1d3557;
+    margin: 0 5px 0 5px;
 }
 .titleContainer {
     display: flex;
-    border: 1px solid salmon;
+    height: 35px;
+}
+.title {
+    align-self: center;
 }
 .titleEdit {
     display: none;
@@ -362,11 +366,41 @@
 .spacerDiv {
     flex-grow: 1;
 }
+.card .priority {
+    padding: 10px;
+    width: 60px;
+    border-radius: 5px;
+    color:#f1faee;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#Low {
+    border: 2px solid #55a630;
+    color: #55a630;
+}
+#Medium {
+    border: 2px solid #FCBF49;
+    color: #FCBF49;
+}
+#High {
+    border: 2px solid #f77f00;
+    color: #f77f00;
+}
+#Defcon {
+    border: 2px solid #d62828;
+    color: #d62828;
+}
 .dateInput {
     display: none;
 }
-.notesContainer {
-
+.card button {
+    background-color: #f1faee;
+    border: none;
+}
+.card button > img {
+    filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
 }
 .notesContainer > label,
 .notesContainer > input {
@@ -394,6 +428,13 @@
 button {
     height: 40px;
     width: 40px;
+}
+.editCard, 
+.expand {
+    padding: 5px;
+}
+.deleteCard {
+    padding: 5px 5px 5px;
 }
 .completedToDo {
     opacity: 0.7;
