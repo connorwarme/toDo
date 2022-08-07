@@ -86,7 +86,7 @@ const edit = (() => {
     const populateInput = (cardDiv, object) =>  {
         let currentTitle = cardDiv.querySelector('input.titleEdit');
         currentTitle.value = object.title;
-        let currentNotes = cardDiv.querySelector('input#notesEdit');
+        let currentNotes = cardDiv.querySelector('textarea#notesEdit');
         currentNotes.value = object.notes;
         let optionsArray = project.populateInput(objectOps.projectArray, cardDiv);
         project.markSelected(optionsArray, object);

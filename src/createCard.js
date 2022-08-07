@@ -107,7 +107,7 @@ const craftCard = (() => {
         notes.textContent = `Notes: ${object.notes}`;
         const notesEditLabel = createElement('label', {"for": "notesEdit"});
         notesEditLabel.textContent = "Notes:";
-        const notesEditInput = createElement('input', {"type": "textarea", "id": "notesEdit"});
+        const notesEditInput = createElement('textarea', {"id": "notesEdit", "rows": "3", "cols": "30"});
         notesContainer.appendChild(notes);
         notesContainer.appendChild(notesEditLabel);
         notesContainer.appendChild(notesEditInput);

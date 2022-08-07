@@ -285,16 +285,16 @@
 .bodyContainer {
     height: inherit;
     width: calc(100vw - 200px);
-    background-color: #a8dadc;
+    background-color: rgba(168, 218, 220, 0.4);
 }
 .body {
     display: grid;
-    background-color: #a8dadc;
+    background-color: rgba(168, 218, 220, 0.4);
 }
 .addContainer {
     display: flex;
     justify-content: center;
-    background-color: #a8dadc;
+    background-color: rgba(168, 218, 220, 0.4);
 }
 .addContainer > button {
     height: 85px;
@@ -360,6 +360,7 @@
 }
 .titleContainer {
     display: flex;
+    align-items: center;
     height: 35px;
 }
 .title {
@@ -369,6 +370,15 @@
 }
 .titleEdit {
     display: none;
+}
+.titleContainer > label {
+    margin: 0 5px;
+}
+.titleContainer > input {
+    padding: 2px 5px;
+    border: 1px solid #1d3557;
+    border-radius: 4px;
+    font-size: 16px;
 }
 .spacerDiv {
     flex-grow: 1;
@@ -418,9 +428,22 @@
 .card .notes {
     padding: 0 15px 6px 20px;
 }
+.notesContainer {
+    display: flex;
+}
 .notesContainer > label,
-.notesContainer > input {
+.notesContainer > textarea {
     display: none;
+}
+.notesContainer > label {
+    padding: 4px 5px 6px 20px;
+}
+.notesContainer > textarea {
+    text-align: start;
+    border: 1px solid #1d3557;
+    border-radius: 4px;
+    padding: 2px 4px;
+    width: 248px;
 }
 .card .projectText {
     width: 153px;
