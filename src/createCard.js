@@ -39,12 +39,12 @@ const craftCard = (() => {
         let title = _title(object);
         const spacerDiv = createElement('div', {"class": "spacerDiv"});
         let priority = _priority(object);
-        expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card"});
+        expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card", "title": "Expand"});
         const expandIcon = createElement('img', {"src": `${Expand}`, "alt": "Expand"});
         let date = _date(object);
-        editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card"});
+        editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card", "title": "Edit"});
         const editIcon = createElement('img', {"src": `${Edit}`, "alt": "Edit"});
-        deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card"});
+        deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card", "title": "Delete"});
         const deleteIcon = createElement('img', {"src": `${Delete}`, "alt": "Delete"});
         // extended size
         let note = _notes(object);
