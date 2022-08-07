@@ -94,6 +94,7 @@
 .dateNavContainer {
     display: flex;
     align-items: center;
+    height: 44px;
 }
 .homeContainer > label,
 .todayContainer > label,
@@ -117,6 +118,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition-duration: 100ms;
 }
 .homeBtn > img,
 .todayBtn > img,
@@ -124,14 +126,14 @@
 .priorityNavBtn > img,
 .dateNavBtn > img {
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
-    height: 40px;
+    height: 36px;
 }
 .homeBtn:hover,
 .todayBtn:hover,
 .weekBtn:hover,
 .priorityNavBtn:hover,
 .dateNavBtn:hover {
-    border: 1px solid black;
+    transform: scale(1.15);
 }
 .sortText,
 .projectText {
@@ -151,6 +153,9 @@
     border: none;
     background-color: #f1faee;
     margin-left: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .projNavBtn > img {
     height: 30px;
@@ -162,13 +167,12 @@
     border: none;
 }
 .projDeleteBtn > img {
-    height: 20px;
+    height: 18px;
 }
 .projNavContainer {
     display: flex;
     align-items: center;
 }
-
 .projNavContainer > label {
     color:#1d3557;
     font-size: 18px;
@@ -177,6 +181,9 @@
 }
 .projNavContainer > button > img {
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
+}
+.projNavContainer:hover > button > img {
+    transform: scale(1.15)
 }
 .projNavContainer:hover .projDeleteBtn {
     display: block;
@@ -252,6 +259,16 @@
 .projNewSave > img {
     height: 25px;
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
+}
+.highlight > label {
+    font-weight: 700;
+}
+.highlight > button:first-child {
+    background-color: #1d3557;
+    border-radius: 5px;
+}
+.highlight > button:first-child > img {
+    filter: invert(96%) sepia(3%) saturate(606%) hue-rotate(62deg) brightness(104%) contrast(96%);
 }
 .bodyContainer {
     height: inherit;

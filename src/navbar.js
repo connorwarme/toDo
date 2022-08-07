@@ -36,6 +36,7 @@ const navbar = (() => {
         // home listener
         homeBtn.addEventListener('click', () => {
             navFns.homeFn(objectOps.objectArray);
+            navFns.highlightFn(homeContainer);
         })
         // append it all together
         homeContainer.appendChild(homeBtn);
@@ -84,15 +85,19 @@ const navbar = (() => {
         // sort listeners
         todayBtn.addEventListener('click', () => {
             navFns.todayFn(objectOps.objectArray);
+            navFns.highlightFn(todayContainer);
         })
         weekBtn.addEventListener('click', () => {
             navFns.weekFn(objectOps.objectArray);
+            navFns.highlightFn(weekContainer);
         })
         priorityNavBtn.addEventListener('click', () => {
             navFns.priorityFn(objectOps.objectArray);
+            navFns.highlightFn(priorityNavContainer);
         })
         dateNavBtn.addEventListener('click', () => {
             navFns.dueDateFn(objectOps.objectArray);
+            navFns.highlightFn(dateNavContainer);
         })
         project();
     }
@@ -150,6 +155,7 @@ const navbar = (() => {
         // add listeners
         button.addEventListener('click', () => {
             navFns.projectFn(objectOps.objectArray, input);
+            navFns.highlightFn(container);
         })
         deleteBtn.addEventListener('click', () => {
             navFns.projDeleteFn(container);
@@ -333,7 +339,22 @@ const navFns = (() => {
             console.log(index.value.project);
         })
     }
-    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn };
+    // when user clicks one of the navbar links, highlight it (aka to show what is being displayed)
+    // need to remove highlight class from any other navbar divs first
+    const highlightFn = (input) => {
+        _removeHighlight();
+        _addHighlight(input);
+    }
+    const _removeHighlight = () => {
+        let highlight = document.querySelector('div.highlight');
+        if (highlight) {
+            highlight.classList.remove('highlight');
+        }
+    }
+    const _addHighlight = (input) => {
+        input.classList.add('highlight');
+    }
+    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn, highlightFn };
 })();
 
 export { navbar, navFns }
