@@ -1,5 +1,5 @@
 import { createElement } from "./utility";
-import { listeners } from "./cardFunctionality";
+import { checkboxFn, listeners } from "./cardFunctionality";
 import Delete from "./icons/trash.svg";
 import Edit from "./icons/edit.svg";
 import Expand from "./icons/expand.svg";
@@ -70,6 +70,10 @@ const craftCard = (() => {
         editSize.appendChild(submitEdit);
         // add listeners to all the buttons
         listeners.addAll(checked, expandCard, editCard, deleteCard, projectAdd, projectAddCancel, projectAddSave, cancelEditBtn, submitEditBtn, cardDiv, object)
+        // check for checkbox
+        if (object.checked) {
+            checkboxFn(checked);
+        }
     }
     // helper fns
     const _title = (object) => {

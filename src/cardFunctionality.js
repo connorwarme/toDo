@@ -567,4 +567,4 @@ const listeners = (() => {
     }
     return { addAll, removeAll };
 })();
-export { listeners, edit, deleteFn };
+export { checkboxFn, listeners, edit, deleteFn };
