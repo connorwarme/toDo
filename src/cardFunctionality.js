@@ -245,6 +245,7 @@ const priority = (() => {
                 return index.value === object.priority;
             });
             btn.checked = "checked";
+            markLabel(btn);
         } else {
             btn = "";
         }

@@ -571,7 +571,7 @@ textarea {
     margin: 4px -4px 6px 9px;
 }
 .priorityEditContainer > input {
-    /* display: none; */
+    display: none;
 }
 .priorityEditContainer > label {
     width: 65px;
