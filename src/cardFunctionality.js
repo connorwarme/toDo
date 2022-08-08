@@ -362,6 +362,7 @@ const project = (() => {
     // cancel - clears the input field, hides display of input, cancel, save
     // save - gathers input, adds project to array, hides display^^, reruns creating dropdown menu (with the new addition)
     const addBtnFn = (cardDiv) => {
+        cardDiv.children[1].children[1].children[2].style.display = "none";
         cardDiv.children[1].children[1].children[3].style.display = "none";
         cardDiv.children[1].children[1].children[4].style.display = "flex";
         cardDiv.children[1].children[1].children[4].children[0].focus();
@@ -388,6 +389,7 @@ const project = (() => {
     // clear input field value; show "add new project" button; hide input, cancel, and save.
     const addCancelFn = (cardDiv) => {
         cardDiv.children[1].children[1].children[4].children[0].value = "";
+        cardDiv.children[1].children[1].children[2].style.display = "block";
         cardDiv.children[1].children[1].children[3].style.display = "flex";
         cardDiv.children[1].children[1].children[4].style.display = "none";
     }
@@ -413,20 +415,20 @@ const date = (() => {
 
     }
     const hideInput = (cardDiv) => {
-        cardDiv.children[0].children[5].children[0].style.display = "block";
-        cardDiv.children[0].children[5].children[1].style.display = "none";
-        cardDiv.children[0].children[5].children[2].style.display = "none";
+        cardDiv.children[0].children[4].children[0].style.display = "block";
+        cardDiv.children[0].children[4].children[1].style.display = "none";
+        cardDiv.children[0].children[4].children[2].style.display = "none";
     }
     const displayInput = (cardDiv) => {
-        cardDiv.children[0].children[5].children[0].style.display = "none";
-        cardDiv.children[0].children[5].children[1].style.display = "block";
-        cardDiv.children[0].children[5].children[2].style.display = "block";
+        cardDiv.children[0].children[4].children[0].style.display = "none";
+        cardDiv.children[0].children[4].children[1].style.display = "block";
+        cardDiv.children[0].children[4].children[2].style.display = "block";
     }
     const clearInput = (cardDiv) => {
-        cardDiv.children[0].children[5].children[2].value = "";
+        cardDiv.children[0].children[4].children[2].value = "";
     }
     const getInput = (cardDiv) => {
-        let input = cardDiv.children[0].children[5].children[2].value;
+        let input = cardDiv.children[0].children[4].children[2].value;
         if (input != "") {
             let date = format(parseISO(input), 'MM/dd/yyyy');
             return date;
@@ -436,7 +438,7 @@ const date = (() => {
     }
     // when user goes to edit to-do, show current due date on input
     const populateInput = (cardDiv, object) => {
-        let input = cardDiv.children[0].children[5].children[2];
+        let input = cardDiv.children[0].children[4].children[2];
         if (object.dueDate != "") {
             let currentDate = format(parse(object.dueDate, 'MM/dd/yyyy', new Date()), 'yyyy-MM-dd');
             input.value = currentDate;

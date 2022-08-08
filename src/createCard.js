@@ -39,9 +39,9 @@ const craftCard = (() => {
         let title = _title(object);
         const spacerDiv = createElement('div', {"class": "spacerDiv"});
         let priority = _priority(object);
+        let date = _date(object);
         expandCard = createElement('button', {"id": "expand", "class": "expand", "aria-label": "Expand Card", "title": "Expand"});
         const expandIcon = createElement('img', {"src": `${Expand}`, "alt": "Expand"});
-        let date = _date(object);
         editCard = createElement('button', {"class": "editCard", "aria-label": "Edit Card", "title": "Edit"});
         const editIcon = createElement('img', {"src": `${Edit}`, "alt": "Edit"});
         deleteCard = createElement('button', {"class": "deleteCard", "aria-label": "Delete Card", "title": "Delete"});
@@ -57,9 +57,9 @@ const craftCard = (() => {
         regularSize.appendChild(title);
         regularSize.appendChild(spacerDiv);
         regularSize.appendChild(priority);
+        regularSize.appendChild(date);
         regularSize.appendChild(expandCard);
         expandCard.appendChild(expandIcon);
-        regularSize.appendChild(date);
         regularSize.appendChild(editCard);
         editCard.appendChild(editIcon);
         regularSize.appendChild(deleteCard);

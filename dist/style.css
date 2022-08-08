@@ -3,7 +3,10 @@
     margin: 0;
 }
 .main {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: "Teko", "Oswald", Georgia, 'Times New Roman', Times, serif;
+}
+input {
+    font-family: "Raleway", Georgia, 'Times New Roman', Times, serif;
 }
 .modalContainer {
     display: flex;
@@ -84,6 +87,7 @@
     height: 150px;
 }
 .headerTextBox {
+    font-family: "Teko", Georgia, 'Times New Roman', Times, serif;
     font-size: 88px;
     font-weight: 800;
     color: #a8dadc;
@@ -319,9 +323,10 @@
 }
 .card {
     width: inherit;
-    background-color: #f1faee;
+    background-color: #a8dadc;
     margin: 10px 10px 0 10px;
-    border: 2px solid #1d3557;
+    border-left: 5px solid #1d3557;
+    border-radius: 5px;
     color: #1d3557;
 }
 .card:hover {
@@ -381,6 +386,7 @@
     border: 1px solid #1d3557;
     border-radius: 4px;
     font-size: 16px;
+    background-color: #f1faee;
 }
 .spacerDiv {
     flex-grow: 1;
@@ -396,25 +402,29 @@
 }
 .Low {
     border: 2px solid #55a630;
-    color: #55a630;
+    background-color: rgba(85, 166, 48, 0.5);
+    color: #1d3557;
 }
 .Medium {
-    border: 2px solid #FCBF49;
-    color: #FCBF49;
+    border: 2px solid #ffc300;
+    background-color: rgba(255, 195, 0, 0.5);
+    color: #1d3557;
 }
 .High {
     border: 2px solid #f77f00;
-    color: #f77f00;
+    background-color: rgba(247, 127, 0, 0.5);
+    color: #1d3557;
 }
 .Defcon {
     border: 2px solid #d62828;
-    color: #d62828;
+    background-color: rgba(214, 40, 40, 0.5);
+    color: #1d3557;
 }
 .dateInput {
     display: none;
 }
 .card button {
-    background-color: #f1faee;
+    background-color: #a8dadc;
     border: none;
 }
 .card button:hover {
@@ -427,7 +437,20 @@
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
 }
 .dateContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0px 5px;
+}
+.dateContainer > label {
+    margin: 0 5px;
+}
+.dateContainer > input {
+    border: 1px solid #1d3557;
+    border-radius: 5px;
+    height: 30px;
+    background-color: #f1faee;
+    color: #1d3557;
 }
 .card .notes {
     padding: 0 15px 6px 20px;
@@ -447,8 +470,8 @@
 .notesContainer > textarea {
     text-align: start;
     border: 1px solid #1d3557;
-    background-color: rgba(241, 250, 238, 0.3);
-    border-radius: 4px;
+    background-color: #f1faee;
+    border-radius: 5px;
     padding: 3px 5px;
     width: 35vw;
     height: 35px;
@@ -468,6 +491,7 @@
 .projectSelect {
     display: none;
     height: 30px;
+    width: 116px;
     padding: 0 10px;
     margin-right: 5px;
     color: #1d3557;
@@ -479,7 +503,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 40px;
+    margin-right: 80px;
+}
+.projectContainer > label {
+    display: none;
 }
 .projectAddBtn {
     display: none;
@@ -497,8 +524,8 @@
 }
 .projectAddContainer > input {
     height: 28px;
-    width: 105px;
-    background-color: rgba(168, 218, 220, 0.3);
+    width: 116px;
+    background-color: #f1faee;
     border: 1px solid #1d3557;
     border-radius: 5px;
     margin-right: 5px;
@@ -506,10 +533,6 @@
 }
 .projectAddContainer > button {
     border-radius: 5px;
-    width: 39px;
-}
-.projectAddSave {
-    margin-right: 2px;
 }
 .projectAddContainer > button > img {
     height: 30px;
@@ -538,33 +561,34 @@
 .priorityEditContainer > label:hover {
     cursor: pointer;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
 }
 .priorityEditContainer .Low:hover,
 #activeLow {
     background-color: #55a630;
-    color: #f1faee;
+    color: #1d3557;
 }
 .priorityEditContainer .Medium:hover,
 #activeMedium {
-    background-color: #FCBF49;
-    color: #f1faee;
+    background-color: #ffc300;
+    color: #1d3557;
 }
 .priorityEditContainer .High:hover,
 #activeHigh {
     background-color: #f77f00;
-    color: #f1faee;
+    color: #1d3557;
 }
 .priorityEditContainer .Defcon:hover,
 #activeDefcon {
     background-color: #d62828;
-    color: #f1faee;
+    color: #1d3557;
 }
 .submitContainer {
     justify-self: flex-end;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-right: 5vw;
+    padding-right: 8vw;
 }
 .submitContainer > button {
     height: 36px;
