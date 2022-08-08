@@ -218,7 +218,7 @@ const navFns = (() => {
     // priority
     // - display all, but sorted from highest priority to lowest
     const priorityFn = (array) => {
-        let priorityArray = array;
+        let priorityArray = [...array];
         _assignPValue(priorityArray);
         priorityArray.sort((a,b) => {
             return a.pvalue - b.pvalue;

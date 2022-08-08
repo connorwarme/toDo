@@ -223,7 +223,7 @@ const priority = (() => {
     const mainFn = (cardDiv) => {
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let selection = currentSelection(priorityBtns);
-        markLabel(selection);
+        markLabel(selection, cardDiv);
         return selection;
     }
     // clear radio selection
@@ -237,6 +237,8 @@ const priority = (() => {
     // display the current selection (in edit mode)
     const editCurrentSelection = (cardDiv, object) => {
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
+        console.log(priorityBtns);
+        console.log(object);
         let btn;
         if (object.priority != "") {
             btn = priorityBtns.find(index => {
@@ -277,7 +279,8 @@ const priority = (() => {
     }
     const markLabel = (radio) => {
         // clear labels of active class
-        let container = document.querySelector('div.priorityEditContainer');
+        let container = radio.parentElement;
+        console.log(container);
         let labels = Array.from(container.querySelectorAll('label'));
         labels.forEach(index => {
             index.removeAttribute('id');
@@ -413,7 +416,6 @@ const date = (() => {
         let dateInput = getInput(cardDiv);
         // do I need a mainFn?
         // need a function to populate the input with current dueDate
-
     }
     const hideInput = (cardDiv) => {
         cardDiv.children[0].children[4].children[0].style.display = "block";
@@ -447,35 +449,6 @@ const date = (() => {
     }
     return { mainFn, hideInput, displayInput, clearInput, getInput, populateInput}
 })();
-// // object operations
-// const updateObject = (object, array) => {
-//     for (let i=0; i<array.length; i++) {
-//         object[object.properties[i]] = array[i];
-//     }
-// }
-// const updateObjectCheck = (input) => {
-//     let object = getObject(input.parentElement.parentElement);
-//     if (input.checked) {
-//         object.checked = true;
-//     } else {
-//         object.checked = false;
-//     }
-// }
-// // needs updating once I have multiple objects... !!!
-// // needs to be passed the project as well..? or should it just sort through the main array of objects?
-// const getObject = (cardDiv) => {
-//     let theTitle = cardDiv.children[0].children[1].children[0].textContent;
-//     let object = objectArray.find(index => {
-//         return index.title === theTitle;
-//     });
-//     // this works, but tried using find instead...can delete later 
-//     // for (i=0; i<objectArray.length; i++) {
-//     //     if (objectArray[i].title == title) {
-//     //         object = objectArray[i];
-//     //     }
-//     // }
-//     return object;
-// }
 
 const listeners = (() => {
     const elementsArray = [];
