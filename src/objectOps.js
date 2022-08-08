@@ -24,7 +24,9 @@ const objectOps = (() => {
             if (index.project == "" || index.project == null || index.project == undefined) {
                 console.log(index.project);
             } else {
-                objectOps.projectArray.push(index.project);
+                if (!(_checkProjectArray(index.project))) {
+                    objectOps.projectArray.push(index.project);
+                }
             }
         })
         // save/update local storage
@@ -36,6 +38,7 @@ const objectOps = (() => {
     }
     // an attempt at a check to see if project already exists in array
     const _checkProjectArray = (input) => {
+        console.log(objectOps.projectArray);
         let check = objectOps.projectArray.find(index => {
             return index == input;
         })

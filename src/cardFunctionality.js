@@ -152,7 +152,6 @@ const submit = (() => {
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio'));
         let inputArray = _getInput(cardDiv, btns);
         objectOps.update(object, inputArray);
-        console.log(object);
         _displayInput(cardDiv, inputArray);
         edit.cancelEditFn(cardDiv);
     }
@@ -237,8 +236,6 @@ const priority = (() => {
     // display the current selection (in edit mode)
     const editCurrentSelection = (cardDiv, object) => {
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
-        console.log(priorityBtns);
-        console.log(object);
         let btn;
         if (object.priority != "") {
             btn = priorityBtns.find(index => {
@@ -281,7 +278,6 @@ const priority = (() => {
     const markLabel = (radio) => {
         // clear labels of active class
         let container = radio.parentElement;
-        console.log(container);
         let labels = Array.from(container.querySelectorAll('label'));
         labels.forEach(index => {
             index.removeAttribute('id');
