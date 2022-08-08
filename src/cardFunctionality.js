@@ -2,6 +2,7 @@ import { createElement } from "./utility";
 import { objectOps } from "./objectOps";
 import { ls } from "./localStorage";
 import { format, parseISO, parse } from "date-fns";
+import { navbar } from "./navbar";
 
 // To-Do card button listener functions
 // get card and toggle class
@@ -170,9 +171,8 @@ const submit = (() => {
         dateText.textContent = array[3];
     }
     const _emptyInputCheck = (input, section) => {
-        let empty = "";
         if (input == false || input == "" || input == undefined) {
-            return empty;
+            return `${section}: none`;
         } else {
             return `${section}: ${input}`;
         }
@@ -396,6 +396,8 @@ const project = (() => {
     }
     const addSaveFn = (cardDiv, object) => {
         addInputFn(cardDiv, object);
+        // add to navbar
+        navbar.newProject(object.project);
         // reset display
         addCancelFn(cardDiv);
         // remove and recreate dropdown menu

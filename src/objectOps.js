@@ -16,7 +16,7 @@ const objectOps = (() => {
         ls.saveArray(objectOps.objectArray, "obj");
         // does this need to return the updated array? !!!
     }
-    let projectArray = [];
+    let projectArray = [` - none - `];
     // this is going to need a sort function to weed out "" (empty) projects and the like. !!! did current version work?
     // needs a clear function before this is run (to make sure projectArray is empty), or run a check to see if project already exists or if it needs to be added to the projectArray !!!
     const addToProjectArray = (array) => {

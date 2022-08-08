@@ -42,6 +42,6 @@ console.log(objectOps.projectArray);
 createModal();
 makeHF();
 navbar.createNav();
-navbar.newProject('winning');
+// navbar.newProject('winning');
 
 navFns.dueDateFn([first, second, third, fourth]);

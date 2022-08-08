@@ -100,6 +100,7 @@ const navbar = (() => {
             navFns.highlightFn(dateNavContainer);
         })
         project();
+        loadExistingProjects(objectOps.projectArray);
     }
     const project = () => {
         // project
@@ -169,6 +170,13 @@ const navbar = (() => {
         deleteBtn.appendChild(deleteIcon);
         // could have the third argument be the function to have the listener run...
         // could use this fn to dynamically create the sort zone too...
+    }
+    const loadExistingProjects = (array) => {
+        array.forEach(index => {
+            if (!(index == ` - none - `)) {
+                newProject(index);
+            }
+        })
     }
     return { createNav, newProject };
 })();
@@ -323,8 +331,6 @@ const navFns = (() => {
         let project = parent.value;
         console.log(parent.value);
         // delete project from project Array
-        // do I need to go thru the to-dos and update the ones with that project? Like reset it to ""? !!!
-        // i attempted to in deleteProjectNavbar, we'll see if it works
         objectOps.deleteProjectNavbar(project);
         // delete display
         // do I need to remove listeners?
