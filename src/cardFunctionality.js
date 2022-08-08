@@ -7,6 +7,7 @@ import { format, parseISO, parse } from "date-fns";
 // get card and toggle class
 // might need update - to check object.checked / then to update it !!!
 const checkboxFn = (input) => {
+    input.classList.toggle('checked');
     input.parentElement.parentElement.classList.toggle('completedToDo');
     objectOps.updateCheck(input);
 }

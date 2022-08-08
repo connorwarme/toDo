@@ -100,7 +100,7 @@ const objectOps = (() => {
     // update the checkmark (if to-do is complete)
     const updateCheck = (input) => {
         let object = getObject(input.parentElement.parentElement);
-        if (input.checked) {
+        if (input.classList[1] == "checked") {
             object.checked = true;
         } else {
             object.checked = false;

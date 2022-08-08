@@ -35,7 +35,7 @@ const craftCard = (() => {
         cardDiv.appendChild(editSize);
         // build card
         // regular size
-        checked = createElement('input', {"type": "checkbox", "class": "checkbox", 'aria-label': "Checkbox"});
+        checked = createElement('div', {"class": "checkbox", 'aria-label': "Checkbox", "id": "checkbox"});
         let title = _title(object);
         const spacerDiv = createElement('div', {"class": "spacerDiv"});
         let priority = _priority(object);
