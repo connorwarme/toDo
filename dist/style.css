@@ -445,12 +445,18 @@ textarea {
 .card button {
     background-color: #a8dadc;
     border: none;
+    transition-duration: 200ms all;
 }
 .card button:hover {
     cursor: pointer;
 }
 .card button:hover > img {
     transform: scale(1.2);
+}
+.body button:active,
+label:active {
+    box-shadow: inset 0px 0px 5px #1d3557;
+    border-radius: 5px;
 }
 .card button > img {
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
@@ -671,6 +677,14 @@ button {
 }
 .linkContainer > a > img {
     height: 50px;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
+}
+.linkContainer > a:first-child > img:hover {
+    transform: rotate(25deg);
+}
+.linkContainer > a:nth-child(2) > img:hover {
+    transform: rotate(-25deg);
 }
 .footerBox > .textContainer {
     height: 25px;
