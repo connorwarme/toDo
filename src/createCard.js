@@ -23,11 +23,10 @@ const craftCard = (() => {
         const card = createElement('div', {"class": "card"});
         return card;
     }
-    let count = 0;
+    let count = -1;
     // make to-do card
     const card = (object, cardDiv) => {
         cardDiv.value = object;
-        object.value = count;
         count++;
         // -> 3 zones (regular, extended, and editable)
         const regularSize = createElement('div', {"class": "regularSize"});
@@ -53,7 +52,7 @@ const craftCard = (() => {
         let note = _notes(object);
         let project = _project(object);
         // editable size
-        let priorityEdit = _priorityEdit(object);
+        let priorityEdit = _priorityEdit();
         let submitEdit = _submitEdit();
         // append it all together
         regularSize.appendChild(checked);
@@ -150,21 +149,21 @@ const craftCard = (() => {
         projectAddSave.appendChild(projectSaveIcon);
         return projectContainer;
     }
-    const _priorityEdit = (object) => {
+    const _priorityEdit = () => {
         const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
         const priorityEditTitle = createElement('div', {"class": "priorityEditTitle"});
         priorityEditTitle.textContent = "Priority:"
-        const priorityEditLow = createElement('input', {"type": "radio", "name": `priorityEditBtns${object.value}`, "id": `priorityEditLow${object.value}`, "value": "Low"});
-        const priorityEditLowLabel = createElement('label', {"for": `priorityEditLow${object.value}`, "class": "Low"});
+        const priorityEditLow = createElement('input', {"type": "radio", "name": `priorityEditBtns${count}`, "id": `priorityEditLow${count}`, "value": "Low"});
+        const priorityEditLowLabel = createElement('label', {"for": `priorityEditLow${count}`, "class": "Low"});
         priorityEditLowLabel.textContent = "Low";
-        const priorityEditMed = createElement('input', {"type": "radio", "name": `priorityEditBtns${object.value}`, "id": `priorityEditMed${object.value}`, "value": "Medium"});
-        const priorityEditMedLabel = createElement('label', {"for": `priorityEditMed${object.value}`, "class": "Medium"});
+        const priorityEditMed = createElement('input', {"type": "radio", "name": `priorityEditBtns${count}`, "id": `priorityEditMed${count}`, "value": "Medium"});
+        const priorityEditMedLabel = createElement('label', {"for": `priorityEditMed${count}`, "class": "Medium"});
         priorityEditMedLabel.textContent = "Medium";
-        const priorityEditHigh = createElement('input', {"type": "radio", "name": `priorityEditBtns${object.value}`, "id": `priorityEditHigh${object.value}`, "value": "High"});
-        const priorityEditHighLabel = createElement('label', {"for": `priorityEditHigh${object.value}`, "class": "High"});
+        const priorityEditHigh = createElement('input', {"type": "radio", "name": `priorityEditBtns${count}`, "id": `priorityEditHigh${count}`, "value": "High"});
+        const priorityEditHighLabel = createElement('label', {"for": `priorityEditHigh${count}`, "class": "High"});
         priorityEditHighLabel.textContent = "High";
-        const priorityEditDefcon = createElement('input', {"type": "radio", "name": `priorityEditBtns${object.value}`, "id": `priorityEditDefcon${object.value}`, "value": "Defcon"});
-        const priorityEditDefconLabel = createElement('label', {"for": `priorityEditDefcon${object.value}`, "class": "Defcon"});
+        const priorityEditDefcon = createElement('input', {"type": "radio", "name": `priorityEditBtns${count}`, "id": `priorityEditDefcon${count}`, "value": "Defcon"});
+        const priorityEditDefconLabel = createElement('label', {"for": `priorityEditDefcon${count}`, "class": "Defcon"});
         priorityEditDefconLabel.textContent = "Defcon";
         priorityEditContainer.appendChild(priorityEditTitle);
         priorityEditContainer.appendChild(priorityEditLow);

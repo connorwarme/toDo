@@ -1,7 +1,7 @@
 import { ls } from "./localStorage";
 
-const cardFactory = (title, project, priority, dueDate, notes, checked, value) => {
-    return { title, project, priority, dueDate, notes, checked, value, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
+const cardFactory = (title, project, priority, dueDate, notes, checked) => {
+    return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
 }
 const objectOps = (() => {
     let objectArray = [];
@@ -116,7 +116,12 @@ const objectOps = (() => {
     const getObject = (cardDiv) => {
         let theObject = cardDiv.value;
         let indexPosition = objectOps.objectArray.findIndex(object => {
-            return object == theObject;
+            // previously had this more simply, as "return object == theObject", 
+            // but something changed (haven't figured out what) where the object.properties wasn't equal to theObject.properties, 
+            // thus the fn would return -1 (aka nothing matched theObject)
+            if (object.title == theObject.title && object.project == theObject.project && object.priority == theObject.priority && object.dueDate == theObject.dueDate) {
+                return object;
+            }
         });
         // this works, but tried using find instead...can delete later 
         // for (i=0; i<objectArray.length; i++) {
