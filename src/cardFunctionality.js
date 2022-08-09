@@ -237,7 +237,7 @@ const priority = (() => {
     const editCurrentSelection = (cardDiv, object) => {
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let btn;
-        if (object.priority != "") {
+        if (object.priority != "" && object.priority != undefined) {
             btn = priorityBtns.find(index => {
                 return index.value === object.priority;
             });

@@ -7,6 +7,7 @@ const objectOps = (() => {
     let objectArray = [];
     const addToObjectArray = (object) => {
         objectOps.objectArray.push(object);
+        console.log(objectArray);
         // save/update local storage
         ls.saveArray(objectOps.objectArray, "obj");
     }

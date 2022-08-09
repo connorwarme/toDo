@@ -192,6 +192,9 @@ textarea {
 .projDeleteBtn > img {
     height: 18px;
 }
+.projDeleteBtn:hover > img {
+    transform: scale(1.2);
+}
 .projNavContainer {
     display: flex;
     align-items: center;
@@ -201,11 +204,12 @@ textarea {
     font-size: 24px;
     padding-left: 14px;
     width: 92px;
+    flex: 1;
 }
 .projNavContainer > button > img {
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
 }
-.projNavContainer:hover > button > img {
+.projNavContainer button:hover > img {
     transform: scale(1.2)
 }
 .projNavContainer:hover .projDeleteBtn {
@@ -445,7 +449,7 @@ textarea {
 .card button {
     background-color: #a8dadc;
     border: none;
-    transition-duration: 200ms all;
+    transition-duration: 200ms;
 }
 .card button:hover {
     cursor: pointer;
@@ -478,7 +482,7 @@ label:active {
     border: 1px solid #1d3557;
     border-radius: 5px;
     height: 30px;
-    width: 114px;
+    width: 120px;
     background-color: #f1faee;
     color: #1d3557;
 }
@@ -522,7 +526,7 @@ label:active {
 .projectSelect {
     display: none;
     height: 30px;
-    width: 116px;
+    width: 122px;
     padding: 0 10px;
     margin-right: 5px;
     color: #1d3557;
