@@ -150,9 +150,11 @@ const edit = (() => {
 const submit = (() => {
     // gather inputs, update object, update To-Do card display
     const mainFn = (cardDiv, object) => {
-        let btns = Array.from(cardDiv.querySelectorAll('input[type="radio'));
+        let btns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let inputArray = _getInput(cardDiv, btns);
-        objectOps.update(object, inputArray);
+        console.log(inputArray);
+        let index = objectOps.getObjIndex(cardDiv);
+        objectOps.update(object, inputArray, index);
         _displayInput(cardDiv, inputArray);
         edit.cancelEditFn(cardDiv);
     }
@@ -167,7 +169,7 @@ const submit = (() => {
         priorityText.textContent = array[2];
         let projectText = cardDiv.children[1].children[1].children[0];
         projectText.textContent = _emptyInputCheck(array[1], 'Project');
-        let dateText = cardDiv.children[0].children[5].children[0];
+        let dateText = cardDiv.children[0].children[4].children[0];
         dateText.textContent = array[3];
     }
     const _emptyInputCheck = (input, section) => {

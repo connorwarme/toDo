@@ -91,10 +91,16 @@ const objectOps = (() => {
     }
     // object operations
     // update the object with input data (in array)
-    const update = (object, array) => {
+    const update = (object, array, index) => {
+        console.log(object);
+        console.log(objectOps.objectArray[index]);
         for (let i=0; i<array.length; i++) {
-            object[object.properties[i]] = array[i];
+            let key = `${object.properties[i]}`;
+            object[key] = array[i];
         }
+        objectOps.objectArray[index] = object;
+        console.log(object);
+        console.log(objectOps.objectArray);
         // update local storage
         ls.saveArray(objectOps.objectArray, "obj");
     }
@@ -113,8 +119,10 @@ const objectOps = (() => {
     }
     // needs updating once I have multiple objects... !!!
     // needs to be passed the project as well..? or should it just sort through the main array of objects?
-    const getObject = (cardDiv) => {
+    
+    const getObjIndex = (cardDiv) => {
         let theObject = cardDiv.value;
+        console.log(theObject);
         let indexPosition = objectOps.objectArray.findIndex(object => {
             // previously had this more simply, as "return object == theObject", 
             // but something changed (haven't figured out what) where the object.properties wasn't equal to theObject.properties, 
@@ -123,6 +131,20 @@ const objectOps = (() => {
                 return object;
             }
         });
+        return indexPosition;
+    }
+    const getObject = (cardDiv) => {
+        let theObject = cardDiv.value;
+        console.log(theObject);
+        let indexPosition = objectOps.objectArray.findIndex(object => {
+            // previously had this more simply, as "return object == theObject", 
+            // but something changed (haven't figured out what) where the object.properties wasn't equal to theObject.properties, 
+            // thus the fn would return -1 (aka nothing matched theObject)
+            if (object.title == theObject.title && object.project == theObject.project && object.priority == theObject.priority && object.dueDate == theObject.dueDate) {
+                return object;
+            }
+        });
+        console.log(indexPosition);
         // this works, but tried using find instead...can delete later 
         // for (i=0; i<objectArray.length; i++) {
         //     if (objectArray[i].title == title) {
@@ -131,7 +153,7 @@ const objectOps = (() => {
         // }
         return objectOps.objectArray[indexPosition];
     }
-    return { addToObjectArray, addToProjectArray, addSingleToProjectArray, checkAndAdd, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray, deleteProjectNavbar }    
+    return { addToObjectArray, addToProjectArray, addSingleToProjectArray, checkAndAdd, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray, deleteProjectNavbar, getObjIndex }   
 })();
 
 export { cardFactory, objectOps }

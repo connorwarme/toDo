@@ -23,15 +23,10 @@ objectOps.addToProjectArray(objectOps.objectArray);
 let body = document.querySelector('div.body');
 
 body.appendChild(createCard(first));
-console.log('boom');
 body.appendChild(createCard(second));
-console.log('boom');
 body.appendChild(createCard(third));
-console.log('boom');
 body.appendChild(createCard(fourth));
-console.log('boom');
 body.appendChild(createCard(fifth));
-console.log('boom');
 // body.appendChild(addToDo.addDOM());
 // ls.saveArray(objectOps.objectArray, "obj");
 // let x = ls.returnArray("obj");
