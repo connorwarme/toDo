@@ -1,4 +1,5 @@
 import { ls } from "./localStorage";
+import { navFns } from "./navbar";
 
 const cardFactory = (title, project, priority, dueDate, notes, checked) => {
     return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
@@ -67,6 +68,10 @@ const objectOps = (() => {
             let project = objectOps.objectArray.filter(index => index.project === object.project);
             if (project.length == 1) {
                 _deleteProject(object.project);
+                // check for navbar listing
+                // delete project from navbar 
+                let container = navFns.getContainer(object.project);
+                container.parentElement.removeChild(container);
             }
         }
         // does this need to return the updated array?? !!!

@@ -338,6 +338,16 @@ const navFns = (() => {
         // update current to-dos (i.e. remove that project text)
         _updateCardProjText();
     }
+    const getContainer = (project) => {
+        let array = Array.from(document.querySelectorAll('div.projNavContainer'));
+        let container;
+        for (let i=0; i<array.length; i++) {
+            if (array[i].children[0].id == `${project}Btn`) {
+                container = array[i];
+            }
+        }
+        return container;
+    }
     const _updateCardProjText = () => {
         let cardsArray = document.querySelectorAll('div.card');
         cardsArray.forEach(index => {
@@ -360,7 +370,7 @@ const navFns = (() => {
     const _addHighlight = (input) => {
         input.classList.add('highlight');
     }
-    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn, highlightFn };
+    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn, getContainer, highlightFn };
 })();
 
 export { navbar, navFns }
