@@ -92,15 +92,11 @@ const objectOps = (() => {
     // object operations
     // update the object with input data (in array)
     const update = (object, array, index) => {
-        console.log(object);
-        console.log(objectOps.objectArray[index]);
         for (let i=0; i<array.length; i++) {
             let key = `${object.properties[i]}`;
             object[key] = array[i];
         }
         objectOps.objectArray[index] = object;
-        console.log(object);
-        console.log(objectOps.objectArray);
         // update local storage
         ls.saveArray(objectOps.objectArray, "obj");
     }
