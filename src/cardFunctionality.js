@@ -151,7 +151,9 @@ const submit = (() => {
     // gather inputs, update object, update To-Do card display
     const mainFn = (cardDiv, object) => {
         // check if user added new project but didn't save it yet
-        project.addSaveFn(cardDiv, object);
+        if (!(project.checkProjListing(cardDiv))) {
+            project.addSaveFn(cardDiv, object);
+        }
         // get new input values
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let inputArray = _getInput(cardDiv, btns);
@@ -411,21 +413,29 @@ const project = (() => {
     const addSaveFn = (cardDiv, object) => {
         // add a check if input field display = "block" - so I can also run this fn
         // if user hits "save to-do" before saving a newly inputted project
-        let inputField = cardDiv.children[1].children[1].children[2]
-        if (inputField.style.display = "block") {
-            addInputFn(cardDiv, object);
-            // add to navbar
-            navbar.newProject(object.project);
-            // reset display
-            addCancelFn(cardDiv);
-            // remove and recreate dropdown menu
-            clearOptions(cardDiv);
-            // these need the project array and the object of the card !!!
-            let optionsArray = populateInput(objectOps.projectArray, cardDiv);
-            markSelected(optionsArray, object);
+        addInputFn(cardDiv, object);
+        // add to navbar
+        navbar.newProject(object.project);
+        // reset display
+        addCancelFn(cardDiv);
+        // remove and recreate dropdown menu
+        clearOptions(cardDiv);
+        // these need the project array and the object of the card !!!
+        let optionsArray = populateInput(objectOps.projectArray, cardDiv);
+        markSelected(optionsArray, object);
+    }
+    const checkProjListing = (cardDiv) => {
+        let inputField = cardDiv.children[1].children[1].children[2];
+        let navListing = document.getElementById(`${inputField.value}Btn`);
+        console.log(inputField);
+        console.log(navListing);
+        if (navListing == null || navListing == undefined) {
+            return false;
+        } else {
+            return true;
         }
     }
-    return { hideInput, displayInput, populateInput, getInput, markSelected, addBtnFn, addCancelFn, clearOptions, addSaveFn }
+    return { hideInput, displayInput, populateInput, getInput, markSelected, addBtnFn, addCancelFn, clearOptions, addSaveFn, checkProjListing }
 })();
 
 // date functionality

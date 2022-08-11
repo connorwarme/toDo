@@ -61,7 +61,7 @@ const objectOps = (() => {
         }
     }
     const deleteFromProjectArray = (object) => {
-        if (object.project == "") {
+        if (object.project == "" || object.project == " - none - ") {
             return;
         } else {
             // check if other objects are also in the same project, or if this object is the only one
