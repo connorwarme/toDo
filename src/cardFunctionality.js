@@ -150,12 +150,18 @@ const edit = (() => {
 const submit = (() => {
     // gather inputs, update object, update To-Do card display
     const mainFn = (cardDiv, object) => {
+        // check if user added new project but didn't save it yet
+        project.addSaveFn(cardDiv, object);
+        // get new input values
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let inputArray = _getInput(cardDiv, btns);
         console.log(inputArray);
+        // update the object with new values
         let index = objectOps.getObjIndex(cardDiv);
         objectOps.update(object, inputArray, index);
+        // display the new values on to-do card
         _displayInput(cardDiv, inputArray);
+        // change card out of edit/input mode
         edit.cancelEditFn(cardDiv);
     }
     // updates card display
@@ -403,16 +409,21 @@ const project = (() => {
         cardDiv.children[1].children[1].children[4].style.display = "none";
     }
     const addSaveFn = (cardDiv, object) => {
-        addInputFn(cardDiv, object);
-        // add to navbar
-        navbar.newProject(object.project);
-        // reset display
-        addCancelFn(cardDiv);
-        // remove and recreate dropdown menu
-        clearOptions(cardDiv);
-        // these need the project array and the object of the card !!!
-        let optionsArray = populateInput(objectOps.projectArray, cardDiv);
-        markSelected(optionsArray, object);
+        // add a check if input field display = "block" - so I can also run this fn
+        // if user hits "save to-do" before saving a newly inputted project
+        let inputField = cardDiv.children[1].children[1].children[2]
+        if (inputField.style.display = "block") {
+            addInputFn(cardDiv, object);
+            // add to navbar
+            navbar.newProject(object.project);
+            // reset display
+            addCancelFn(cardDiv);
+            // remove and recreate dropdown menu
+            clearOptions(cardDiv);
+            // these need the project array and the object of the card !!!
+            let optionsArray = populateInput(objectOps.projectArray, cardDiv);
+            markSelected(optionsArray, object);
+        }
     }
     return { hideInput, displayInput, populateInput, getInput, markSelected, addBtnFn, addCancelFn, clearOptions, addSaveFn }
 })();
