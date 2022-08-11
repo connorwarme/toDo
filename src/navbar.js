@@ -209,8 +209,10 @@ const navFns = (() => {
     // - sort out only those due today, display those
     const todayFn = (array) => {
         let todayArray = array.filter(index => {
-            let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
-            return isToday(date);
+            if (!(index.dueDate == "")) {
+                let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
+                return isToday(date);
+            }
         })
         homeFn(todayArray);
     }
@@ -218,8 +220,10 @@ const navFns = (() => {
     // - sort out those due this week, display those
     const weekFn = (array) => {
         let weekArray = array.filter(index => {
-            let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
-            return isThisWeek(date, { weekStartsOn: 0 });
+            if (!(index.dueDate == "")) {
+                let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
+                return isThisWeek(date, { weekStartsOn: 0 });
+            }
         })
         homeFn(weekArray);
     }
@@ -259,11 +263,14 @@ const navFns = (() => {
     }
     // change dates from displayed format to the format date-fns "compareAsc" can use
     const _parseDates = (array) => {
-        let dateArray = array.map(index => {
-            let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
-            index.dueDate = date;
-            return index;
+        let dateArray = array.filter(index => {
+            if (!(index.dueDate == "")) {
+                let date = parse(index.dueDate, 'MM/dd/yyyy', new Date());
+                index.dueDate = date;
+                return index;
+            }
         })
+        console.log(dateArray);
         return dateArray;
     }
     // sort the dates, soonest to latest
@@ -271,10 +278,12 @@ const navFns = (() => {
         let result = array.sort((a, b) => {
             return compareAsc(a.dueDate, b.dueDate);
         })
+        console.log(result);
         return result;
     }
     // change dates back into display format
     const _reformatDates = (array) => {
+        console.log(array);
         array.forEach(index => {
             let update = format(parseJSON(index.dueDate), 'MM/dd/yyyy');
             index.dueDate = update;
