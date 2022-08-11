@@ -184,10 +184,11 @@ const submit = (() => {
     const _getInput = (cardDiv, btnsArray) => {
         let titleInput = cardDiv.children[0].children[1].children[2].value;
         let notesInput = cardDiv.children[1].children[0].children[2].value;
-        let priorityInput = priority.currentSelection(btnsArray).value;
+        let priorityInput = priority.currentSelection(btnsArray);
+        console.log(priorityInput);
         let projectInput = project.getInput(cardDiv);
         let dateInput = date.getInput(cardDiv);
-        let array = [titleInput, projectInput, priorityInput, dateInput, notesInput, ""];
+        let array = [titleInput, projectInput, priorityInput, dateInput, notesInput];
         return array;
     }
     return { mainFn };
@@ -267,6 +268,7 @@ const priority = (() => {
         //         return input[i];
         //     }
         // }
+        console.log(checked);
         if (checked == undefined) {
             return "";
         } else {
@@ -275,7 +277,11 @@ const priority = (() => {
     }
     const updateDisplay = (element, value) => {
         element.removeAttribute('class');
-        element.classList.add(value);
+        if(!(value == "")) {
+            element.classList.add(value);
+        } else {
+            element.classList.add('none');
+        }
     }
     const markLabel = (radio) => {
         // clear labels of active class
