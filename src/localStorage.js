@@ -28,7 +28,20 @@ const ls = (() => {
             return content;
         }
     }
-    return { saveArray, updateArrays, returnArray, checkContent }
+    return { saveArray, updateArrays, returnArray, checkContent, storageAvailable }
 })();
+function storageAvailable(type) {
+    let storage;
+    try {
+        storage = window[type];
+        const value = '__storage_test__';
+        storage.setItem(value, value);
+        storage.removeItem(value);
+        return true;
+    }
+    catch (e) {
+        return (e instanceof DOMException && (e.code === 22 || e.code === 1014 || e.name === `QuotaExceededError` || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') && (storage && storage.length !== 0));
+    }
+    }
 
-export { ls };
+export { ls, storageAvailable };
