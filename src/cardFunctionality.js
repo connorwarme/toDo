@@ -156,7 +156,6 @@ const submit = (() => {
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let inputArray = _getInput(cardDiv, btns);
         console.log(inputArray);
-
         // update the object with new values
         let index = objectOps.getObjIndex(cardDiv);
         objectOps.update(object, inputArray, index);
@@ -192,7 +191,6 @@ const submit = (() => {
         let titleInput = cardDiv.children[0].children[1].children[2].value;
         let notesInput = cardDiv.children[1].children[0].children[2].value;
         let priorityInput = priority.currentSelection(btnsArray);
-        console.log(priorityInput);
         let projectInput = project.getInput(cardDiv);
         let dateInput = date.getInput(cardDiv);
         let array = [titleInput, projectInput, priorityInput, dateInput, notesInput];
@@ -275,7 +273,6 @@ const priority = (() => {
         //         return input[i];
         //     }
         // }
-        console.log(checked);
         if (checked == undefined) {
             return "";
         } else {
@@ -400,8 +397,6 @@ const project = (() => {
         if (already == undefined) {
             return false;
         } else {
-            console.log('already there!');
-            // this could fire an alert or something !!!
             return true;
         }
     }
@@ -413,39 +408,37 @@ const project = (() => {
         cardDiv.children[1].children[1].children[4].style.display = "none";
     }
     const addSaveFn = (cardDiv, object) => {
-        // add a check if input field display = "block" - so I can also run this fn
-        // if user hits "save to-do" before saving a newly inputted project
         addInputFn(cardDiv, object)
         // add to navbar
-        console.log(`addInputFn fired`);
         navbar.newProject(object.project);
         // reset display
         addCancelFn(cardDiv);
         // remove and recreate dropdown menu
         clearOptions(cardDiv);
-        console.log(object);
         // these need the project array and the object of the card !!!
         let optionsArray = populateInput(objectOps.projectArray, cardDiv);
         markSelected(optionsArray, object);
     }
     // check if user added a project (but didn't click to save it yet)
-    // true if project is already listed
-    // false if it needs to be listed
     const checkProjListing = (cardDiv, object) => {
         let input = cardDiv.children[1].children[1].children[4].children[0];
-        console.log(input.value);
+        // if input is empty, bail out
         if (input.value == "") {
             return false;
             }
+        // in input isn't empty, and the project doesn't exist in projectArray
+        // add it to projArray, update the object, add project to navbar
         let already = checkAlreadyInArray(input.value);
         if (input.value != "" && already == false) {
             objectOps.addSingleToProjectArray(input.value);
             objectOps.updateSingle(object, `project`, input.value);
             navbar.newProject(object.project);
             }
+        // if already in projectArray, update object with this project value
         if (already == true) {
             objectOps.updateSingle(object, `project`, input.value);
             }
+        // reset the to-do card: project section
         addCancelFn(cardDiv);
         clearOptions(cardDiv);
         let optionsArray = populateInput(objectOps.projectArray, cardDiv);

@@ -8,7 +8,6 @@ const objectOps = (() => {
     let objectArray = [];
     const addToObjectArray = (object) => {
         objectOps.objectArray.push(object);
-        console.log(objectArray);
         // save/update local storage
         ls.saveArray(objectOps.objectArray, "obj");
     }
@@ -40,11 +39,9 @@ const objectOps = (() => {
     }
     // an attempt at a check to see if project already exists in array
     const _checkProjectArray = (input) => {
-        console.log(objectOps.projectArray);
         let check = objectOps.projectArray.find(index => {
             return index == input;
         })
-        console.log(check);
         if (check == undefined) {
             return false;
         } else {
@@ -77,7 +74,6 @@ const objectOps = (() => {
         // does this need to return the updated array?? !!!
     }
     const deleteProjectNavbar = (project) => {
-        console.log(`this is the project ${project}`);
         // find objects with this project, reset project value
         let resetArray = objectOps.objectArray.filter(index => index.project === project);
         resetArray.forEach(index => index.project = "");
@@ -123,7 +119,6 @@ const objectOps = (() => {
     
     const getObjIndex = (cardDiv) => {
         let theObject = cardDiv.value;
-        console.log(theObject);
         let indexPosition = objectOps.objectArray.findIndex(object => {
             // previously had this more simply, as "return object == theObject", 
             // but something changed (haven't figured out what) where the object.properties wasn't equal to theObject.properties, 
@@ -136,7 +131,6 @@ const objectOps = (() => {
     }
     const getObject = (cardDiv) => {
         let theObject = cardDiv.value;
-        console.log(theObject);
         let indexPosition = objectOps.objectArray.findIndex(object => {
             // previously had this more simply, as "return object == theObject", 
             // but something changed (haven't figured out what) where the object.properties wasn't equal to theObject.properties, 
@@ -145,7 +139,6 @@ const objectOps = (() => {
                 return object;
             }
         });
-        console.log(indexPosition);
         // this works, but tried using find instead...can delete later 
         // for (i=0; i<objectArray.length; i++) {
         //     if (objectArray[i].title == title) {
