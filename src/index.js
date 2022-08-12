@@ -42,12 +42,7 @@ console.log(objectOps.objectArray);
 console.log(objectOps.projectArray);
 // console.log(ls.checkContent("obj"));
 
-// probably put this under modal page
-if (storageAvailable(`localStorage`)) {
-    console.log(`local storage supported and available`);
-} else {
-    console.log('local storage unavailable');
-}
+
 
 
 createModal();

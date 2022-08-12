@@ -5,6 +5,7 @@ import { ls, storageAvailable } from "./localStorage";
 import { createCard } from "./createCard";
 import { loadExistingProjects, navbar } from "./navbar";
 import { objectOps } from "./objectOps";
+import { demonstration } from "./demo";
 
 // create modal, show on page load
 // options: 1) blank slate 2) demo the app 3) load locally stored data
@@ -75,6 +76,15 @@ const createModal = () => {
             console.log('demo');
             standard();
             // pull in  a whole bunch of to-dos and navprojs
+            // need to add to objectOps.objArray and projArray
+            // then display them on body
+            // then display projects on navbar
+            let example = demonstration.mode();
+            console.log(example);
+            example.array.forEach(index => {
+                body.appendChild(createCard(index));
+            })
+            navbar.loadExistingProjects(example.proj);
         });
     }
     listeners();
