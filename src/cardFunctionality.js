@@ -151,13 +151,12 @@ const submit = (() => {
     // gather inputs, update object, update To-Do card display
     const mainFn = (cardDiv, object) => {
         // check if user added new project but didn't save it yet
-        if (!(project.checkProjListing(cardDiv))) {
-            project.addSaveFn(cardDiv, object);
-        }
+        project.checkProjListing(cardDiv, object);
         // get new input values
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let inputArray = _getInput(cardDiv, btns);
         console.log(inputArray);
+
         // update the object with new values
         let index = objectOps.getObjIndex(cardDiv);
         objectOps.update(object, inputArray, index);
@@ -215,7 +214,7 @@ const deleteFn = (() => {
         objectOps.deleteFromProjectArray(object);
         objectOps.deleteFromObjectArray(object);
         // remove from local storage
-        console.log(`deletefn ${objectOps.objectArray} and ${objectOps.projectArray}`);
+        // console.log(`deletefn ${objectOps.objectArray} and ${objectOps.projectArray}`);
         // delete display
         deleteDisplay(toDoCard);
     }
@@ -389,6 +388,9 @@ const project = (() => {
         if (input != "" && !(checkAlreadyInArray(input))) {
             objectOps.addSingleToProjectArray(input);
             objectOps.updateSingle(object, `project`, input);
+            return true;
+        } else {
+            return false;
         }
     }
     const checkAlreadyInArray = (input) => {
@@ -413,27 +415,41 @@ const project = (() => {
     const addSaveFn = (cardDiv, object) => {
         // add a check if input field display = "block" - so I can also run this fn
         // if user hits "save to-do" before saving a newly inputted project
-        addInputFn(cardDiv, object);
+        addInputFn(cardDiv, object)
         // add to navbar
+        console.log(`addInputFn fired`);
         navbar.newProject(object.project);
         // reset display
         addCancelFn(cardDiv);
         // remove and recreate dropdown menu
         clearOptions(cardDiv);
+        console.log(object);
         // these need the project array and the object of the card !!!
         let optionsArray = populateInput(objectOps.projectArray, cardDiv);
         markSelected(optionsArray, object);
     }
-    const checkProjListing = (cardDiv) => {
-        let inputField = cardDiv.children[1].children[1].children[2];
-        let navListing = document.getElementById(`${inputField.value}Btn`);
-        console.log(inputField);
-        console.log(navListing);
-        if (navListing == null || navListing == undefined) {
+    // check if user added a project (but didn't click to save it yet)
+    // true if project is already listed
+    // false if it needs to be listed
+    const checkProjListing = (cardDiv, object) => {
+        let input = cardDiv.children[1].children[1].children[4].children[0];
+        console.log(input.value);
+        if (input.value == "") {
             return false;
-        } else {
-            return true;
-        }
+            }
+        let already = checkAlreadyInArray(input.value);
+        if (input.value != "" && already == false) {
+            objectOps.addSingleToProjectArray(input.value);
+            objectOps.updateSingle(object, `project`, input.value);
+            navbar.newProject(object.project);
+            }
+        if (already == true) {
+            objectOps.updateSingle(object, `project`, input.value);
+            }
+        addCancelFn(cardDiv);
+        clearOptions(cardDiv);
+        let optionsArray = populateInput(objectOps.projectArray, cardDiv);
+        markSelected(optionsArray, object);
     }
     return { hideInput, displayInput, populateInput, getInput, markSelected, addBtnFn, addCancelFn, clearOptions, addSaveFn, checkProjListing }
 })();
