@@ -21,8 +21,8 @@ const ls = (() => {
     }
     const checkContent = (key) => {
         let content = returnArray(key);
-        console.log(`checking for content ${content}`);
-        if (content === null || content[0] == undefined) {
+        console.log(content);
+        if (content == null || content[0] == undefined) {
             return false;
         } else {
             return content;

@@ -173,12 +173,12 @@ const navbar = (() => {
     }
     const loadExistingProjects = (array) => {
         array.forEach(index => {
-            if (!(index == ` - none - `)) {
+            if (!(index == ` - none - ` || index == "")) {
                 newProject(index);
             }
         })
     }
-    return { createNav, newProject };
+    return { createNav, newProject, loadExistingProjects };
 })();
     // button functions
 const navFns = (() => {
