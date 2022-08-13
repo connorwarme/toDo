@@ -3,10 +3,13 @@ import { createElement } from './utility';
 const Header = new URL('/home/peregrinning/Documents/Coding/TOP/toDo/src/headercheck.png', import.meta.url);
 const Github = new URL('/home/peregrinning/Documents/Coding/TOP/toDo/src/github.png',  import.meta.url);
 const LinkedIn = new URL('/home/peregrinning/Documents/Coding/TOP/toDo/src/linkedin.png', import.meta.url);
+import Menu from './icons/menu.svg';
 
 const makeHF = () => {
     const header = () => {
         let header = document.querySelector('div.header');
+        const menuBtn = createElement('button', {"class": "headerMenu", "aria-label": "Site Menu"});
+        const menuIcon = createElement('img', {"src": `${Menu}`, "alt": "Menu"});
         let headerImgBox = createElement('div', {"class": "headerImgBox"});
         const icon = new Image();
         icon.src = Header;
@@ -14,6 +17,8 @@ const makeHF = () => {
         headerTextBox.textContent = "MATE";
 
         // append it all together
+        header.appendChild(menuBtn);
+        menuBtn.appendChild(menuIcon);
         header.appendChild(headerImgBox);
         headerImgBox.appendChild(icon);
         header.appendChild(headerTextBox);

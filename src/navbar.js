@@ -379,6 +379,23 @@ const navFns = (() => {
     const _addHighlight = (input) => {
         input.classList.add('highlight');
     }
+    // hide navbar when viewport size is <600px
+    // display nav menu btn in header when navbar is hidden
+    const toggleNav = () => {
+        const header = document.querySelector('div.header');
+        const nav = document.querySelector('div.navbar');
+        if (window.innerWidth < 600) {
+            header.children[0].classList.add('displayMenu');
+            nav.classList.add('hideNav');
+        } else if (window.innerWidth > 600) {
+            header.children[0].classList.remove('displayMenu');
+            nav.classList.remove('hideNav');
+        }
+    }
+    const headerMenuFn = () => {
+        const navbar = document.querySelector('div.navbar');
+        navbar.classList.toggle('displayNav');
+    }
     return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn, getContainer, highlightFn };
 })();
 

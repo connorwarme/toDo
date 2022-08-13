@@ -72,7 +72,7 @@ const createModal = () => {
                     navbar.loadExistingProjects(projArray);
                 }
             } else {
-                alert(`Nothing found in local storage, starting with a blank slate.`);
+                alert(`Nothing found in local storage, starting in "blank slate" mode.`);
             }
         });
         demo.addEventListener('click', () => {
