@@ -59,15 +59,15 @@ const createModal = () => {
             // if no, load blank version
             let content = ls.checkContent('obj');
             if (content) {
+                let projArray = ls.checkContent('proj');
+                objectOps.objectArray = content;
+                objectOps.projectArray = projArray;
                 content.forEach(index => {
                     body.appendChild(createCard(index));
                 })
-                let projArray = ls.checkContent('proj');
                 if (projArray) {
                     navbar.loadExistingProjects(projArray);
                 }
-                objectOps.objectArray = content;
-                objectOps.projectArray = projArray;
             } else {
                 alert(`Nothing found in local storage, starting with a blank slate.`);
             }

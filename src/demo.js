@@ -1,4 +1,5 @@
 import { cardFactory, objectOps } from './objectOps';
+import { ls, storageAvailable } from './localStorage';
 
 const demonstration = (() => {
     const todo = cardFactory;
@@ -11,7 +12,11 @@ const demonstration = (() => {
         demoObj.array = [d1, d2, d3, d4];
         objectOps.objectArray = demoObj.array;
         demoObj.proj = [d1.project, d2.project, d3.project];
-        objectOps.projectArray = demoObj.proj;
+        let projArray = objectOps.projectArray.concat(demoObj.proj);
+        objectOps.projectArray = projArray;
+        if (storageAvailable('localStorage')) {
+            ls.updateArrays(objectOps.objectArray, objectOps.projectArray);
+        }
         return demoObj;
     }
     return { mode };

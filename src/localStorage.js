@@ -8,7 +8,6 @@ const ls = (() => {
         // save to local
         localStorage.setItem(key, data);
     }
-    // not currently using this one.. !!!
     const updateArrays = (array1, array2) => {
         saveArray(array1, "obj");
         saveArray(array2, "proj");
