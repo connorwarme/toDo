@@ -101,6 +101,8 @@ const navbar = (() => {
         })
         project();
         loadExistingProjects(objectOps.projectArray);
+        // load window-resize listener -> hides nav if window is small
+        window.addEventListener('resize', navFns.toggleNav);
     }
     const project = () => {
         // project
@@ -382,21 +384,26 @@ const navFns = (() => {
     // hide navbar when viewport size is <600px
     // display nav menu btn in header when navbar is hidden
     const toggleNav = () => {
-        const header = document.querySelector('div.header');
-        const nav = document.querySelector('div.navbar');
-        if (window.innerWidth < 600) {
-            header.children[0].classList.add('displayMenu');
+        const main = document.querySelector('div.main');
+        const headerMenu = main.children[0].children[0];
+        const nav = main.children[1].children[0];
+        const body = main.children[1].children[1];
+        if (window.innerWidth < 800) {
+            headerMenu.classList.add('displayMenu');
             nav.classList.add('hideNav');
-        } else if (window.innerWidth > 600) {
-            header.children[0].classList.remove('displayMenu');
+            body.classList.add('bodyFull')
+        } else if (window.innerWidth > 800) {
+            headerMenu.classList.remove('displayMenu');
             nav.classList.remove('hideNav');
+            body.classList.remove('bodyFull');
         }
     }
     const headerMenuFn = () => {
-        const navbar = document.querySelector('div.navbar');
-        navbar.classList.toggle('displayNav');
+        const mainC = document.querySelector('div.mainContainer');
+        mainC.children[0].classList.toggle('displayNav');
+        mainC.children[1].classList.toggle('bodyFull');
     }
-    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn, getContainer, highlightFn };
+    return { homeFn, todayFn, weekFn, priorityFn, dueDateFn, projectFn, projAddFn, projNewCancelFn, projNewSaveFn, projDeleteFn, getContainer, highlightFn, toggleNav, headerMenuFn };
 })();
 
 export { navbar, navFns }

@@ -4,6 +4,7 @@ const Header = new URL('/home/peregrinning/Documents/Coding/TOP/toDo/src/headerc
 const Github = new URL('/home/peregrinning/Documents/Coding/TOP/toDo/src/github.png',  import.meta.url);
 const LinkedIn = new URL('/home/peregrinning/Documents/Coding/TOP/toDo/src/linkedin.png', import.meta.url);
 import Menu from './icons/menu.svg';
+import { navFns } from './navbar';
 
 const makeHF = () => {
     const header = () => {
@@ -22,6 +23,9 @@ const makeHF = () => {
         header.appendChild(headerImgBox);
         headerImgBox.appendChild(icon);
         header.appendChild(headerTextBox);
+
+        // add menu btn listener
+        menuBtn.addEventListener('click', navFns.headerMenuFn);
     }
     const footer = () => {
         let footer = document.querySelector('div.footer');

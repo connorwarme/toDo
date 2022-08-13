@@ -87,6 +87,20 @@ textarea {
     width: inherit;
     background-color: #1d3557;
 }
+.headerMenu {
+    display: none;
+    align-self: end;
+    background-color: transparent;
+    border: none;
+    margin: 0 0 6px 8px;
+}
+.headerMenu > img {
+    filter: invert(92%) sepia(19%) saturate(427%) hue-rotate(129deg) brightness(90%) contrast(91%);
+}
+.displayMenu {
+    display: block;
+    margin-right: -50px;
+}
 .headerImgBox {
     margin-left: 50px;
 }
@@ -109,6 +123,12 @@ textarea {
     width: 200px;
     background-color: #f1faee;
     font-family: "Teko", "Merriweather", Georgia, 'Times New Roman', Times, serif;
+}
+.hideNav {
+    display: none;
+}
+.displayNav {
+    display: block;
 }
 .homeContainer,
 .todayContainer,
@@ -303,7 +323,11 @@ textarea {
 .bodyContainer {
     height: inherit;
     width: calc(100vw - 200px);
+    min-width: 630px;
     background-color: rgba(168, 218, 220, 0.3);
+}
+.bodyFull {
+    width: 100vw;
 }
 .body {
     display: grid;
