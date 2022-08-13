@@ -27,7 +27,11 @@ const ls = (() => {
             return content;
         }
     }
-    return { saveArray, updateArrays, returnArray, checkContent, storageAvailable }
+    const clear = () => {
+        localStorage.removeItem("obj");
+        localStorage.removeItem("proj");
+    }
+    return { saveArray, updateArrays, returnArray, checkContent, clear }
 })();
 function storageAvailable(type) {
     let storage;

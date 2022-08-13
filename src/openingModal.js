@@ -43,12 +43,15 @@ const createModal = () => {
     const listeners = () => {
         blank.addEventListener('click', () => {
             console.log('blank');
-            standard();
+            // check if local storage is supported/available
             if (!(storageAvailable('localStorage'))) {
                 alert(`App may not function properly due to problem with local storage.`)
+            } else {
+                // check local storage / clear it
+                ls.clear();
             }
-            // check if local storage is supported/available
-            // that should be it..?
+            // close modal, display "add to-do" button w/ listener
+            standard();
         });
         local.addEventListener('click', () => {
             console.log('local');
