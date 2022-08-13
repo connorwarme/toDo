@@ -48,5 +48,6 @@ console.log(objectOps.projectArray);
 createModal();
 makeHF();
 navbar.createNav();
-
+// detect screen width: whether or not to display nav
+window.addEventListener('load', navFns.toggleNav());
 // navFns.dueDateFn([first, second, third, fourth, fifth]);

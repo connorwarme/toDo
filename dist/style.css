@@ -413,6 +413,7 @@ textarea {
     display: flex;
     align-items: center;
     height: 35px;
+    min-width: 250px;
 }
 .title {
     align-self: center;
