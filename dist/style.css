@@ -5,6 +5,7 @@
 .main {
     font-family: "Merriweather", Georgia, 'Times New Roman', Times, serif;
     font-size: 14px;
+    min-width: 630px;
 }
 input,
 select,
