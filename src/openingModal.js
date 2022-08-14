@@ -8,8 +8,7 @@ import { objectOps } from "./objectOps";
 import { demonstration } from "./demo";
 
 // create modal, show on page load
-// options: 1) blank slate 2) demo the app 3) load locally stored data
-
+// options: 1) blank slate 2) load locally stored data 3) demo the app
 const createModal = () => {
     let main = document.querySelector('div.main');
     //
@@ -23,7 +22,6 @@ const createModal = () => {
     const blank = createElement('input', {"type": "button", "class": "blank", "aria-label": "Blank Slate", "value": "Blank Slate"});
     const local = createElement('input', {"type": "button", "class": "local", "aria-label": "Check Local Storage", "value": "Check Local Storage"});
     const demo = createElement('input', {"type": "button", "class": "demo", "aria-label": "Demo App", "value": "Demo App"});
-
     // append it together
     modalContainer.appendChild(modalBox);
     modalBox.appendChild(title);
@@ -31,10 +29,9 @@ const createModal = () => {
     modalBox.appendChild(blank);
     modalBox.appendChild(local);
     modalBox.appendChild(demo);
-
     main.appendChild(modalContainer);
-    // close modal, display add to-do button w/ listener
-    const standard = () => {
+    // close modal, display button for adding "to-do" w/ listener
+    const standardSetup = () => {
         modalContainer.style.display = "none";
         main.children[1].children[1].appendChild(addToDo.addDOM());
         addToDo.addListener();
@@ -42,7 +39,6 @@ const createModal = () => {
     let body = main.children[1].children[1].children[0];
     const listeners = () => {
         blank.addEventListener('click', () => {
-            console.log('blank');
             // check if local storage is supported/available
             if (!(storageAvailable('localStorage'))) {
                 alert(`App may not function properly due to problem with local storage.`)
@@ -51,15 +47,13 @@ const createModal = () => {
                 ls.clear();
             }
             // close modal, display "add to-do" button w/ listener
-            standard();
+            standardSetup();
         });
         local.addEventListener('click', () => {
-            console.log('local');
-            standard();
-            // check if local storage is s/a
+            standardSetup();
             // check if any values exist (for obj, proj)
             // if yes, load them on the page
-            // if no, load blank version
+            // if no, load blank slate version
             let content = ls.checkContent('obj');
             if (content) {
                 let projArray = ls.checkContent('proj');
@@ -76,14 +70,12 @@ const createModal = () => {
             }
         });
         demo.addEventListener('click', () => {
-            console.log('demo');
-            standard();
-            // pull in  a whole bunch of to-dos and navprojs
+            standardSetup();
+            // pull in a whole bunch of to-dos and navprojs from demo.js
             // need to add to objectOps.objArray and projArray
             // then display them on body
             // then display projects on navbar
             let example = demonstration.mode();
-            console.log(example);
             example.array.forEach(index => {
                 body.appendChild(createCard(index));
             })

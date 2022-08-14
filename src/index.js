@@ -11,43 +11,16 @@ let second = cardFactory('doing it', "dudeage", "High", "08/16/2022", "all the t
 let third = cardFactory('round three', "winning", "Low", "08/04/2022", "", false);
 let fourth = cardFactory('send the Honeymoon', "Diamond", "Defcon", "09/18/2022", "give er hell", false);
 let fifth = cardFactory("Alpine Mission", "Ships Prow", "High", "08/14/2022", "", false);
-// if (ls.checkContent("obj") == false) {
-// objectOps.addToObjectArray(first);
-// objectOps.addToObjectArray(second);
-// objectOps.addToObjectArray(third);
-// objectOps.addToObjectArray(fourth);
-// objectOps.addToObjectArray(fifth);
-// objectOps.addToProjectArray(objectOps.objectArray);
-// }
+
 let body = document.querySelector('div.body');
 
-// body.appendChild(createCard(first));
-// body.appendChild(createCard(second));
-// body.appendChild(createCard(third));
-// body.appendChild(createCard(fourth));
-// body.appendChild(createCard(fifth));
-// body.appendChild(addToDo.addDOM());
-// ls.saveArray(objectOps.objectArray, "obj");
-// let x = ls.returnArray("obj");
-// console.log(x);
-// for (let i=0; i<x.length; i++) {
-//     body.appendChild(createCard(x[i]));
-// }
-// ls.saveArray(objectOps.projectArray, "proj");
-// console.log(ls.returnArray("proj"));
-// objectOps.objectArray = ls.returnArray("obj");
-// objectOps.projectArray = ls.returnArray("proj");
-// // 
 console.log(objectOps.objectArray);
 console.log(objectOps.projectArray);
-// console.log(ls.checkContent("obj"));
-
-
-
-
+// create opening modal with user options
 createModal();
+// create header and footer
 makeHF();
+// create navbar
 navbar.createNav();
 // detect screen width: whether or not to display nav
 window.addEventListener('load', navFns.toggleNav());
-// navFns.dueDateFn([first, second, third, fourth, fifth]);
