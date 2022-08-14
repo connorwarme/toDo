@@ -1,9 +1,13 @@
 import { ls } from "./localStorage";
 import { navFns } from "./navbar";
-
+// create to-do objects
+// expanded and editable properties are for use in displaying the card
+// aka knowing when to expand the card, or when to go into edit mode
+// I utilize the "properties" key when I update the object
 const cardFactory = (title, project, priority, dueDate, notes, checked) => {
     return { title, project, priority, dueDate, notes, checked, expanded: false, editable: true, properties: ["title", "project", "priority", "dueDate", "notes", "checked"] }
 }
+// object operations
 const objectOps = (() => {
     let objectArray = [];
     const addToObjectArray = (object) => {

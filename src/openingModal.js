@@ -1,20 +1,19 @@
 import { createElement } from "./utility";
 import { addToDo } from "./addToDo";
-import Check from './icons/checkcircle.svg';
 import { ls, storageAvailable } from "./localStorage";
 import { createCard } from "./createCard";
-import { loadExistingProjects, navbar } from "./navbar";
+import { navbar } from "./navbar";
 import { objectOps } from "./objectOps";
 import { demonstration } from "./demo";
+import Check from './icons/checkcircle.svg';
 
 // create modal, show on page load
 // options: 1) blank slate 2) load locally stored data 3) demo the app
 const createModal = () => {
     let main = document.querySelector('div.main');
-    //
     const modalContainer = createElement('div', {"class": "modalContainer"});
     const modalBox = createElement('div', {"class": "modalBox"});
-    // title
+    // title w/ logo img
     const title = createElement('div', {"class": "modalTitle"});
     const check = createElement('img', {"src": `${Check}`, "alt": "Check"});
     title.textContent = `Mate`;
@@ -37,6 +36,9 @@ const createModal = () => {
         addToDo.addListener();
     }
     let body = main.children[1].children[1].children[0];
+    // should I have not used anonymous functions here (below), so that I can remove the listeners...?
+    // I'm not sure.
+    // listeners for each option: blank, local storage, or demo mode
     const listeners = () => {
         blank.addEventListener('click', () => {
             // check if local storage is supported/available
@@ -53,7 +55,7 @@ const createModal = () => {
             standardSetup();
             // check if any values exist (for obj, proj)
             // if yes, load them on the page
-            // if no, load blank slate version
+            // if no, alert and load blank slate version
             let content = ls.checkContent('obj');
             if (content) {
                 let projArray = ls.checkContent('proj');
@@ -72,8 +74,8 @@ const createModal = () => {
         demo.addEventListener('click', () => {
             standardSetup();
             // pull in a whole bunch of to-dos and navprojs from demo.js
-            // need to add to objectOps.objArray and projArray
-            // then display them on body
+            // add them to objectOps.objArray and projArray
+            // then display them on the page
             // then display projects on navbar
             let example = demonstration.mode();
             example.array.forEach(index => {
@@ -84,5 +86,5 @@ const createModal = () => {
     }
     listeners();
 }
-
+// export createModal for index.js to use
 export { createModal };

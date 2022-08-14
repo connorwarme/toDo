@@ -18,21 +18,25 @@ const ls = (() => {
         let regularArray = JSON.parse(arrayString);
         return regularArray;
     }
+    // check local storage for "key" content
     const checkContent = (key) => {
         let content = returnArray(key);
-        console.log(content);
         if (content == null || content[0] == undefined) {
             return false;
         } else {
             return content;
         }
     }
+    // clear the local storage
     const clear = () => {
         localStorage.removeItem("obj");
         localStorage.removeItem("proj");
     }
     return { saveArray, updateArrays, returnArray, checkContent, clear }
 })();
+// check to see if local storage is supported and available
+// not sure if this is necessary...?
+// definitely if I needed to support older browsers, but I doubt many folks will visit the page
 function storageAvailable(type) {
     let storage;
     try {
