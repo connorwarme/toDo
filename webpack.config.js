@@ -6,7 +6,7 @@ module.exports = {
     entry: {
         index: './src/index.js',
         objectOps: './src/objectOps.js', 
-        create: './src/createCard.js',
+        createCard: './src/createCard.js',
         addToDo: './src/addToDo.js',
         hf: './src/h&f.js',
         navbar: './src/navbar.js',

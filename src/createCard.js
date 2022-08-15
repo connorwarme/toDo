@@ -7,6 +7,7 @@ import Add from "./icons/add.svg";
 import Cancel from "./icons/close.svg";
 import Save from "./icons/check.svg";
 
+// create a "to-do" card, via DOM
 const craftCard = (() => {
 // I have these declared right away to be available in multiple functions...)
     let checked;
@@ -23,8 +24,9 @@ const craftCard = (() => {
         const card = createElement('div', {"class": "card"});
         return card;
     }
+    // use a count to differentiate each card's group of priority (radio) btns
     let count = -1;
-    // make to-do card
+    // make "to-do" card
     const card = (object, cardDiv) => {
         cardDiv.value = object;
         count++;
@@ -78,6 +80,7 @@ const craftCard = (() => {
         }
     }
     // helper fns
+    // title: container, text (regular view), input and label (edit mode)
     const _title = (object) => {
         const titleContainer = createElement('div', {"class": "titleContainer"})
         const title = createElement('div', {"class": "title"});
@@ -90,11 +93,13 @@ const craftCard = (() => {
         titleContainer.appendChild(titleEditInput);
         return titleContainer;
     }
+    // priority: display to-do's priority level
     const _priority = (object) => {
         const priority = createElement('div', {"id": "priority", "class": `${object.priority}`});
         priority.textContent = `${object.priority}`;
         return priority;
     } 
+    // date: display to-do's due date
     const _date = (object) => {
         const dateContainer = createElement('div', {"class": "dateContainer"});
         const dateText = createElement('div', {"class": "dateText"});
@@ -107,6 +112,7 @@ const craftCard = (() => {
         dateContainer.appendChild(dateInput);
         return dateContainer;
     }
+    // notes: display notes
     const _notes = (object) => {
         const notesContainer = createElement('div', {"class": "notesContainer"});
         const notes = createElement('div', {"class": "notes"});
@@ -119,6 +125,8 @@ const craftCard = (() => {
         notesContainer.appendChild(notesEditInput);
         return notesContainer;
     }
+    // project: display project dropdown (in regular view), 
+    // button to add new project (which reveals input field, cancel btn and save btn)
     const _project = (object) => {
         const projectContainer = createElement('div', {'class': 'projectContainer'});
         const projectText = createElement('div', {"class": "projectText"});
@@ -149,6 +157,9 @@ const craftCard = (() => {
         projectAddSave.appendChild(projectSaveIcon);
         return projectContainer;
     }
+    // priority: radio buttons & corresponding labels
+    // had to differentiate each card's group of radio buttons
+    // did this using the "count" value in the name
     const _priorityEdit = () => {
         const priorityEditContainer = createElement('div', {"class": "priorityEditContainer"});
         const priorityEditTitle = createElement('div', {"class": "priorityEditTitle"});
@@ -176,6 +187,7 @@ const craftCard = (() => {
         priorityEditContainer.appendChild(priorityEditDefconLabel);
         return priorityEditContainer;
     }
+    // submit: container, cancel and submit buttons
     const _submitEdit = () => {
         const submitEditContainer = createElement('div', {"class": "submitContainer"});
         cancelEditBtn = createElement('button', {"class": "cancelEditBtn", "aria-label": "Cancel Edit"});
@@ -188,7 +200,7 @@ const craftCard = (() => {
     }
     return { initial, card }
 })();
-
+// create initial div, then build the card, then return in
 const createCard = (object) => {
     let card = craftCard.initial();
     craftCard.card(object, card);
