@@ -2,14 +2,17 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: {
         index: './src/index.js',
         objectOps: './src/objectOps.js', 
         createCard: './src/createCard.js',
         addToDo: './src/addToDo.js',
         hf: './src/h&f.js',
+        openingModal: './src/openingModal.js',
         navbar: './src/navbar.js',
+        demo: './src/demo.js',
+        localStorage: './src/localStorage.js',
         utility: './src/utility.js'
     },
     devServer: {
