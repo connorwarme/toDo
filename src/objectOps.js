@@ -9,6 +9,7 @@ const cardFactory = (title, project, priority, dueDate, notes, checked) => {
 }
 // object operations
 const objectOps = (() => {
+    // the main array, of all the "to-do" objects
     let objectArray = [];
     const addToObjectArray = (object) => {
         objectOps.objectArray.push(object);
@@ -19,11 +20,13 @@ const objectOps = (() => {
         let filteredArray = objectOps.objectArray.filter((index) => index !== object);
         objectOps.objectArray = filteredArray;
         ls.saveArray(objectOps.objectArray, "obj");
-        // does this need to return the updated array? !!!
     }
+    // project array: a collection of all the project names
     let projectArray = [` - none - `];
-    // this is going to need a sort function to weed out "" (empty) projects and the like. !!! did current version work?
-    // needs a clear function before this is run (to make sure projectArray is empty), or run a check to see if project already exists or if it needs to be added to the projectArray !!!
+    // for each project in argument array:
+    // if object.project is empty or undefined, don't add it
+    // check to see if project already exists in array,
+    // if not, add it to the projectArray 
     const addToProjectArray = (array) => {
         array.forEach(index => {
             if (index.project == "" || index.project == null || index.project == undefined) {
@@ -37,11 +40,12 @@ const objectOps = (() => {
         // save/update local storage
         ls.saveArray(objectOps.projectArray, "proj");
     }
+    // add a single project to the array
     const addSingleToProjectArray = (input) => {
         objectOps.projectArray.push(input);
         ls.saveArray(objectOps.projectArray, "proj");
     }
-    // an attempt at a check to see if project already exists in array
+    // check to see if project already exists in array
     const _checkProjectArray = (input) => {
         let check = objectOps.projectArray.find(index => {
             return index == input;
@@ -52,6 +56,7 @@ const objectOps = (() => {
             return true;
         }
     }
+    // function used by "add project" input on edit mode of to-do, and on navbar
     const checkAndAdd = (input) => {
         if (!(_checkProjectArray(input))) {
             addSingleToProjectArray(input);
@@ -61,6 +66,7 @@ const objectOps = (() => {
             return false;
         }
     }
+    // delete an object.project from the array
     const deleteFromProjectArray = (object) => {
         if (object.project == "" || object.project == " - none - ") {
             return;
@@ -69,23 +75,24 @@ const objectOps = (() => {
             let project = objectOps.objectArray.filter(index => index.project === object.project);
             if (project.length == 1) {
                 _deleteProject(object.project);
-                // check for navbar listing
-                // delete project from navbar 
+                // check for navbar listing & delete project from navbar 
                 let container = navFns.getContainer(object.project);
                 container.parentElement.removeChild(container);
             }
         }
-        // does this need to return the updated array?? !!!
     }
+    // when user deletes project from the navbar
+    // go through projectArray and reset objects with that project value
     const deleteProjectNavbar = (project) => {
         // find objects with this project, reset project value
         let resetArray = objectOps.objectArray.filter(index => index.project === project);
-        resetArray.forEach(index => index.project = "");
+        resetArray.forEach(index => index.project = " - none - ");
         // update local storage
         ls.saveArray(objectOps.objectArray, "obj");
         // delete project from project Array
         _deleteProject(project);
     }
+    // delete a project from projectArray
     const _deleteProject = (project) => {
         // filter out all the other projects
         let filteredArray = objectOps.projectArray.filter(index => index !== project);
@@ -94,7 +101,6 @@ const objectOps = (() => {
         // update the local storage
         ls.saveArray(objectOps.projectArray, "proj");
     }
-    // object operations
     // update the object with input data (in array)
     const update = (object, array, index) => {
         for (let i=0; i<array.length; i++) {
@@ -105,6 +111,7 @@ const objectOps = (() => {
         // update local storage
         ls.saveArray(objectOps.objectArray, "obj");
     }
+    // update a single property value in an object
     const updateSingle = (object, key, input) => {
         object[key] = input;
     }
@@ -118,13 +125,11 @@ const objectOps = (() => {
         }
         ls.saveArray(objectOps.objectArray, "obj");
     }
-    // needs updating once I have multiple objects... !!!
-    // needs to be passed the project as well..? or should it just sort through the main array of objects?
-    
+    // get the index position of a given object in the objectArray
     const getObjIndex = (cardDiv) => {
         let theObject = cardDiv.value;
         let indexPosition = objectOps.objectArray.findIndex(object => {
-            // previously had this more simply, as "return object == theObject", 
+            // previously had this more simple: "return object == theObject", 
             // but something changed (haven't figured out what) where the object.properties wasn't equal to theObject.properties, 
             // thus the fn would return -1 (aka nothing matched theObject)
             if (object.title == theObject.title && object.project == theObject.project && object.priority == theObject.priority && object.dueDate == theObject.dueDate) {
@@ -133,22 +138,14 @@ const objectOps = (() => {
         });
         return indexPosition;
     }
+    // similar to above, but returns the object
     const getObject = (cardDiv) => {
         let theObject = cardDiv.value;
         let indexPosition = objectOps.objectArray.findIndex(object => {
-            // previously had this more simply, as "return object == theObject", 
-            // but something changed (haven't figured out what) where the object.properties wasn't equal to theObject.properties, 
-            // thus the fn would return -1 (aka nothing matched theObject)
             if (object.title == theObject.title && object.project == theObject.project && object.priority == theObject.priority && object.dueDate == theObject.dueDate) {
                 return object;
             }
         });
-        // this works, but tried using find instead...can delete later 
-        // for (i=0; i<objectArray.length; i++) {
-        //     if (objectArray[i].title == title) {
-        //         object = objectArray[i];
-        //     }
-        // }
         return objectOps.objectArray[indexPosition];
     }
     return { addToObjectArray, addToProjectArray, addSingleToProjectArray, checkAndAdd, objectArray, projectArray, update, updateSingle, updateCheck, getObject, deleteFromObjectArray, deleteFromProjectArray, deleteProjectNavbar, getObjIndex }   
