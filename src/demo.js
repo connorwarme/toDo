@@ -1,8 +1,9 @@
 import { cardFactory, objectOps } from './objectOps';
 import { ls, storageAvailable } from './localStorage';
-
+// demo mode
 const demonstration = (() => {
     const todo = cardFactory;
+    // a bunch of to-dos to populate the page
     const a1 = todo("Complete building to-do application", "WebDev", "High", "08/15/2022", "Don't forget to seek feedback on TOP's Discord", false);
     const a2 = todo("Finish the Javascript section", "WebDev", "High", "11/01/2022", "On 'The Odin Project'", false);
     const a3 = todo("Leg workout", "Training", "Medium", "08/20/2022", "Go for a run, finish with calesthenics", false);
@@ -20,6 +21,8 @@ const demonstration = (() => {
     const d3 = todo("Help brothers get ready for college", "Family", "Medium", "08/20/2022", "Be supportive and empowering!", false);
     const d4 = todo("Take nieces rock climbing", "Family", "Low", "09/01/2022", "Introduce them to climbing: bouldering and top-roping.", true);
     const d5 = todo("Go to the climbing gym", "Training", "Medium", "08/15/2022", "Focus on power training!", false);
+    // add demo content to objectArray and projectArray
+    // if local storage, update it
     const mode = () => {
         const demoObj = {};
         demoObj.array = [a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4, d5];
@@ -34,5 +37,5 @@ const demonstration = (() => {
     }
     return { mode };
 })();
-
+// export, for use on in initial modal (openingModal.js)
 export { demonstration };

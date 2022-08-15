@@ -14,8 +14,7 @@ import Cancel from './icons/close.svg';
 import Save from './icons/check.svg';
 import DeleteIcon from './icons/trash.svg';
 
-
-// navbar: create & functions
+// create navbar
 const navbar = (() => {
     const navbar = document.querySelector('div.nav');
     let projContainer;
@@ -33,12 +32,12 @@ const navbar = (() => {
         const homeIcon = createElement('img', {"src": `${Home}`, "alt": "Home"});
         const homeBtnLabel = createElement('label', {"for": "homeBtn"});
         homeBtnLabel.textContent = "Home";
-        // home listener
+        // home: listener
         homeBtn.addEventListener('click', () => {
             navFns.homeFn(objectOps.objectArray);
             navFns.highlightFn(homeContainer);
         })
-        // append it all together
+        // home: append it all together
         homeContainer.appendChild(homeBtn);
         homeBtn.appendChild(homeIcon);
         homeContainer.appendChild(homeBtnLabel);
@@ -82,7 +81,7 @@ const navbar = (() => {
         sortContainer.appendChild(dateNavContainer);
         dateNavContainer.appendChild(dateNavBtn);
         dateNavContainer.appendChild(dateNavBtnLabel);
-        // sort listeners
+        // sort: listeners
         todayBtn.addEventListener('click', () => {
             navFns.todayFn(objectOps.objectArray);
             navFns.highlightFn(todayContainer);
@@ -99,16 +98,19 @@ const navbar = (() => {
             navFns.dueDateFn(objectOps.objectArray);
             navFns.highlightFn(dateNavContainer);
         })
+        // provides way to add new project to navbar and projectArray
         project();
         loadExistingProjects(objectOps.projectArray);
         // load window-resize listener -> hides nav if window is small
         window.addEventListener('resize', navFns.toggleNav);
     }
+    // create a way of adding a project to the navbar
+    // also adds any new project to projectArray
     const project = () => {
         // project
         const projectText = createElement('div', {"class": "projectNavText"});
         projContainer.appendChild(projectText);
-        // project add button
+        // project: add button
         const projNavAddContainer = createElement('div', {"class": "projNavAddContainer"});
         const projNavAddBtn = createElement('button', {"class": "projNavAdd", "id": "projNavAdd", "aria-label": "Add Project"});
         const projNavAddIcon = createElement('img', {"src": `${Add}`, "alt": "Add New Project"});
@@ -118,7 +120,7 @@ const navbar = (() => {
         projNavAddContainer.appendChild(projNavAddBtn);
         projNavAddBtn.appendChild(projNavAddIcon);
         projNavAddContainer.appendChild(projNavAddLabel);
-        // project input field, cancel and save buttons
+        // project: input field, cancel and save buttons
         const projNewContainer = createElement("div", {"class": "projNewContainer", "style": "display: none"});
         const projNewInput = createElement('input', {"type": "text", "id": "projNewInput", "placeholder": "Project", "aria-label": "Add New Project"});
         const projNewCancel = createElement('button', {"class": "projNewCancel", "aria-label": "Cancel"});
@@ -131,7 +133,7 @@ const navbar = (() => {
         projNewCancel.appendChild(projNewCancelIcon);
         projNewContainer.appendChild(projNewSave);
         projNewSave.appendChild(projNewSaveIcon);
-        // project add listeners
+        // project: listeners
         projNavAddBtn.addEventListener('click', () => {
             navFns.projAddFn(projNavAddContainer);
         })
@@ -170,9 +172,8 @@ const navbar = (() => {
         container.appendChild(label);
         container.appendChild(deleteBtn);
         deleteBtn.appendChild(deleteIcon);
-        // could have the third argument be the function to have the listener run...
-        // could use this fn to dynamically create the sort zone too...
     }
+    // take an array as argument, add each index (aka project) to navbar
     const loadExistingProjects = (array) => {
         array.forEach(index => {
             if (!(index == ` - none - ` || index == "")) {
@@ -184,31 +185,29 @@ const navbar = (() => {
 })();
     // button functions
 const navFns = (() => {
-    // also want the button grid cell to highlight / darken to indicate which one is selected
-    // or should I have a "display" class ...
     // clear display function
-    // - remove listeners, delete cardDiv's for all
+    // -> remove listeners, delete cardDiv's for all
     const clearDisplay = (parentDiv) => {
         while (parentDiv.firstChild) {
             deleteFn.deleteDisplay(parentDiv.firstChild);
         }
     }
     // display function
-    // - take an array, forEach => createCard
+    // -> take an array, forEach => createCard
     const display = (array, parentDiv) => {
         array.forEach(index => {
             parentDiv.appendChild(createCard(index));
         })
     }
     // home 
-    // - display all cards (might involve deleting what's there, then create & display all);
+    // -> display all cards (delete what's there, then create & display all);
     const homeFn = (array) => {
         const body = document.querySelector('div.body');
         clearDisplay(body);
         display(array, body);
     }
     // today
-    // - sort out only those due today, display those
+    // -> sort out only those due today, display those
     const todayFn = (array) => {
         let todayArray = array.filter(index => {
             if (!(index.dueDate == "")) {
@@ -219,7 +218,7 @@ const navFns = (() => {
         homeFn(todayArray);
     }
     // week
-    // - sort out those due this week, display those
+    // -> sort out those due this week, display those
     const weekFn = (array) => {
         let weekArray = array.filter(index => {
             if (!(index.dueDate == "")) {
@@ -230,7 +229,7 @@ const navFns = (() => {
         homeFn(weekArray);
     }
     // priority
-    // - display all, but sorted from highest priority to lowest
+    // -> display all, but sorted from highest priority to lowest
     const priorityFn = (array) => {
         let priorityArray = [...array];
         _assignPValue(priorityArray);
@@ -256,7 +255,7 @@ const navFns = (() => {
         })
     }
     // due date
-    // - display all, sorted by due date (earliest to latest)
+    // -> display all (that have a date), sorted by due date (earliest to latest)
     const dueDateFn = (array) => {
         let dateArray = _parseDates(array);
         let result = _sortDates(dateArray);
@@ -272,7 +271,6 @@ const navFns = (() => {
                 return index;
             }
         })
-        console.log(dateArray);
         return dateArray;
     }
     // sort the dates, soonest to latest
@@ -280,7 +278,6 @@ const navFns = (() => {
         let result = array.sort((a, b) => {
             return compareAsc(a.dueDate, b.dueDate);
         })
-        console.log(result);
         return result;
     }
     // change dates back into display format
@@ -292,23 +289,26 @@ const navFns = (() => {
         })
     }
     // project
-    // - display the cards with same project tag
+    // -> display the cards with same project tag
     const projectFn = (array, projectName) => {
         let filteredArray = array.filter(index => {
             return index.project == projectName;
         })
         homeFn(filteredArray);
     }
+    // button: click to add a new project
     const projAddFn = (container) => {
         // on click, show input field, cancel, save
         _displayInput(container);
     }
+    // button to cancel adding new project
     const projNewCancelFn = (parent) => {
         // reset input.value
         _resetInput(parent);
         // hide input / display add button
         _hideInput(parent.parentElement);
     }
+    // button to save new project
     const projNewSaveFn = (parent) => {
         // get new input.value
         let input = _getInput(parent);
@@ -338,10 +338,10 @@ const navFns = (() => {
     const _getInput = (parent) => {
         return parent.children[0].value;
     }
+    // button (trash can) to delete project from navbar
     const projDeleteFn = (parent) => {
         let project = parent.value;
-        console.log(parent.value);
-        // delete project from project Array
+        // delete project from projectArray
         objectOps.deleteProjectNavbar(project);
         // delete display
         // do I need to remove listeners?
@@ -349,6 +349,7 @@ const navFns = (() => {
         // update current to-dos (i.e. remove that project text)
         _updateCardProjText();
     }
+    // find div container of a project
     const getContainer = (project) => {
         let array = Array.from(document.querySelectorAll('div.projNavContainer'));
         let container;
@@ -359,14 +360,16 @@ const navFns = (() => {
         }
         return container;
     }
+    // when a project gets deleted, go through the "to-do" cards
+    // and update the project text (each div.card's "value" is the corresponding object)
     const _updateCardProjText = () => {
         let cardsArray = document.querySelectorAll('div.card');
         cardsArray.forEach(index => {
             index.children[1].children[1].children[0].textContent = `Project: ${index.value.project}`; 
-            console.log(index.value.project);
         })
     }
-    // when user clicks one of the navbar links, highlight it (aka to show what is being displayed)
+    // when user clicks one of the navbar links:
+    // highlight it (aka to show what is being displayed)
     // need to remove highlight class from any other navbar divs first
     const highlightFn = (input) => {
         _removeHighlight();
