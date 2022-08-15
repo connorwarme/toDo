@@ -936,7 +936,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"createElement\": () => (/* binding */ createElement)\n/* harmony export */ });\n// DOM functions\n// helper functions to create DOM element and add attributes\nconst createElement = (type, attributes) => {\n    const newElement = document.createElement(`${type}`);\n    if (attributes == null) return newElement;\n    setAttributes(newElement, attributes);\n    return newElement;\n}\nconst setAttributes = (element, attributes) => {\n    Object.entries(attributes).forEach(([key, value]) => {\n        element.setAttribute(key, value);\n    })\n}\n\n\n//# sourceURL=webpack://todo/./src/utility.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"createElement\": () => (/* binding */ createElement)\n/* harmony export */ });\n// DOM functions\n// helper functions to create DOM element and add attributes\n// is there a more effective/efficient way to do this?!\nconst createElement = (type, attributes) => {\n    const newElement = document.createElement(`${type}`);\n    if (attributes == null) return newElement;\n    setAttributes(newElement, attributes);\n    return newElement;\n}\nconst setAttributes = (element, attributes) => {\n    Object.entries(attributes).forEach(([key, value]) => {\n        element.setAttribute(key, value);\n    })\n}\n\n\n//# sourceURL=webpack://todo/./src/utility.js?");
 
 /***/ }),
 
