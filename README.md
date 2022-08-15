@@ -33,3 +33,6 @@
   * mobile-friendly UI  
   * navbar projects: an option to edit (instead of simply deleting the project)  
   * bug: when you create multiple empty to-dos, it alternates between edit mode and regular view  
+   
+
+   
