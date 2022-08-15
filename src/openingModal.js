@@ -14,17 +14,25 @@ const createModal = () => {
     const modalContainer = createElement('div', {"class": "modalContainer"});
     const modalBox = createElement('div', {"class": "modalBox"});
     // title w/ logo img
-    const title = createElement('div', {"class": "modalTitle"});
+    const titleContainer = createElement('div', {"class": "modalTitleContainer"});
+    const titleText = createElement('div', {"class": "titleText"});
     const check = createElement('img', {"src": `${Check}`, "alt": "Check"});
-    title.textContent = `Mate`;
+    titleText.textContent = `Mate`;
+    const titleQuote = createElement('div', {"class": "titleQuote"});
+    const titleQuoteAuthor = createElement('div', {"class": "titleQuoteAuthor"});
+    titleQuote.textContent = "The secret of gettings things done is to act!";
+    titleQuoteAuthor.textContent = "- Dante Alighieri";
     // three options 
     const blank = createElement('input', {"type": "button", "class": "blank", "aria-label": "Blank Slate", "value": "Blank Slate"});
     const local = createElement('input', {"type": "button", "class": "local", "aria-label": "Check Local Storage", "value": "Check Local Storage"});
     const demo = createElement('input', {"type": "button", "class": "demo", "aria-label": "Demo App", "value": "Demo App"});
     // append it together
     modalContainer.appendChild(modalBox);
-    modalBox.appendChild(title);
-    title.appendChild(check);
+    modalBox.appendChild(titleContainer);
+    titleContainer.appendChild(titleText);
+    titleText.appendChild(check);
+    titleContainer.appendChild(titleQuote);
+    titleQuote.appendChild(titleQuoteAuthor);
     modalBox.appendChild(blank);
     modalBox.appendChild(local);
     modalBox.appendChild(demo);

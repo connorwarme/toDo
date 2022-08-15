@@ -27,10 +27,10 @@ textarea {
     backdrop-filter: blur(10px);
 }
 .modalBox {
-    height: 30vh;
+    height: 45vh;
     min-height: 300px;
-    width: 20vw;
-    min-width: 250px;
+    width: 30vw;
+    min-width: 425px;
     display: grid;
     grid-template-rows: repeat(5, 1fr);
     gap: 10px;
@@ -41,9 +41,14 @@ textarea {
     outline: 10px outset #f1faee;
     border: 10px solid #457b98;
 }
-.modalTitle {
+.modalTitleContainer {
     grid-row: 1/3;
-    font-size: 50px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.modalTitleContainer > .titleText {
+    grid-row: 1/3;
+    font-size: 60px;
     font-weight: 800;
     font-family: "Teko", "Merriweather", Georgia, 'Times New Roman', Times, serif;
     color:#1d3557;
@@ -52,11 +57,23 @@ textarea {
     justify-content: center;
     align-items: center;
 }
-.modalTitle > img {
-    height: 40px;
+.modalTitleContainer > div > img {
+    height: 50px;
     filter: invert(17%) sepia(11%) saturate(3251%) hue-rotate(176deg) brightness(98%) contrast(92%);
     position: relative;
     bottom: 4px;
+}
+.titleQuote {
+    grid-row: 3/4;
+    font-family: "Merriweather", Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
+    color: #1d3557;
+}
+.titleQuoteAuthor {
+    font-size: 12px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.25vh;
 }
 .modalBox > input {
     min-width: 210px;
@@ -67,6 +84,7 @@ textarea {
     font-weight: 600;
     border: 4px solid #457b98;
     background-color:#f1faee;
+    justify-self: center;
 }
 .modalBox > input:hover {
     background-color: #457b98;
