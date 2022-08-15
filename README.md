@@ -1,4 +1,5 @@
-# Checkmate: a to-do list app to help you get things done!  
+# Checkmate:  
+# a to-do list app to help you get things done!  
   
 ![title](https://github.com/connorwarme/toDo/blob/main/screenshots/title.png?raw=true "title") 
   
