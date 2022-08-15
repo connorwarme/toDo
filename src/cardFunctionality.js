@@ -128,7 +128,7 @@ const edit = (() => {
         date.hideInput(cardDiv);
         minimizeCard(cardDiv);
     }
-    // clears edits from input sources
+    // clears values from input fields
     const _clearInputs = (cardDiv) => {
         clearTextInputs(cardDiv);
         priority.clearSelection(cardDiv);
@@ -141,7 +141,7 @@ const edit = (() => {
     }
     return { mainFn, resetCard, populateInput, cancelEditFn, cancelEditFnLite  }
 })();
-// for submit
+// submit
 const submit = (() => {
     // gather inputs, update object, update To-Do card display
     const mainFn = (cardDiv, object) => {
@@ -150,7 +150,6 @@ const submit = (() => {
         // get new input values
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let inputArray = _getInput(cardDiv, btns);
-        console.log(inputArray);
         // update the object with new values
         let index = objectOps.getObjIndex(cardDiv);
         objectOps.update(object, inputArray, index);
@@ -173,6 +172,7 @@ const submit = (() => {
         let dateText = cardDiv.children[0].children[4].children[0];
         dateText.textContent = array[3];
     }
+    // if input value is empty, return "none" for text display
     const _emptyInputCheck = (input, section) => {
         if (input == false || input == "" || input == undefined) {
             return `${section}: none`;
@@ -181,11 +181,10 @@ const submit = (() => {
         }
     }
     // collect input values, returns array (indexes mimic position in object)
-    // needs updating - project, date, checked !!!
     const _getInput = (cardDiv, btnsArray) => {
         let titleInput = cardDiv.children[0].children[1].children[2].value;
         let notesInput = cardDiv.children[1].children[0].children[2].value;
-        let priorityInput = priority.currentSelection(btnsArray);
+        let priorityInput = priority.currentSelection(btnsArray).value;
         let projectInput = project.getInput(cardDiv);
         let dateInput = date.getInput(cardDiv);
         let array = [titleInput, projectInput, priorityInput, dateInput, notesInput];
@@ -193,28 +192,21 @@ const submit = (() => {
     }
     return { mainFn };
 })();
-// not using...do I need this? !!!
-// const editUpdateObject = (object, key, input) => {
-//     object[`${key}`] = input;
-// }
-// deletes To-Do card
-// should run a function to delete object too? !!! or to remove it from array of objects?
+// delete "to-do" card
 const deleteFn = (() => {
     const mainFn = (input) => {
         let toDoCard = input.parentElement.parentElement;
-        // remove from arrays
+        // remove from arrays (& from local storage)
         let object = objectOps.getObject(toDoCard);
         objectOps.deleteFromProjectArray(object);
         objectOps.deleteFromObjectArray(object);
-        // remove from local storage
-        // console.log(`deletefn ${objectOps.objectArray} and ${objectOps.projectArray}`);
         // delete display
         deleteDisplay(toDoCard);
     }
     const deleteDisplay = (cardDiv) => {
         // remove listeners
         listeners.removeAll(cardDiv);
-        // remove from parentDiv
+        // remove card from parentDiv
         cardDiv.parentElement.removeChild(cardDiv);   
     }
     return { mainFn, deleteDisplay };
@@ -235,7 +227,6 @@ const priority = (() => {
             priorityBtns[i].checked = false;
         }
     }
-    // not sure about this: editCurrentSelection returns the btn (need condition...if btn == null, don't worry about it);
     // display the current selection (in edit mode)
     const editCurrentSelection = (cardDiv, object) => {
         let priorityBtns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
@@ -249,13 +240,6 @@ const priority = (() => {
         } else {
             btn = "";
         }
-        // this also works, tried to improve it by using array methods... can delete later
-        // for (i=0; i<priorityBtns.length; i++) {
-        //     if (priorityBtns[i].value == object.priority) {
-        //         priorityBtns[i].checked = "checked";
-        //         btn = priorityBtns[i];
-        //     }
-        // }
         return btn;
     }
     // find and return the "checked" radio button aka selected priority level
@@ -263,17 +247,13 @@ const priority = (() => {
         let checked = input.find(index => {
             return index.checked;
         })
-        // for (let i=0; i<input.length; i++) {
-        //     if (input[i].checked) {
-        //         return input[i];
-        //     }
-        // }
         if (checked == undefined) {
             return "";
         } else {
             return checked;
         }
     }
+    // update the priority display in regular view
     const updateDisplay = (element, value) => {
         element.removeAttribute('class');
         if(!(value == "")) {
@@ -282,6 +262,8 @@ const priority = (() => {
             element.classList.add('none');
         }
     }
+    // indicate which radio button is selected
+    // -> add 'active' id, which allows for unique styling of that button/label
     const markLabel = (radio) => {
         // clear labels of active class
         let container = radio.parentElement;
@@ -300,8 +282,7 @@ const priority = (() => {
 
 // project input
 // -> populate display, clear input, gather input
-// -> do dropdown? w/ option to add?
-// -> or text input, and run a check to see if project already exists. if not, pop-up suggesting creating one..?
+// -> dropdown, w/ option to add
 const project = (() => {
     const hideInput = (cardDiv) => {
         cardDiv.children[1].children[1].children[0].style.display = "block";
@@ -316,8 +297,7 @@ const project = (() => {
         cardDiv.children[1].children[1].children[2].style.display = "block";
         cardDiv.children[1].children[1].children[3].style.display = "flex";
     }
-    // might want to separate forEach fn on its own... !!!
-    // another fn to find object.property value and to select it (set "option.selected = true")
+    // take projectArray and make each project an <option> in dropdown
     const populateInput = (array, cardDiv) => {
         if (array == null || array == undefined) {
             return false;
@@ -333,8 +313,8 @@ const project = (() => {
             return optionsArray;
         }
     }
+    // set the current object.project value as the selected dropdown value
     const markSelected = (array, object) => {
-        // does this need another check - for when no project is selected? !!!
         let selectedOption;
         if (object.project != "") {
             selectedOption = array.find(index => {
@@ -343,7 +323,7 @@ const project = (() => {
             selectedOption.selected = true;
         }
     }
-    // project clear input (for cancel button)
+    // project: clear dropdown input (for cancel button)
     const clearOptions = (cardDiv) => {
         let select = cardDiv.children[1].children[1].children[2];
         let optionsArray = Array.from(select.children);
@@ -351,8 +331,8 @@ const project = (() => {
             select.removeChild(index);
         })
     }
-    // project gather input (for submit button)
-    // returns project name
+    // project: gather input (for submit button)
+    // -> returns project name
     const getInput = (cardDiv) => {
         let select = cardDiv.children[1].children[1].children[2];
         if (select.children.length > 0) {
@@ -365,16 +345,18 @@ const project = (() => {
             return false;
         }
     }
-    // + button: opens input to add project to the dropdown list
-    // click + button, display input field and cancel and save buttons
-    // cancel - clears the input field, hides display of input, cancel, save
-    // save - gathers input, adds project to array, hides display^^, reruns creating dropdown menu (with the new addition)
+    // project: + (add new) button (opens input to add project to the dropdown list)
+    // -> click + button, display input field and cancel and save buttons
+    // -> cancel: clears the input field, hides display of input, cancel, save
+    // -> save: gathers input, adds project to array, hides display^^, reruns creating dropdown menu (with the new addition)
     const addBtnFn = (cardDiv) => {
         cardDiv.children[1].children[1].children[2].style.display = "none";
         cardDiv.children[1].children[1].children[3].style.display = "none";
         cardDiv.children[1].children[1].children[4].style.display = "flex";
         cardDiv.children[1].children[1].children[4].children[0].focus();
     }
+    // get input value
+    // if it's a new project, add it to projectArray & update current object.project value
     const addInputFn = (cardDiv, object) => {
         let input = cardDiv.children[1].children[1].children[4].children[0].value;
         if (input != "" && !(checkAlreadyInArray(input))) {
@@ -385,6 +367,8 @@ const project = (() => {
             return false;
         }
     }
+    // check if a project already exists in projectArray
+    // (don't want duplicates in the array)
     const checkAlreadyInArray = (input) => {
         let already = objectOps.projectArray.find(index => {
             return index == input;
@@ -395,33 +379,39 @@ const project = (() => {
             return true;
         }
     }
-    // clear input field value; show "add new project" button; hide input, cancel, and save.
+    // clear input field value; show "add new project" button; hide input, cancel, and save
     const addCancelFn = (cardDiv) => {
         cardDiv.children[1].children[1].children[4].children[0].value = "";
         cardDiv.children[1].children[1].children[2].style.display = "block";
         cardDiv.children[1].children[1].children[3].style.display = "flex";
         cardDiv.children[1].children[1].children[4].style.display = "none";
     }
+    // save new project button
     const addSaveFn = (cardDiv, object) => {
+        // add new project
         addInputFn(cardDiv, object)
         // add to navbar
         navbar.newProject(object.project);
         // reset display
         addCancelFn(cardDiv);
-        // remove and recreate dropdown menu
+        // remove and recreate dropdown menu, selecting object.project value
         clearOptions(cardDiv);
-        // these need the project array and the object of the card !!!
         let optionsArray = populateInput(objectOps.projectArray, cardDiv);
         markSelected(optionsArray, object);
     }
     // check if user added a project (but didn't click to save it yet)
+    // note: this fn got complicated, as it has to deal with multiple scenarios:
+    // 1) an empty "new project" input field
+    // 2) an unsaved "new project" input value
+    // 3) an input value that matches an existing project
+    // then reset the display for the project section
     const checkProjListing = (cardDiv, object) => {
         let input = cardDiv.children[1].children[1].children[4].children[0];
         // if input is empty, bail out
         if (input.value == "") {
             return false;
-            }
-        // in input isn't empty, and the project doesn't exist in projectArray
+        }
+        // if input isn't empty and the project doesn't exist in projectArray
         // add it to projArray, update the object, add project to navbar
         let already = checkAlreadyInArray(input.value);
         if (input.value != "" && already == false) {
@@ -433,7 +423,7 @@ const project = (() => {
         if (already == true) {
             objectOps.updateSingle(object, `project`, input.value);
             }
-        // reset the to-do card: project section
+        // reset the "to-do" card's project section
         addCancelFn(cardDiv);
         clearOptions(cardDiv);
         let optionsArray = populateInput(objectOps.projectArray, cardDiv);
@@ -444,16 +434,13 @@ const project = (() => {
 
 // date functionality
 const date = (() => {
-    const mainFn = (cardDiv) => {
-        let dateInput = getInput(cardDiv);
-        // do I need a mainFn?
-        // need a function to populate the input with current dueDate
-    }
+    // regular view: text display (no input field)
     const hideInput = (cardDiv) => {
         cardDiv.children[0].children[4].children[0].style.display = "block";
         cardDiv.children[0].children[4].children[1].style.display = "none";
         cardDiv.children[0].children[4].children[2].style.display = "none";
     }
+    // edit mode: input field (no text display)
     const displayInput = (cardDiv) => {
         cardDiv.children[0].children[4].children[0].style.display = "none";
         cardDiv.children[0].children[4].children[1].style.display = "block";
@@ -462,6 +449,7 @@ const date = (() => {
     const clearInput = (cardDiv) => {
         cardDiv.children[0].children[4].children[2].value = "";
     }
+    // get value from input field, format it
     const getInput = (cardDiv) => {
         let input = cardDiv.children[0].children[4].children[2].value;
         if (input != "") {
@@ -471,7 +459,7 @@ const date = (() => {
             return input;
         }
     }
-    // when user goes to edit to-do, show current due date on input
+    // when user goes to edit "to-do", show current due date on input
     const populateInput = (cardDiv, object) => {
         let input = cardDiv.children[0].children[4].children[2];
         if (object.dueDate != "") {
@@ -479,11 +467,18 @@ const date = (() => {
             input.value = currentDate;
         }
     }
-    return { mainFn, hideInput, displayInput, clearInput, getInput, populateInput}
+    return { hideInput, displayInput, clearInput, getInput, populateInput}
 })();
 
 const listeners = (() => {
     const elementsArray = [];
+    // note: I can't remember why I had to implement the following method, 
+    // utilizing the elementsArray for removeEventListener functions
+    // I remember troubleshooting for a long while, and this works (I think?)
+    // I think it had to do with making sure that I was removing listeners from the same DOM items
+    // i.e. to make sure it was the same card (removing the listeners from the same DOM items that had received listeners via "addAll" on that card)
+    // I don't think I explained that well...
+    // ..basically each card has a "listeners.removeAll" fn that will remove the listeners from that card's buttons
     function addAll (checkboxBtn, expandBtn, editBtn, deleteBtn, projAddBtn, projAddCancelBtn, projAddSaveBtn, cancelEditBtn, submitEditBtn, cardDiv, object) {
         for (let i = 0; i<arguments.length; i++) {
             elementsArray.push(arguments[i]);
@@ -533,7 +528,6 @@ const listeners = (() => {
         })
     }
     // remove all listeners (used when deleting the card);
-    // need to test if this is working... !!!
     const removeAll = () => {
         elementsArray[0].removeEventListener('click', () => {
             checkboxFn(elementsArray[0]);
@@ -547,7 +541,6 @@ const listeners = (() => {
         elementsArray[3].removeEventListener('click', () => {
             deleteFn.mainFn(elementsArray[3]);
         })
-        // I think it can piggyback on the previous priorityBtns array !!!
         let priorityBtns = Array.from(elementsArray[9].querySelectorAll('input[type="radio"]'));
         priorityBtns.forEach(index => {
             index.removeEventListener('click', () => {
