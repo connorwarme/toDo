@@ -200,10 +200,11 @@ const craftCard = (() => {
     }
     return { initial, card }
 })();
-// create initial div, then build the card, then return in
+// create initial div, then build the card, then return it
 const createCard = (object) => {
     let card = craftCard.initial();
     craftCard.card(object, card);
     return card;
 }
+// export for use in openingModal.js, navbar.js, and addToDo.js
 export { createCard }

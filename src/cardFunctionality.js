@@ -4,17 +4,18 @@ import { ls } from "./localStorage";
 import { format, parseISO, parse } from "date-fns";
 import { navbar } from "./navbar";
 
-// To-Do card button listener functions
-// get card and toggle class
-// might need update - to check object.checked / then to update it !!!
+// "to-do" card functionality
+// checkbox: get card and toggle class
+// -> update object.checked
 const checkboxFn = (input) => {
     input.classList.toggle('checked');
     input.parentElement.parentElement.classList.toggle('completedToDo');
     objectOps.updateCheck(input);
 }
+// expand card: reveal notes and project
+// -> or, if it's expanded already, minimize card
+// -> or, if it's in edit mode, cancel edit and minimize card
 const expand = (() => {
-    // expand card
-    // or, if it's expanded already, minimize card
     const mainFn = (input) => {
         let extendedCard = input.parentElement.nextElementSibling;
         let object = objectOps.getObject(extendedCard.parentElement);
@@ -32,7 +33,8 @@ const expand = (() => {
     return { mainFn }
 })();
 
-// edit card
+// edit card: go into edit mode (reveal input fields)
+// -> or, if it's in edit mode, cancel edit and go back to regular view
 const edit = (() => {
     const mainFn = (input) => {
         let toDoCard = input.parentElement.parentElement;
@@ -44,8 +46,7 @@ const edit = (() => {
             object.editable = false;
             // display input fields
             displayInputs(toDoCard);
-            // populate the input fields with current object data... needs object as argument !!!
-            // needs object passed as argument...need to figure that out!
+            // populate the input fields with current object data
             populateInput(toDoCard, object);
         } else if (object.editable == false) {
             resetCard(toDoCard);
@@ -53,20 +54,19 @@ const edit = (() => {
             object.editable = true;
         }
     }
-    // card expanded to allow edits
+    // card expanded into edit mode
     const editableCard = (cardDiv) => {
         cardDiv.classList.add('cardEdit');
         cardDiv.children[1].style.display = "flex";
         cardDiv.children[2].classList.add('displayEdit');
     }
-    // card minimized, hide notes & project, priority buttons and cancel/submit
+    // card minimized: hide notes & project, priority buttons and cancel/submit
     const minimizeCard = (cardDiv) => {
         cardDiv.classList.remove('cardEdit');
         cardDiv.children[1].style.display = "none";
         cardDiv.children[2].classList.remove('displayEdit');
     }
     // switch from text display to input fields
-    // is it possible/advantageous to change this into a fn that works for each of these (title, notes, priority, date, project). first argument = (exact element needing to be acted upon), second arg = (what should happen to it)..? !!!
     const _displayInput = (containerDiv) => {
         containerDiv.children[0].style.display = "none";
         containerDiv.children[1].style.display = "block";
@@ -80,11 +80,10 @@ const edit = (() => {
         _displayInput(notesDiv);
         // display date input
         date.displayInput(cardDiv);
-        // project input
+        // display project input (dropdown)
         project.displayInput(cardDiv); 
     }
     // populate inputs with current object data
-    // have to pass it the projectArray?? !!! regardless, it needs access.
     const populateInput = (cardDiv, object) =>  {
         let currentTitle = cardDiv.querySelector('input.titleEdit');
         currentTitle.value = object.title;
@@ -95,18 +94,15 @@ const edit = (() => {
         priority.editCurrentSelection(cardDiv, object);
         date.populateInput(cardDiv, object); 
     }
-    // other option, both need access to DOM and object
-    // so I have to pass title and object.title for it to work...
-    // const editPopulateInput = (inputDOM, value) => {
-    //     inputDOM.value = value;
-    // }
     // switch from input fields to text display
     const _hideInput = (containerDiv) => {
         containerDiv.children[0].style.display = "flex";
         containerDiv.children[1].style.display = "none";
         containerDiv.children[2].style.display = "none";
     }
-    // cancel edit button
+    // cancel edit button functionality
+    // -> if the object hasn't been given a title, delete card & object 
+    // -> (i.e. when user clicked to add new card, then decided to cancel)
     const cancelEditFn = (cardDiv) => {
         let object = objectOps.getObject(cardDiv);
         if (object.title == "") {
@@ -116,7 +112,6 @@ const edit = (() => {
         object.editable = true;
         object.expanded = false;
         }
-        // needs to be updated to be able to receive other objects (?)
     }
     const cancelEditFnLite = (cardDiv) => {
         let object = objectOps.getObject(cardDiv);
