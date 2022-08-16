@@ -360,16 +360,26 @@ textarea {
     width: 85px;
     border-radius: 50%;
     border: none;
-    color: #a8dadc;
-    font-size: 100px;
-    font-weight: bold; 
-    font-family: courier;
     background-color: #1d3557;
     transition-duration: 1000ms;
     transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.0);
     opacity: 0.8;
-    padding-left: 2px;
     margin: 15px 0 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.addContainer > button::before,
+.addContainer > button::after {
+    content: '';
+    height: 65px;
+    width: 12px;
+    background-color: #a8dadc;
+    position: absolute;
+    border-radius: 6px;
+}
+.addContainer > button::before {
+    transform: rotate(90deg);
 }
 .addContainer > button:hover {
     transform: rotate(360deg);

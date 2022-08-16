@@ -8,7 +8,6 @@ const addToDo = (() => {
         // create container and button
         const addContainer = createElement('div', {'class': 'addContainer'});
         let addBtn = createElement('button', {'class': 'addBtn', 'id': 'addToDo', 'aria-label': 'Add To-Do'});
-        addBtn.textContent = "+";
         // append together
         addContainer.appendChild(addBtn);
         return addContainer;
