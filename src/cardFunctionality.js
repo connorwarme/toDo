@@ -150,9 +150,11 @@ const submit = (() => {
         // get new input values
         let btns = Array.from(cardDiv.querySelectorAll('input[type="radio"]'));
         let inputArray = _getInput(cardDiv, btns);
+        console.log(inputArray);
         // update the object with new values
         let index = objectOps.getObjIndex(cardDiv);
         objectOps.update(object, inputArray, index);
+        console.log(objectOps.objectArray);
         // display the new values on to-do card
         _displayInput(cardDiv, inputArray);
         // change card out of edit/input mode
@@ -184,7 +186,11 @@ const submit = (() => {
     const _getInput = (cardDiv, btnsArray) => {
         let titleInput = cardDiv.children[0].children[1].children[2].value;
         let notesInput = cardDiv.children[1].children[0].children[2].value;
-        let priorityInput = priority.currentSelection(btnsArray).value;
+        // recent.edit
+        let priorityInput = priority.currentSelection(btnsArray)
+        if (priorityInput != "") {
+            priorityInput = priorityInput.value;
+        };
         let projectInput = project.getInput(cardDiv);
         let dateInput = date.getInput(cardDiv);
         let array = [titleInput, projectInput, priorityInput, dateInput, notesInput];
@@ -247,10 +253,10 @@ const priority = (() => {
         let checked = input.find(index => {
             return index.checked;
         })
-        if (checked == undefined) {
-            return "";
-        } else {
+        if (checked != undefined) {
             return checked;
+        } else {
+            return "";
         }
     }
     // update the priority display in regular view

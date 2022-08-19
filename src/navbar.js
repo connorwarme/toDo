@@ -232,11 +232,15 @@ const navFns = (() => {
     // -> display all, but sorted from highest priority to lowest
     const priorityFn = (array) => {
         let priorityArray = [...array];
-        _assignPValue(priorityArray);
-        priorityArray.sort((a,b) => {
+        let filteredArray = priorityArray.filter(index => {
+            return index.priority != "";
+        })
+        console.log(filteredArray);
+        _assignPValue(filteredArray);
+        filteredArray.sort((a,b) => {
             return a.pvalue - b.pvalue;
         })
-        homeFn(priorityArray);
+        homeFn(filteredArray);
     }
     // give each priority a number value, easier to compare/sort
     const _assignPValue = (array) => {
