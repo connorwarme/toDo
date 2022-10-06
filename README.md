@@ -1,4 +1,4 @@
-# Checkmate: a to-do list app   
+# [Checkmate](https://connorwarme.github.io/toDo/): a to-do list app   
   
 ![title](https://github.com/connorwarme/toDo/blob/main/screenshots/title.png?raw=true "title") 
   
